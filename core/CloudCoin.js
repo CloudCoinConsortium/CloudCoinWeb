@@ -304,13 +304,13 @@ class CloudCoin
      {
         let rawpan = "";
         let fullPan = "";
-        for(let i = 0; i>15;i++)
-        {
+        //for(let i = 0; i>15;i++)
+        //{
         //generate byte
         //let byte = .toString(16);
         //    rawpan += byte;
         rawpan = generateUUID();
-        }
+        //}
         switch(rawpan.length)
         {
             case 27: fullPan = ("00000" + rawpan); break;
@@ -505,6 +505,7 @@ class CloudCoin
 
         consoleReport()
         {
+            import StringHolder from "StringHolder";
             Console.log("");
             
             Console.log("╔══════════════════════════════════════════════════════╗");
@@ -533,4 +534,13 @@ class CloudCoin
                 Console.log("U");
             }
         }
+
+        generateUUID() {
+    var r = new Random();
+    var uuid = 'xxxxxxxxxxxxxxxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+        var ran = r.integer(0, 15);
+        return (c == 'x' ? ran : (r & 0x3 | 0x8)).toString(16);
+    });
+    return uuid.toUpperCase();
+}
 }

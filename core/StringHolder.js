@@ -286,4 +286,6 @@ class StringHolder
         keyboardreader_7 = temp.keyboardreader_7;
 
     }//end load new language
+    
 }
+export default class{}
