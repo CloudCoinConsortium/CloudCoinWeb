@@ -505,7 +505,7 @@ class CloudCoin
 
         consoleReport()
         {
-            import StringHolder from "StringHolder";
+            //import StringHolder from "StringHolder";
             Console.log("");
             
             Console.log("╔══════════════════════════════════════════════════════╗");
@@ -544,3 +544,4 @@ class CloudCoin
     return uuid.toUpperCase();
 }
 }
+export default class{}
