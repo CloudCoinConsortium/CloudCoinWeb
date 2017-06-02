@@ -1,6 +1,6 @@
 class CloudCoin
 {
-    constructor(nn, sn, ans, ed, aoid, extension) 
+    constructor(nn = 0, sn = 0, ans = 0, ed = 0) //param aoid removed as is extention because it is unused
     {
         this.nn = nn;
         this.sn = sn;
@@ -18,13 +18,16 @@ class CloudCoin
         this.YEARSTILEXPIRE = 2;
         this.FolderEn = { Suspect:1, Counterfeit:2, Fracked:3, Bank:4, Trash:5 };
         this.folder = 0; //
-        this.gradeStatus = [];
-        this.pown = "uuuuuuuuuuuuuuuuuuuuuuuuu";
-
+        //this.gradeStatus = []; now created by reportdetectionresults();
+        //this.pown now created by calcpown
+        this.pans = [];
+        
+        
         for(let i = 0; i < 25; i++) {
                         
             this.pans[i] = this.generatePan();
-            this.pastStatus[i] = Status.undetected;
+            
+            this.pastStatus[i] = this.Status.undetected;
             /*if( aoid.hasKey("fracked"))
             {
                 let j = aoid.findKey("fracked");
@@ -40,9 +43,12 @@ class CloudCoin
 
 
         }//end for
+        
     }//end constructon
 
-    constructor()
+
+/*
+    constructor() //es doesnt support multiple constructors
     {
         this.nn = 0;
         this.sn = 0;
@@ -64,6 +70,8 @@ class CloudCoin
         this.gradeStatus = [];
         this.pown = "uuuuuuuuuuuuuuuuuuuuuuuuu";
     }
+
+    */
 
     getPastStatus(raida_id)
     {
@@ -165,7 +173,7 @@ class CloudCoin
         }
      }//end calc hp
 
-     gradeCoin()
+     /*gradeCoin() //does same thing as calcpown and report detection results
      {
          let passed = 0;
          let failed = 0;
@@ -288,7 +296,7 @@ class CloudCoin
             }
             // end RAIDA other errors and unknowns
             return "\n " + passedDesc + " said Passed. " + "\n " + failedDesc + " said Failed. \n RAIDA Status: " + otherDesc;
-     }//end grade coin
+     }//end grade coin */
 
      calcExpirationDate()
      {
@@ -309,6 +317,7 @@ class CloudCoin
         //generate byte
         //let byte = .toString(16);
         //    rawpan += byte;
+        //import * as randommin from "random.min";
         rawpan = generateUUID();
         //}
         switch(rawpan.length)
@@ -326,7 +335,28 @@ class CloudCoin
         return fullPan;
      }
 
-     grade()
+     calcPown()  //used to be part of grade()
+     {
+         let cPown = "";
+         for(let i = 0; i<25; i++){
+             if(this.pastStatus[i] === StatusEn.pass)
+             {
+                 
+                 cPown += "p";
+             }else if (this.pastStatus[i] === StatusEn.fail)
+             {
+                
+                cPown += "f";
+             } else {
+                 
+                 cPown += "u";
+             }// end if elses
+        
+        }
+        return cPown;
+     }
+     
+     reportDetectionResults() //used to be called grade()
      {
          let passed = 0;
          let failed = 0;
@@ -334,23 +364,24 @@ class CloudCoin
          let passedDesc = "";
          let failedDesc = "";
          let otherDesc = "";
-         let internalAoid = "";
+         let gradeStatus = [];
+         
          for(let i = 0; i<25; i++){
              if(this.pastStatus[i] === StatusEn.pass)
              {
                  passed++;
-                 internalAoid += "p";
+                 
              }else if (this.pastStatus[i] === StatusEn.fail)
              {
                 failed++;
-                internalAoid += "f";
+                
              } else {
                  other++;
-                 internalAoid += "u";
+                 
              }// end if elses
         
         }
-        this.pown = internalAoid;
+        
          //calculate passed
          if ((passed == 25))
             {
@@ -451,28 +482,28 @@ class CloudCoin
             if ( other > 12 )
             {
                 // not enough RAIDA to have a quorum
-                folder = FolderEn.Suspect;
+                this.folder = FolderEn.Suspect;
             }
             else if ( failed > passed )
             {
                 // failed out numbers passed with a quorum: Counterfeit
-                folder = FolderEn.Counterfeit;
+                this.folder = FolderEn.Counterfeit;
             }
             else if ( failed > 0 )
             {
                 // The quorum majority said the coin passed but some disagreed: fracked. 
-                folder = FolderEn.Fracked;
+                this.folder = FolderEn.Fracked;
             }
             else
             {
                 // No fails, all passes: bank
-                folder = FolderEn.Bank;
+                this.folder = FolderEn.Bank;
             }
 
-            this.gradeStatus[0] = passedDesc;
-            this.gradeStatus[1] = failedDesc;
-            this.gradeStatus[2] = otherDesc;
-            return this.gradeStatus;
+            gradeStatus[0] = passedDesc;
+            gradeStatus[1] = failedDesc;
+            gradeStatus[2] = otherDesc;
+            return gradeStatus;
      }//end grade
 
      setAnstoPans()
@@ -535,7 +566,10 @@ class CloudCoin
             }
         }
 
-        generateUUID() {
+        
+}
+function generateUUID() {
+    //import * as randommin from "random.min";
     var r = new Random();
     var uuid = 'xxxxxxxxxxxxxxxxyxxxxxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
         var ran = r.integer(0, 15);
@@ -543,5 +577,4 @@ class CloudCoin
     });
     return uuid.toUpperCase();
 }
-}
-export default class{}
+//export default class{} 
