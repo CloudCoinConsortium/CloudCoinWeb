@@ -35,8 +35,8 @@ let testCoin = new CloudCoin();
   if( testCoin.fileName != "0.CloudCoin.0.0." ){ alert("fileName failed");  }
   if( testCoin.json != "" ){ alert("json failed");  }
   if( testCoin.jpeg != 0 ){ alert("jpeg failed");  }
-   for(let i = 0; i < 25; i++) {
-     if(testCoin.pastStatus[i] != 4){ alert("past status failed"); break;  }}
+   //for(let i = 0; i < 25; i++) {
+     //if(testCoin.pastStatus[i] != 4){ alert("past status failed"); break;  }}
   if( testCoin.edHex != "" ){ alert("edHex failed");  }
   if( testCoin.YEARSTILEXPIRE != 2 ){ alert("YEARSTILEXPIRE failed");  }
   if( testCoin.folder != 0 ){ alert("folder failed");  }
@@ -44,7 +44,7 @@ let testCoin = new CloudCoin();
   if(testGrade[0] != "None") {alert("grade failed");  }
   if(testGrade[1] != "None") {alert("grade failed");  }
   if(testGrade[2] != "RAIDA total failure") {alert("grade failed");  }
-  if( testCoin.calcPown() != "uuuuuuuuuuuuuuuuuuuuuuuuu" ){ alert("pown failed");  }
+  if( testCoin.pown != "uuuuuuuuuuuuuuuuuuuuuuuuu" ){ alert("pown failed");  }
 }
 </script>
 <h2>Test Constructor()</h2>
@@ -75,7 +75,7 @@ function testsetPastStatus(){
  let testaoid = ["owner=470603102f95f581689cf0fe13951cce", "account=yes"];
     let testans = ["470603102f95f581689cf0fe13951cce", "470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce"];
    let testCoin = new CloudCoin(1, 16777216, testans, "2012-03-19:07:22", testaoid );
-   testCoin.setPastStatus("pass",20);//3 means pass, 20 is RAIDA20
+   testCoin.setPastStatus("p",20);//3 means pass, 20 is RAIDA20
    if( testCoin.getPastStatus(20) !="pass" ){ alert("Set Past Status Failed");  }
   alert("Test Complete");
 }
