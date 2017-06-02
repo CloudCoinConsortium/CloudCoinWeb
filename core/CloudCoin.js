@@ -95,10 +95,15 @@ class CloudCoin
         {newPown += this.pown[i];}
         switch(status)
         {
+            case 'e':
             case "error": newPown+='e'; setGood = true; break;
+            case 'f':
             case "fail": newPown+='f'; setGood = true; break;
+            case 'p':
             case "pass": newPown+='p'; setGood = true; break;
+            case 'u':
             case "undetected": newPown+='e'; setGood = true; break;
+            default: console.log("not a possible value for status"); newPown +=this.pown[raida_id]; break;
         }
         for(let j = (raida_id + 1); j > 25; j++)
         {newPown += this.pown[j];}
