@@ -161,14 +161,28 @@ alert("All undetected:" + reportDetectionResults());
 </script>
 <h2>Test calcExpirationDate()</h2>
 <button onclick="testcalcExpirationDate()">Test</button>
+<script>
 function testcalcExpirationDate(){
 
+let testCoin = makeTestCoin();
+testCoin.calcExpirationDate();
+alert("Zero month was Aug 2016. Expiration date if powned today would be "+ testCoin.ex +", binary "+ testCoin.exHex);
+alert("Test Complete");
 }
 </script>
 <h2>Test generatePan()</h2>
 <button onclick="testgeneratePan()">Test</button>
+<script>
 function testgeneratePan(){
+    let testCoin = makeTestCoin();
 
+    alert("Generating 10,000 GUIDs");
+    for(let i = 0; i < 10000; i++)
+    {
+     if(testCoin.generatePan().length !=32 ){ alert("generatePan failed. One of them was not 32 characters long.")}
+    }
+    alert("Sample PAN: "+ testCoin.generatePan());
+    alert("Test Complete");
 }
 </script>
 <h2>Test grade()</h2>
@@ -179,14 +193,30 @@ function testgrade(){
 </script>
 <h2>Test setAnsToPansIfPassed()</h2>
 <button onclick="testAnsToPansIfPassed()">Test</button>
+<script>
 function testAnsToPansIfPassed(){
-
+    let testCoin = makeTestCoin();
+  for(let i = 0; i < 25; i++)
+     {
+         testCoin.ans[i] = "00000000000000000000000000000000";
+         testCoin.pans[i] = "11111111111111111111111111111111";
+         testCoin.setPastStatus("pass", i);
+     }
+      testCoin.setAnsToPansIfPassed();
+    for(let i = 0; i < 25; i++)
+     {
+         if ( testCoin.ans[i] != "11111111111111111111111111111111"){ alert("failed set Ans To Pans If Passed");}
+     }
+     alert("Test Complete");
 }
+
 </script>
 <h2>Test consoleReport()</h2>
 <button onclick="testconsoleReport()">Test</button>
+<script>
 function testconsoleReport(){
-
+  let testCoin = makeTestCoin();
+  testCoin.consoleReport();
 }
 </script>
 <h2>Test a()</h2>
