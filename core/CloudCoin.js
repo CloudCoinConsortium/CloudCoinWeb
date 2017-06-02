@@ -1,6 +1,6 @@
 class CloudCoin
 {
-    constructor(nn = 0, sn = 0, ans = 0, ed = 0, aoid = []) //param aoid removed as is extention because it is unused
+    constructor(nn = 0, sn = 0, ans = 0, ed = "", aoid = []) // extention is unused
     {
         this.nn = nn;
         this.sn = sn;
@@ -13,7 +13,7 @@ class CloudCoin
         this.jpeg = [];
         this.Status = {fail:1, pass:2, error:3, undetected:4};
         this.pastStatus = [];
-        this.ed = "";
+        //this.ed = "";
         this.edHex = "";
         this.YEARSTILEXPIRE = 2;
         this.FolderEn = { Suspect:1, Counterfeit:2, Fracked:3, Bank:4, Trash:5 };
