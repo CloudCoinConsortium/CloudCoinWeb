@@ -75,21 +75,22 @@ function testgetPastStatus(){
     let testans = ["470603102f95f581689cf0fe13951cce", "470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce"];
 
  let testCoin = new CloudCoin(1, 16777216, testans, "2012-03-19:07:22", testaoid );
-if( testCoin.getPastStatus() != "undetected" ){ alert("Get Past Status Failed");  }
+if( testCoin.getPastStatus(1) != "undetected" ){ alert("Get Past Status Failed");  }
+//if( testCoin.getPastStatus() == "no valid id" ){ alert("No id error");  }
 alert("Test Complete");
 }
 </script>
 
 <h2>Test setPastStatus(status, raida_id) </h2>
-<button onclick="testsetPastStatus(status, raida_id)">Test</button>
+<button onclick="testsetPastStatus()">Test</button>
 <script>
 function testsetPastStatus(){
 
  let testaoid = ["owner=470603102f95f581689cf0fe13951cce", "account=yes"];
     let testans = ["470603102f95f581689cf0fe13951cce", "470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce"];
    let testCoin = new CloudCoin(1, 16777216, testans, "2012-03-19:07:22", testaoid );
-   testCoin.setPastStatus(3,20);//3 means pass, 20 is RAIDA20
-   if( testCoin.getPastStatus(20) != 3 ){ alert("Set Past Status Failed");  }
+   testCoin.setPastStatus("pass",20);//3 means pass, 20 is RAIDA20
+   if( testCoin.getPastStatus(20) !="pass" ){ alert("Set Past Status Failed");  }
   alert("Test Complete");
 }
 </script>
