@@ -1,13 +1,13 @@
 class CloudCoin
 {
-    constructor(nn = 0, sn = 0, ans = 0, ed = 0) //param aoid removed as is extention because it is unused
+    constructor(nn = 0, sn = 0, ans = 0, ed = 0, aoid = []) //param aoid removed as is extention because it is unused
     {
         this.nn = nn;
         this.sn = sn;
         this.ans = ans;
         this.ed = ed;
         this.hp = 25;
-        this.aoid = [];
+        this.aoid = aoid;
         this.fileName = this.getDenomination() + ".CloudCoin." + this.nn + "." + this.sn + ".";
         this.json = "";
         this.jpeg = [];
@@ -76,12 +76,13 @@ class CloudCoin
     getPastStatus(raida_id)
     {
         let returnString = "";
-        switch(pastStatus[raida_id])
+        switch(this.pastStatus[raida_id])
         {
-            case Status.error: returnString = "error"; break;
-            case Status.fail: returnString = "fail"; break;
-            case Status.pass: returnString = "pass"; break;
-            case Status.undetected: returnString = "undetected"; break;
+            case this.Status.error: returnString = "error"; break;
+            case this.Status.fail: returnString = "fail"; break;
+            case this.Status.pass: returnString = "pass"; break;
+            case this.Status.undetected: returnString = "undetected"; break;
+            default: returnString = "no valid id"; break;
         }
         return returnString;
     }//end get Past status
@@ -91,10 +92,10 @@ class CloudCoin
         let setGood = false;
         switch(status)
         {
-            case "error": pastStatus[raida_id] = Status.error; setGood = true; break;
-            case "fail": pastStatus[raida_id] = Status.fail; setGood = true; break;
-            case "pass": pastStatus[raida_id] = Status.pass; setGood = true; break;
-            case "undetected": pastStatus[raida_id] = Status.undetected; setGood = true; break;
+            case "error": this.pastStatus[raida_id] = this.Status.error; setGood = true; break;
+            case "fail": this.pastStatus[raida_id] = this.Status.fail; setGood = true; break;
+            case "pass": this.pastStatus[raida_id] = this.Status.pass; setGood = true; break;
+            case "undetected": this.pastStatus[raida_id] = this.Status.undetected; setGood = true; break;
         }
         return setGood;
     }//end set past status
