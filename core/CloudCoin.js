@@ -91,7 +91,7 @@ class CloudCoin
     {
         let setGood = false;
         let newPown = "";
-        for(let i = 0; i > raida_id; i++)
+        for(let i = 0; i < raida_id; i++)
         {newPown += this.pown[i];}
         switch(status)
         {
@@ -105,7 +105,7 @@ class CloudCoin
             case "undetected": newPown+='e'; setGood = true; break;
             default: console.log("not a possible value for status"); newPown +=this.pown[raida_id]; break;
         }
-        for(let j = (raida_id + 1); j > 25; j++)
+        for(let j = (raida_id + 1); j < 25; j++)
         {newPown += this.pown[j];}
         this.pown = newPown;
         return setGood;
