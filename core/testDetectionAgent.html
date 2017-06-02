@@ -45,14 +45,14 @@ if( !rr.success){
 <button onclick="testDetect()">Test</button>
 <script>
 function testDetect(){
-let da = new DetectionAgent(0, 5000);
-    let rr = da.echo();//rr is RaidaResponse;
-if( !rr.success){ 
-    alert("echo failed. See Console"); 
-    Console.log(rr.fullRequest);
-    Console.log(rr.fullResponse);
-    } //end if
-  alert("Test Complete");
+    let da = new DetectionAgent(22, 5000);
+        let rr = da.detect( 1, 3900697, "805f4f97b2e75f9ea6a37635f306b392", "805f4f97b2e75f9ea6a37635f306b392", 5);//rr is RaidaResponse;
+    if( !rr.success){ 
+        alert("Detect failed. See Console"); 
+        Console.log(rr.fullRequest);
+        Console.log(rr.fullResponse);
+        } //end if
+    alert("Test Complete");
 }
 
 </script>
@@ -62,8 +62,8 @@ if( !rr.success){
 <script>
 function testget_ticket(){
 let da = new DetectionAgent(22, 5000);
-    let rr = da.detect( 1, 3900697, "805f4f97b2e75f9ea6a37635f306b392", "805f4f97b2e75f9ea6a37635f306b392", 5);//rr is RaidaResponse;
-if( !rr.success){ 
+    let rr = da.get_ticket( 1, 3900697, "805f4f97b2e75f9ea6a37635f306b392", 5);//rr is RaidaResponse;
+if( !rr.success && rr.outcome.length != 44){ 
     alert("Detect failed. See Console"); 
     Console.log(rr.fullRequest);
     Console.log(rr.fullResponse);
@@ -77,10 +77,21 @@ if( !rr.success){
 <script>
 function testfix(){
 
+//Fix RAIDA12 9838d3fcd087bdfd38f7712924696427
+//Get three tickets using corner 1 (Servers 6,7 and 11)
+let da6 = new DetectionAgent(6, 5000);
+let da7 = new DetectionAgent(7, 5000);
+let da11 = new DetectionAgent(11, 5000);
+let rr6 = da6.get_ticket( 1, 3900697, "8d5cacd4d28c03a03c643dc071778ba2", 5);//rr is RaidaResponse;
+let rr7 = da7.get_ticket( 1, 3900697, "ba6611626c3db50e19fcc38d4e7cf95c", 5);//rr is RaidaResponse;
+let rr11 = da11.get_ticket( 1, 3900697, "5566ff64a5ffc630b5f514418cdc78ab", 5);//rr is RaidaResponse;
+let triad =[6,7,11];
+//send them to 
+
 let da = new DetectionAgent(0, 5000);
-    let rr = da.echo();//rr is RaidaResponse;
+    let rr = da.fix( triad, rr6.outcome, rr7.outcome, rr11.outcome,  "9838d3fcd087bdfd38f7712924696427"  );//rr is RaidaResponse;
 if( !rr.success){ 
-    alert("echo failed. See Console"); 
+    alert("Fix failed. See Console"); 
     Console.log(rr.fullRequest);
     Console.log(rr.fullResponse);
     } //end if
