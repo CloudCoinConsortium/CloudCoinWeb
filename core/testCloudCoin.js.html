@@ -24,7 +24,7 @@ function testDefaultConstructor(){
   if( this.aoid != 0 ){ alert("aoid failed");  }
   if( this.fileName != 0 ){ alert("fileName failed");  }
   if( this.json != 0 ){ alert("json failed");  }
-  if( this.jpeg != []] ){ alert("jpeg failed");  }
+  if( this.jpeg != [] ){ alert("jpeg failed");  }
   if( this.pastStatus != 0 ){ alert("nn failed");  }
   if( this.edHex != "" ){ alert("edHex failed");  }
   if( this.YEARSTILEXPIRE != 0 ){ alert("YEARSTILEXPIRE failed");  }
@@ -34,6 +34,33 @@ function testDefaultConstructor(){
 }
 </script>
 
+<h2>Test Empty Constructor()</h2>
+<button onclick="testEmptyConstructor()">Test</button>
+<script>
+function testEmptyConstructor(){
+let testCoin = new CloudCoin();
+  if( testCoin.nn != 0 ){ alert("nn failed");  }
+  if( testCoin.sn != 0 ){ alert("sn failed");  }
+  if( testCoin.ans != "" ){ alert("ans failed");  }
+  if( testCoin.pans.length != 25 ){ alert("pans failed");  }
+  if( testCoin.ed != "" ){ alert("ed failed");  }
+  if( testCoin.hp != 25 ){ alert("hp failed");  }
+  if( testCoin.aoid != 0 ){ alert("aoid failed");  }
+  if( testCoin.fileName != "0.CloudCoin.0.0." ){ alert("fileName failed");  }
+  if( testCoin.json != "" ){ alert("json failed");  }
+  if( testCoin.jpeg != 0 ){ alert("jpeg failed");  }
+   for(let i = 0; i>24; i++) {
+     if(testCoin.pastStatus[i] != 4){ alert("past status failed"); break;  }}
+  if( testCoin.edHex != "" ){ alert("edHex failed");  }
+  if( testCoin.YEARSTILEXPIRE != 2 ){ alert("YEARSTILEXPIRE failed");  }
+  if( testCoin.folder != 0 ){ alert("folder failed");  }
+  let testGrade = testCoin.reportDetectionResults();
+  if(testGrade[0] != "None") {alert("grade failed");  }
+  if(testGrade[1] != "None") {alert("grade failed");  }
+  if(testGrade[2] != "RAIDA total failure") {alert("grade failed");  }
+  if( testCoin.calcPown() != "uuuuuuuuuuuuuuuuuuuuuuuuu" ){ alert("pown failed");  }
+}
+</script>
 <h2>Test Constructor()</h2>
 <button onclick="testConstructor()">Test</button>
 function testConstructor(){
@@ -42,16 +69,31 @@ function testConstructor(){
 </script>
 <h2>Test getPastStatus(raida_id)</h2>
 <button onclick="testgetPastStatus()">Test</button>
+<script>
 function testgetPastStatus(){
+     let testaoid = ["owner=470603102f95f581689cf0fe13951cce", "account=yes"];
+    let testans = ["470603102f95f581689cf0fe13951cce", "470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce"];
 
+ let testCoin = new CloudCoin(1, 16777216, testans, "2012-03-19:07:22", testaoid );
+if( testCoin.getPastStatus() != "undetected" ){ alert("Get Past Status Failed");  }
+alert("Test Complete");
 }
 </script>
+
 <h2>Test setPastStatus(status, raida_id) </h2>
-<button onclick="testPastStatus(status, raida_id)">Test</button>
-function testPastStatus(){
+<button onclick="testsetPastStatus(status, raida_id)">Test</button>
+<script>
+function testsetPastStatus(){
 
+ let testaoid = ["owner=470603102f95f581689cf0fe13951cce", "account=yes"];
+    let testans = ["470603102f95f581689cf0fe13951cce", "470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce"];
+   let testCoin = new CloudCoin(1, 16777216, testans, "2012-03-19:07:22", testaoid );
+   testCoin.setPastStatus(3,20);//3 means pass, 20 is RAIDA20
+   if( testCoin.getPastStatus(20) != 3 ){ alert("Set Past Status Failed");  }
+  alert("Test Complete");
 }
 </script>
+
 <h2>Test getFolder()</h2>
 <button onclick="testgetFolder()">Test</button>
 function testgetFolder(){

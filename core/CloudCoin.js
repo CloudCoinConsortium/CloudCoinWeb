@@ -339,11 +339,11 @@ class CloudCoin
      {
          let cPown = "";
          for(let i = 0; i<25; i++){
-             if(this.pastStatus[i] === StatusEn.pass)
+             if(this.pastStatus[i] === this.Status.pass)
              {
                  
                  cPown += "p";
-             }else if (this.pastStatus[i] === StatusEn.fail)
+             }else if (this.pastStatus[i] === this.Status.fail)
              {
                 
                 cPown += "f";
@@ -367,11 +367,11 @@ class CloudCoin
          let gradeStatus = [];
          
          for(let i = 0; i<25; i++){
-             if(this.pastStatus[i] === StatusEn.pass)
+             if(this.pastStatus[i] === this.Status.pass)
              {
                  passed++;
                  
-             }else if (this.pastStatus[i] === StatusEn.fail)
+             }else if (this.pastStatus[i] === this.Status.fail)
              {
                 failed++;
                 
@@ -482,22 +482,22 @@ class CloudCoin
             if ( other > 12 )
             {
                 // not enough RAIDA to have a quorum
-                this.folder = FolderEn.Suspect;
+                this.folder = this.FolderEn.Suspect;
             }
             else if ( failed > passed )
             {
                 // failed out numbers passed with a quorum: Counterfeit
-                this.folder = FolderEn.Counterfeit;
+                this.folder = this.FolderEn.Counterfeit;
             }
             else if ( failed > 0 )
             {
                 // The quorum majority said the coin passed but some disagreed: fracked. 
-                this.folder = FolderEn.Fracked;
+                this.folder = this.FolderEn.Fracked;
             }
             else
             {
                 // No fails, all passes: bank
-                this.folder = FolderEn.Bank;
+                this.folder = this.FolderEn.Bank;
             }
 
             gradeStatus[0] = passedDesc;
