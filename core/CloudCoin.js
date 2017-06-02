@@ -1,6 +1,6 @@
 class CloudCoin
 {
-    constructor(nn = 0, sn = 0, ans = 0, ed = "", aoid = []) // extention is unused
+    constructor(nn = 0, sn = 0, ans = 0, ed = "", aoid = [], pown = "uuuuuuuuuuuuuuuuuuuuuuuuu") // extention is unused
     {
         this.nn = nn;
         this.sn = sn;
@@ -11,23 +11,23 @@ class CloudCoin
         this.fileName = this.getDenomination() + ".CloudCoin." + this.nn + "." + this.sn + ".";
         this.json = "";
         this.jpeg = [];
-        this.Status = {fail:1, pass:2, error:3, undetected:4};
-        this.pastStatus = [];
+        //this.Status = {fail:1, pass:2, error:3, undetected:4}; // no longer used. imployed pown
+        //this.pastStatus = []; // no longer used. imployed pown
         //this.ed = "";
         this.edHex = "";
         this.YEARSTILEXPIRE = 2;
         this.FolderEn = { Suspect:1, Counterfeit:2, Fracked:3, Bank:4, Trash:5 };
         this.folder = 0; //
-        //this.gradeStatus = []; now created by reportdetectionresults();
-        //this.pown now created by calcpown
+        //this.gradeStatus = [];// now created by reportdetectionresults();
+        this.pown = pown;
         this.pans = [];
         
         
         for(let i = 0; i < 25; i++) {
                         
             this.pans[i] = this.generatePan();
-            
-            this.pastStatus[i] = this.Status.undetected;
+            //this.pastStatus[i] = this.Status.undetected; // no longer used. imployed pown
+                
             /*if( aoid.hasKey("fracked"))
             {
                 let j = aoid.findKey("fracked");
@@ -76,12 +76,12 @@ class CloudCoin
     getPastStatus(raida_id)
     {
         let returnString = "";
-        switch(this.pastStatus[raida_id])
+        switch(this.pown[raida_id])
         {
-            case this.Status.error: returnString = "error"; break;
-            case this.Status.fail: returnString = "fail"; break;
-            case this.Status.pass: returnString = "pass"; break;
-            case this.Status.undetected: returnString = "undetected"; break;
+            case 'e': returnString = "error"; break;
+            case 'f': returnString = "fail"; break;
+            case 'p': returnString = "pass"; break;
+            case 'u': returnString = "undetected"; break;
             default: returnString = "no valid id"; break;
         }
         return returnString;
@@ -90,13 +90,19 @@ class CloudCoin
     setPastStatus(status, raida_id) 
     {
         let setGood = false;
+        let newPown = "";
+        for(let i = 0; i > raida_id; i++)
+        {newPown += this.pown[i];}
         switch(status)
         {
-            case "error": this.pastStatus[raida_id] = this.Status.error; setGood = true; break;
-            case "fail": this.pastStatus[raida_id] = this.Status.fail; setGood = true; break;
-            case "pass": this.pastStatus[raida_id] = this.Status.pass; setGood = true; break;
-            case "undetected": this.pastStatus[raida_id] = this.Status.undetected; setGood = true; break;
+            case "error": newPown+='e'; setGood = true; break;
+            case "fail": newPown+='f'; setGood = true; break;
+            case "pass": newPown+='p'; setGood = true; break;
+            case "undetected": newPown+='e'; setGood = true; break;
         }
+        for(let j = (raida_id + 1); j > 25; j++)
+        {newPown += this.pown[j];}
+        this.pown = newPown;
         return setGood;
     }//end set past status
 
@@ -168,7 +174,7 @@ class CloudCoin
     {
         this.hp = 25;
         for (let i = 0; (i < 25); i++){
-            if (this.pastStatus[i]===StatusEn.fail){
+            if (this.pown[i]=='f'){
                 this.hp--;
             }
         }
@@ -336,15 +342,15 @@ class CloudCoin
         return fullPan;
      }
 
-     calcPown()  //used to be part of grade()
+     /*calcPown()  //used to be part of grade()
      {
          let cPown = "";
          for(let i = 0; i<25; i++){
-             if(this.pastStatus[i] === this.Status.pass)
+             if(this.pastStatus[i] === 'p')
              {
                  
                  cPown += "p";
-             }else if (this.pastStatus[i] === this.Status.fail)
+             }else if (this.pastStatus[i] === 'f')
              {
                 
                 cPown += "f";
@@ -355,7 +361,7 @@ class CloudCoin
         
         }
         return cPown;
-     }
+     }*/ //no longer needed
      
      reportDetectionResults() //used to be called grade()
      {
@@ -368,11 +374,11 @@ class CloudCoin
          let gradeStatus = [];
          
          for(let i = 0; i<25; i++){
-             if(this.pastStatus[i] === this.Status.pass)
+             if(this.pown[i] === 'p')
              {
                  passed++;
                  
-             }else if (this.pastStatus[i] === this.Status.fail)
+             }else if (this.pown[i] === 'f')
              {
                 failed++;
                 
@@ -519,11 +525,11 @@ class CloudCoin
             // now set all ans that passed to the new pans
             for (let i = 0; (i < 25); i++)
             {
-                if (pastStatus[i] == Status.pass)//1 means pass
+                if (this.pown[i] == 'p')//1 means pass
                 {
                     ans[i] = pans[i];
                 }
-                else if (pastStatus[i] == Status.undetected && !RAIDA_Status.failsEcho[i] )//Timed out but there server echoed. So it probably changed the PAN just too slow of a response
+                else if (this.pown[i] == 'u' && !RAIDA_Status.failsEcho[i] )//Timed out but there server echoed. So it probably changed the PAN just too slow of a response
                 {
                     ans[i] = pans[i];
                 }
@@ -543,24 +549,24 @@ class CloudCoin
             Console.log("╔══════════════════════════════════════════════════════╗");
             Console.log( StringHolder.cloudcoin_report +  this.sn + StringHolder.cloudcoin_denomination + this.getDenomination() + " ║");
             Console.log("╠══════════╦══════════╦══════════╦══════════╦══════════╣");
-            Console.log("║    "); a(pastStatus[0]);  Console.log("     ║    "); a(pastStatus[1]);   Console.log("     ║    "); a(pastStatus[2]);  Console.log("     ║    "); a(pastStatus[3]);  Console.log("     ║    "); a(pastStatus[4]);  Console.log("     ║");
+            Console.log("║    "); a(this.getPastStatus[0]);  Console.log("     ║    "); a(this.getPastStatus[1]);   Console.log("     ║    "); a(this.getPastStatus[2]);  Console.log("     ║    "); a(this.getPastStatus[3]);  Console.log("     ║    "); a(this.getPastStatus[4]);  Console.log("     ║");
             Console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
-            Console.log("║    "); a(pastStatus[5]); Console.log("     ║    "); a(pastStatus[6]);    Console.log("     ║    "); a(pastStatus[7]);  Console.log("     ║    "); a(pastStatus[8]);  Console.log("     ║    "); a(pastStatus[9]);  Console.log("     ║");
+            Console.log("║    "); a(this.getPastStatus[5]); Console.log("     ║    "); a(this.getPastStatus[6]);    Console.log("     ║    "); a(this.getPastStatus[7]);  Console.log("     ║    "); a(this.getPastStatus[8]);  Console.log("     ║    "); a(this.getPastStatus[9]);  Console.log("     ║");
             Console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
-            Console.log("║    "); a(pastStatus[10]); Console.log("     ║    "); a(pastStatus[11]);  Console.log("     ║    "); a(pastStatus[12]); Console.log("     ║    "); a(pastStatus[13]); Console.log("     ║    "); a(pastStatus[14]); Console.log("     ║");
+            Console.log("║    "); a(this.getPastStatus[10]); Console.log("     ║    "); a(this.getPastStatus[11]);  Console.log("     ║    "); a(this.getPastStatus[12]); Console.log("     ║    "); a(this.getPastStatus[13]); Console.log("     ║    "); a(this.getPastStatus[14]); Console.log("     ║");
             Console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
-            Console.log("║    "); a(pastStatus[15]); Console.log("     ║    "); a(pastStatus[16]);  Console.log("     ║    "); a(pastStatus[17]); Console.log("     ║    "); a(pastStatus[18]); Console.log("     ║    "); a(pastStatus[19]); Console.log("     ║");
+            Console.log("║    "); a(this.getPastStatus[15]); Console.log("     ║    "); a(this.getPastStatus[16]);  Console.log("     ║    "); a(this.getPastStatus[17]); Console.log("     ║    "); a(this.getPastStatus[18]); Console.log("     ║    "); a(this.getPastStatus[19]); Console.log("     ║");
             Console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
-            Console.log("║    "); a(pastStatus[20]); Console.log("     ║    "); a(pastStatus[21]);  Console.log("     ║    "); a(pastStatus[22]); Console.log("     ║    "); a(pastStatus[23]); Console.log("     ║    "); a(pastStatus[24]); Console.log("     ║");
+            Console.log("║    "); a(this.getPastStatus[20]); Console.log("     ║    "); a(this.getPastStatus[21]);  Console.log("     ║    "); a(this.getPastStatus[22]); Console.log("     ║    "); a(this.getPastStatus[23]); Console.log("     ║    "); a(this.getPastStatus[24]); Console.log("     ║");
             Console.log("╚══════════╩══════════╩══════════╩══════════╩══════════╝");
             Console.log("");
         }
 
         a(status)
         {
-            if(status === Status.pass) {
+            if(status == 'p') {
                 Console.log("♥");
-            } else if (status === Status.fail) {
+            } else if (status == 'f') {
                 Console.log("█");
             } else {
                 Console.log("U");
