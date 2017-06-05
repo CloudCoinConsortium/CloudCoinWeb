@@ -21,7 +21,7 @@ class FileUtils
     loadOneCloudCoinFromJsonFile(loadFilePath)
     {
         //load file as json
-        let incomeJson = JSON.parse(loadFilePath);//adjust this later for webstorage
+        let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));//adjust this later for webstorage
 
         let nn = incomeJson.nn;
         let sn = incomeJson.sn;
@@ -32,7 +32,7 @@ class FileUtils
         
         //if fracked goes here
 
-        returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
+        let returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
         return returnCC;
 
     }
@@ -40,7 +40,7 @@ class FileUtils
     loadManyCloudCoinFromJsonFile(loadFilePath)
     {
         returnCoins = [];
-        let incomeJson = JSON.parse(loadFilePath);
+        let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));
         for(let j = 0; j < incomeJson.cloudcoin.length - 1; j++)
         {
             let currentCoin = incomeJson.cloudcoin[j];
@@ -50,11 +50,25 @@ class FileUtils
             let ed = currentCoin.ed;
             let aoid = currentCoin.aoid;
             let pown = currentCoin.pown;
-            returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
+            let returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
             returnCoins[j] = returnCC;
 
         }
         return returnCoins;
+    }
+
+    saveCloudCoinToJsonFile(cc, saveFilePath)
+    {
+        let coin = {
+            nn: cc.nn,
+            sn: cc.sn,
+            ans: cc.ans,
+            ed: cc.ed,
+            aoid: cc.aoid,
+            pown: cc.pown
+        }
+        let file = JSON.stringify(coin);
+        localStorage.setItem(saveFilePath, file);
     }
 
     //importJSON not neccessary for javascript

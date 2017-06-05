@@ -1,0 +1,68 @@
+<html>
+<head>
+
+    <script src="random.min.js"></script>
+    <script src="CloudCoin.js"></script>
+    <script src="StringHolder.js"></script>
+    <script src="FileUtils.js"></script>
+
+</head>
+<body>
+<h1>Test FileUtils.js</h1>
+
+<div id="output"></div>
+<h2>Display Test Coin()</h2>
+<button onclick="displayTestCoin()">Display</button>
+<script>
+function displayTestCoin() {
+document.getElementById("output").innerHTML = testCoin.nn + " " + testCoin.sn;
+}
+    </script>
+
+<script>
+var testCoin = (function (){
+let testaoid = ["owner=470603102f95f581689cf0fe13951cce", "account=yes"];
+    let testans = ["470603102f95f581689cf0fe13951cce", "470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce"];
+   let testCoin = new CloudCoin(1, 16777216, testans, "2012-03-19:07:22", testaoid );
+   return testCoin;
+})();
+
+    </script>
+
+<h2>Save Coin</h2>
+<button onclick="saveCoin()">Save</button>
+<script>
+function saveCoin() {
+    var fileU = new FileUtils();
+    fileU.saveCloudCoinToJsonFile(testCoin, "cctestjson");
+}
+    </script>
+
+    <h2>Alert Saved Coin</h2>
+<button onclick="alertSaved()">Test</button>
+<script>
+function alertSaved() {
+    alert(localStorage.getItem("cctestjson"));
+}
+    </script>
+
+<h2>Save Custom Coin</h2>
+<button onclick="saveNewCoin()">Save</button>
+<script>
+function saveNewCoin() {
+    var fileU = new FileUtils();
+    let newCoin = new CloudCoin();
+    fileU.saveCloudCoinToJsonFile(newCoin, "cctestjson");
+}
+    </script>
+
+<h2>Load Custom Test Coin</h2>
+<button onclick="loadCoin()">Load</button>
+<script>
+function loadCoin() {
+    var fileU = new FileUtils();
+    testCoin = fileU.loadOneCloudCoinFromJsonFile("cctestjson");
+}
+    </script>
+</body>
+</html>
