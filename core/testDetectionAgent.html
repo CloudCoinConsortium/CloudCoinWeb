@@ -52,23 +52,25 @@ console.log(rr.fullResponse);
 
 
 <h2>Test Detect()</h2>
-<button onclick="testDetect(testD)">Test</button>
+
 <script>
-var testD = (function() {
-    let da = new DetectionAgent(22, 5000);
-       return  da.detect( 1, 3900697, "805f4f97b2e75f9ea6a37635f306b392", "805f4f97b2e75f9ea6a37635f306b392", 5);//rr is RaidaResponse;
-  })();
-   function testDetect(rr){
-   if( !rr.success){ 
+//var testD = (function() {
+    let dad = new DetectionAgent(22, 5000);
+    var testD =  dad.detect( 1, 3900697, "805f4f97b2e75f9ea6a37635f306b392", "805f4f97b2e75f9ea6a37635f306b392", 5);//rr is RaidaResponse;
+    
+ // })();
+   function testDetect(resp){
+   
+   if( !resp.success){ 
         alert("Detect failed. See Console"); 
-        console.log(rr.fullRequest);
-        console.log(rr.fullResponse);
+        console.log(resp.fullRequest);
+        console.log(resp.fullResponse);
         } //end if
     alert("Test Complete");
 }
 
 </script>
-
+<button onclick="testDetect(testD)">Test</button>
 <h2>Test get_ticket()</h2>
 <button onclick="testget_ticket(testget)">Test</button>
 <script>
@@ -87,7 +89,7 @@ if( !rr.success && rr.outcome.length != 44){
 </script>
 
 <h2>Test fix()</h2>
-<button onclick="testfix(testf)">Test</button>
+
 <script>
 
 
@@ -101,19 +103,21 @@ let rr7 = da7.get_ticket( 1, 3900697, "ba6611626c3db50e19fcc38d4e7cf95c", 5);//r
 let rr11 = da11.get_ticket( 1, 3900697, "5566ff64a5ffc630b5f514418cdc78ab", 5);//rr is RaidaResponse;
 let triad =[6,7,11];
 //send them to 
-var testf = (function() {
-let da = new DetectionAgent(0, 5000);
-    return da.fix( triad, rr6.outcome, rr7.outcome, rr11.outcome,  "9838d3fcd087bdfd38f7712924696427"  );//rr is RaidaResponse;
-})();
-function testfix(rr){
-if( !rr.success){ 
+//var testf = (function() {
+let daf = new DetectionAgent(0, 5000);
+var testf = daf.fix( triad, rr6.outcome, rr7.outcome, rr11.outcome,  "9838d3fcd087bdfd38f7712924696427"  );//rr is RaidaResponse;
+//})();
+function testfix(r){
+if( !r.success){ 
     alert("Fix failed. See Console"); 
-    console.log(rr.fullRequest);
-    console.log(rr.fullResponse);
+    console.log(r.fullRequest);
+    console.log(r.fullResponse);
     } //end if
   alert("Test Complete");
 }
+
 </script>
+<button onclick="testfix(testf)">Test</button>
 
 
 

@@ -24,6 +24,7 @@ class DetectionAgent
         */
     echo(raidaID = this.RAIDANumber) 
     {
+        let rStatus = this.RAIDAStatus;
         var echoResponce = new RaidaResponse();
         echoResponce.fullRequest = this.fullUrl + "echo?b=t";
         let before = (new Date()).getTime();
@@ -38,7 +39,7 @@ class DetectionAgent
                     }else {
                         echoResponce.success = false;
                         echoResponce.outcome = "error";
-                        this.RAIDAStatus.failsEcho[raidaID] = true;
+                        rStatus.failsEcho[raidaID] = true;
                     }
                 });
             }
@@ -47,13 +48,14 @@ class DetectionAgent
         {
             echoResponce.outcome = "error";
             echoResponce.success = false;
-            this.RAIDAStatus.failsEcho[raidaID] = true;
+            rStatus.failsEcho[raidaID] = true;
             echoResponce.fullResponse = error;
         });
         //catch
         let ts = (new Date()).getTime() - before;
         echoResponce.milliseconds = ts;
-        this.RAIDAStatus.echoTime[raidaID] = ts;
+        rStatus.echoTime[raidaID] = ts;
+        
         return echoResponce;
 
     }// end echo
@@ -70,8 +72,10 @@ class DetectionAgent
          */
     detect(nn, sn, an, pan, d)
     {
+        let rStatus = this.RAIDAStatus;
         var detectResponse = new RaidaResponse();
-        detectResponse.fullRequest = this.fullUrl + "detect?nn=" + nn + "&sn=" + sn + "&an" + an + "&pan=" + pan + "&denomination=" +d + "&b=t"
+        let raidaID = this.RAIDANumber;
+        detectResponse.fullRequest = this.fullUrl + "detect?nn=" + nn + "&sn=" + sn + "&an=" + an + "&pan=" + pan + "&denomination=" +d + "&b=t"
         let before = (new Date()).getTime();
         fetch(detectResponse.fullRequest)
          .then(
@@ -89,13 +93,14 @@ class DetectionAgent
                 
             } else if(data.status === "fail" && detectResponse.fullResponse.length < 200)
             {
+                
                 detectResponse.outcome = "fail";
                 detectResponse.success = false;
-                this.RAIDAStatus.failsDetect[RAIDANumber] = true;
+                rStatus.failsDetect[raidaID] = true;
             } else {
                 detectResponse.outcome = "error";
                 detectResponse.success = false;
-                this.RAIDAStatus.failsDetect[RAIDANumber] = true;
+                rStatus.failsDetect[raidaID] = true;
             }//end if
         });
         })
@@ -105,6 +110,7 @@ class DetectionAgent
             detectResponse.success = false;
             
         });
+        return detectResponse;
     }//end detect
 
     /**
@@ -119,6 +125,8 @@ class DetectionAgent
         */
     get_ticket(nn, sn, an , d)
     {
+        let raidaID = this.RAIDANumber;
+        let rStatus = this.RAIDAStatus;
         var get_ticketResponse = new RaidaResponse();
         get_ticketResponse.fullRequest = this.fullUrl + "get_ticket?nn=" + nn + "&sn=" + sn + "&an=" + an + "&pan=" + an + "&denomination=" + d;
         let before = (new Date()).getTime();
@@ -136,13 +144,13 @@ class DetectionAgent
             {
                 get_ticketResponse.outcome = data.message;
                 get_ticketResponse.success = true;
-                this.RAIDAStatus.hasTicket[RAIDANumber] = true;
-                this.RAIDAStatus.ticketHistory[RAIDANumber] = this.RAIDAStatus.TicketHistoryEn.Success;
-                this.RAIDAStatus.tickets[RAIDANumber] = data.message;
+                rStatus.hasTicket[raidaID] = true;
+                rStatus.ticketHistory[raidaID] = rStatus.TicketHistoryEn.Success;
+                rStatus.tickets[raidaID] = data.message;
             } else {
                 get_ticketResponse.success = false;
-                //this.RAIDAStatus.hasTicket[RAIDANumber] = false;
-                //this.RAIDAStatus.ticketHistory[RAIDANumber] = this.RAIDAStatus.TicketHistoryEn.Failed;
+                rStatus.hasTicket[raidaID] = false;
+                rStatus.ticketHistory[raidaID] = rStatus.TicketHistoryEn.Failed;
             }//end if
             });
         })
@@ -150,8 +158,8 @@ class DetectionAgent
             get_ticketResponse.outcome = "error";
             get_ticketResponse.fullResponse = error;
             get_ticketResponse.success = false;
-            this.RAIDAStatus.hasTicket[RAIDANumber] = false;
-            this.RAIDAStatus.ticketHistory[RAIDANumber] = RAIDA_Status.TicketHistoryEn.Failed;
+            rStatus.hasTicket[raidaID] = false;
+            rStatus.ticketHistory[raidaID] = rStatus.TicketHistoryEn.Failed;
         });//end catch
         return get_ticketResponse;
     }//end get ticket
@@ -169,6 +177,7 @@ class DetectionAgent
 
         fix(triad, m1, m2, m3, pan) 
         {
+            
             var fixResponse= new RaidaResponse();
             let before = (new Date()).getTime();
             fixResponse.fullRequest = this.fullUrl+"fix?fromserver1="+triad[0]+"&message1="+m1+"&fromserver2="+triad[1]+"&message2="+m2+"&fromserver3="+triad[2]+"&message3="+m3+"&pan="+pan;
@@ -198,5 +207,6 @@ class DetectionAgent
             fixResponse.success = false;
             
         });
+        return fixResponse;
         }
 }
