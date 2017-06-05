@@ -7,11 +7,11 @@ class RAIDA_Status {
         this.failsFix = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
         this.hasTicket = [false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false, false];
         this.TicketHistoryEn = {Untried : 1, Failed: 2, Success: 3}; //enumeration
-        this.ticketHistory = [TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,
-        TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,
-        TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,
-        TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,
-        TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried,TicketHistoryEn.Untried];
+        this.ticketHistory = [this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,
+        this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,
+        this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,
+        this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,
+        this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried,this.TicketHistoryEn.Untried];
         this.tickets = ["","","","","", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""];
         
     }
@@ -19,9 +19,9 @@ class RAIDA_Status {
     resetTickets()
     {
         for(let i = 0; i < 25; i++){
-            hasTicket[i] = false;
-            ticketHistory[i] = TicketHistoryEn.Untried;
-            tickets[i] = "";
+            this.hasTicket[i] = false;
+            this.ticketHistory[i] = this.TicketHistoryEn.Untried;
+            this.tickets[i] = "";
 
         }//end for
     }//end resetTickets
@@ -29,7 +29,7 @@ class RAIDA_Status {
     resetEcho()
     {
         for(let i = 0; i <25; i++) {
-            failsEcho[i] = false;
+            this.failsEcho[i] = false;
         }//end for
     }//end resetEcho
 
@@ -37,10 +37,10 @@ class RAIDA_Status {
     newCoin()
     {
         for(let i = 0; i < 25; i++){
-            hasTicket[i] = false;
-            ticketHistory[i] = TicketHistoryEn.Untried;
-            tickets[i] = "";
-            failsDetect[i] = false;
+            this.hasTicket[i] = false;
+            this.ticketHistory[i] = this.TicketHistoryEn.Untried;
+            this.tickets[i] = "";
+            this.failsDetect[i] = false;
         }
     }//end newCoin
 }
