@@ -1,6 +1,6 @@
 class CloudCoin
 {
-    constructor(nn = 0, sn = 0, ans = 0, ed = "", aoid = [], pown = "uuuuuuuuuuuuuuuuuuuuuuuuu") // extention is unused
+    constructor(nn = 0, sn = 0, ans = 0, ed = "", aoid = [], pown = "uuuuuuuuuuuuuuuuuuuuuuuuu") //default value if left blank
     {
         this.nn = nn;
         this.sn = sn;
@@ -16,7 +16,7 @@ class CloudCoin
         //this.ed = "";
         this.edHex = "";
         this.YEARSTILEXPIRE = 2;
-        this.FolderEn = { Suspect:1, Counterfeit:2, Fracked:3, Bank:4, Trash:5 };
+        this.FolderEn = { Suspect:1, Counterfeit:2, Fracked:3, Bank:4, Trash:5, Lost:6 };
         this.folder = 0; //
         //this.gradeStatus = [];// now created by reportdetectionresults();
         this.pown = pown;
@@ -26,20 +26,7 @@ class CloudCoin
         for(let i = 0; i < 25; i++) {
                         
             this.pans[i] = this.generatePan();
-            //this.pastStatus[i] = this.Status.undetected; // no longer used. imployed pown
-                
-            /*if( aoid.hasKey("fracked"))
-            {
-                let j = aoid.findKey("fracked");
-                switch(aoid[j].value[i]) {
-                    case 'p': this.pastStatus[i] = Status.pass; break;
-                    case 'f': this.pastStatus[i] = Status.fail; break;
-                    case 'u': this.pastStatus[i] = Status.undetected; break;
-                    case 'e': this.pastStatus[i] = Status.error; break;
-                    default: this.pastStatus[i] = Status.undetected; break;
-                }
-            }//end if fracked key
-            */ //old code
+           
 
 
         }//end for
@@ -47,31 +34,7 @@ class CloudCoin
     }//end constructon
 
 
-/*
-    constructor() //es doesnt support multiple constructors
-    {
-        this.nn = 0;
-        this.sn = 0;
-        this.ans = "";
-        this.pans = "";
-        this.ed = "";
-        this.hp = 0;
-        this.aoid = [];
-        this.fileName = "";
-        this.json = "";
-        this.jpeg = [];
-        this.Status = {fail:1, pass:2, error:3, undetected:4};
-        this.pastStatus = [];
-        this.ed = "";
-        this.edHex = "";
-        this.YEARSTILEXPIRE = 0;
-        this.FolderEn = { Suspect:1, Counterfeit:2, Fracked:3, Bank:4, Trash:5 };
-        this.folder = 0; //
-        this.gradeStatus = [];
-        this.pown = "uuuuuuuuuuuuuuuuuuuuuuuuu";
-    }
 
-    */
 
     getPastStatus(raida_id)
     {
@@ -121,6 +84,7 @@ class CloudCoin
             case this.FolderEn.Fracked: returnString = "Fracked"; break;
             case this.FolderEn.Suspect: returnString = "Suspect"; break;
             case this.FolderEn.Trash: returnString = "Trash"; break;
+            case this.FolderEn.Lost: returnString = "Lost"; break;
 
         }//end switch
         return returnString;
@@ -136,6 +100,7 @@ class CloudCoin
             case "fracked": this.folder = this.FolderEn.Fracked; break;
             case "suspect": this.folder = this.FolderEn.Suspect; break;
             case "trash": this.folder = this.FolderEn.Trash; break;
+            case "lost": this.folder = this.FolderEn.Lost; break;
         }
         return setGood;
     }
@@ -186,188 +151,35 @@ class CloudCoin
         return this.hp;
      }//end calc hp
 
-     /*gradeCoin() //does same thing as calcpown and report detection results
-     {
-         let passed = 0;
-         let failed = 0;
-         let other = 0;
-         let passedDesc = "";
-         let failedDesc = "";
-         let otherDesc = "";
-         let internalAoid = "";
-         for(let i = 0; i<25; i++){
-             if(this.pastStatus[i] === StatusEn.pass)
-             {
-                 passed++;
-                 internalAoid += "p";
-             }else if (this.pastStatus[i] === StatusEn.fail)
-             {
-                failed++;
-                internalAoid += "f";
-             } else {
-                 other++;
-                 internalAoid += "u";
-             }// end if elses
-        
-        }
-        this.pown = internalAoid;
-         //calculate passed
-         if ((passed == 25))
-            {
-                passedDesc = "100% Passed!";
-            }
-            else if ((passed > 17))
-            {
-                passedDesc = "Super Majority";
-            }
-            else if ((passed > 13))
-            {
-                passedDesc = "Majority";
-            }
-            else if ((passed == 0))
-            {
-                passedDesc = "None";
-            }
-            else if ((passed < 5))
-            {
-                passedDesc = "Super Minority";
-            }
-            else
-            {
-                passedDesc = "Minority";
-            }
-            //calculate failed
-            if ((failed == 25))
-            {
-                failedDesc = "100% Failed!";
-            }
-            else if ((failed > 17))
-            {
-                failedDesc = "Super Majority";
-            }
-            else if ((failed > 13))
-            {
-                failedDesc = "Majority";
-            }
-            else if ((failed == 0))
-            {
-                failedDesc = "None";
-            }
-            else if ((failed < 5))
-            {
-                failedDesc = "Super Minority";
-            }
-            else
-            {
-                failedDesc = "Minority";
-            }
-
-            // Calcualte Other RAIDA Servers did not help. 
-            switch (other)
-            {
-                case 0:
-                    otherDesc = "RAIDA 100% good";
-                    break;
-                case 1:
-                case 2:
-                    otherDesc = "Four or less RAIDA errors";
-                    break;
-                case 3:
-                case 4:
-                    otherDesc = "Four or less RAIDA errors";
-                    break;
-                case 5:
-                case 6:
-                    otherDesc = "Six or less RAIDA errors";
-                    break;
-                case 7:
-                case 8:
-                case 9:
-                case 10:
-                case 11:
-                case 12:
-                    otherDesc = "Between 7 and 12 RAIDA errors";
-                    break;
-                case 13:
-                case 14:
-                case 15:
-                case 16:
-                case 17:
-                case 18:
-                case 19:
-                case 20:
-                case 21:
-                case 22:
-                case 23:
-                case 24:
-                case 25:
-                    otherDesc = "RAIDA total failure";
-                    break;
-                default:
-                    otherDesc = "FAILED TO EVALUATE RAIDA HEALTH";
-                    break;
-            }
-            // end RAIDA other errors and unknowns
-            return "\n " + passedDesc + " said Passed. " + "\n " + failedDesc + " said Failed. \n RAIDA Status: " + otherDesc;
-     }//end grade coin */
+     
 
      calcExpirationDate()
      {
-         let d = new Date();
-         let e = new Date("August 1, 2016");
-         d.setFullYear(d.getFullYear() + this.YEARSTILEXPIRE);
-         let f = d.getMonth() - e.getMonth() + ((d.getFullYear() - e.getFullYear())*12);
-         this.ed = d.getMonth() + " - " + d.getFullYear();
-         this.edHex = f;
+         let today = new Date();
+         let start = new Date("August 1, 2016");
+         today.setFullYear(today.getFullYear() + this.YEARSTILEXPIRE);
+         let delta = today.getMonth() - start.getMonth() + ((today.getFullYear() - start.getFullYear())*12);
+         this.ed = today.getMonth() + " - " + today.getFullYear();
+         this.edHex = delta.toString(16);
+         if(this.edHex.length < 2){this.edHex = "0" + this.edHex;}
      }
 
      generatePan()
      {
         let rawpan = "";
-        let fullPan = "";
-        //for(let i = 0; i>15;i++)
-        //{
-        //generate byte
-        //let byte = .toString(16);
-        //    rawpan += byte;
-        //import * as randommin from "random.min";
+        
+   
         rawpan = generateUUID();
         //}
-        switch(rawpan.length)
-        {
-            case 27: fullPan = ("00000" + rawpan); break;
-            case 28: fullPan = ("0000" + rawpan); break;
-            case 29: fullPan = ("000" + rawpan); break;
-            case 30: fullPan = ("00" + rawpan); break;
-            case 31: fullPan = ("0" + rawpan); break;
-            case 32: fullPan = rawpan; break;
-            case 33: fullPan = rawpan.substring(0, rawpan.length - 1); break;//trim one off end
-            case 34: fullPan = rawpan.substring(0, rawpan.length - 2); break;//trim one off end
-        }
+        while( rawpan.length != 32)
+         {
+            rawpan = generateUUID();
+         }
 
-        return fullPan;
+        return rawpan;
      }
 
-     /*calcPown()  //used to be part of grade()
-     {
-         let cPown = "";
-         for(let i = 0; i<25; i++){
-             if(this.pastStatus[i] === 'p')
-             {
-                 
-                 cPown += "p";
-             }else if (this.pastStatus[i] === 'f')
-             {
-                
-                cPown += "f";
-             } else {
-                 
-                 cPown += "u";
-             }// end if elses
-        
-        }
-        return cPown;
-     }*/ //no longer needed
+    
      
      reportDetectionResults() //used to be called grade()
      {
@@ -558,16 +370,16 @@ class CloudCoin
             console.log( report.cloudcoin_report +  this.sn + report.cloudcoin_denomination + this.getDenomination() + " ║");
             console.log("╠══════════╦══════════╦══════════╦══════════╦══════════╣");
             console.log("║    " + this.a(this.getPastStatus(0)) +"     ║    " + this.a(this.getPastStatus(1)) + "     ║    " + this.a(this.getPastStatus(2)) + "     ║    " + this.a(this.getPastStatus(3)) + "     ║    " + this.a(this.getPastStatus(4)) + "     ║");
- +            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
- +            console.log("║    " + this.a(this.getPastStatus(5)) + "     ║    " + this.a(this.getPastStatus(6)) + "     ║    " + this.a(this.getPastStatus(7)) + "     ║    " + this.a(this.getPastStatus(8)) + "     ║    " + this.a(this.getPastStatus(9)) + "     ║");
- +            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
- +            console.log("║    " + this.a(this.getPastStatus(10)) + "     ║    " + this.a(this.getPastStatus(11)) + "     ║    " + this.a(this.getPastStatus(12)) + "     ║    " + this.a(this.getPastStatus(13)) + "     ║    " + this.a(this.getPastStatus(14)) + "     ║");
- +            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
- +            console.log("║    " + this.a(this.getPastStatus(15)) + "     ║    " + this.a(this.getPastStatus(16)) + "     ║    " + this.a(this.getPastStatus(17)) + "     ║    " + this.a(this.getPastStatus(18)) + "     ║    " + this.a(this.getPastStatus(19)) + "     ║");
- +            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
- +            console.log("║    " + this.a(this.getPastStatus(20)) + "     ║    " + this.a(this.getPastStatus(21)) + "     ║    " + this.a(this.getPastStatus(22)) + "     ║    " + this.a(this.getPastStatus(23)) + "     ║    " + this.a(this.getPastStatus(24)) + "     ║");
- +            console.log("╚══════════╩══════════╩══════════╩══════════╩══════════╝");
- +            console.log("");
+            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
+            console.log("║    " + this.a(this.getPastStatus(5)) + "     ║    " + this.a(this.getPastStatus(6)) + "     ║    " + this.a(this.getPastStatus(7)) + "     ║    " + this.a(this.getPastStatus(8)) + "     ║    " + this.a(this.getPastStatus(9)) + "     ║");
+            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
+            console.log("║    " + this.a(this.getPastStatus(10)) + "     ║    " + this.a(this.getPastStatus(11)) + "     ║    " + this.a(this.getPastStatus(12)) + "     ║    " + this.a(this.getPastStatus(13)) + "     ║    " + this.a(this.getPastStatus(14)) + "     ║");
+            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
+            console.log("║    " + this.a(this.getPastStatus(15)) + "     ║    " + this.a(this.getPastStatus(16)) + "     ║    " + this.a(this.getPastStatus(17)) + "     ║    " + this.a(this.getPastStatus(18)) + "     ║    " + this.a(this.getPastStatus(19)) + "     ║");
+            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
+            console.log("║    " + this.a(this.getPastStatus(20)) + "     ║    " + this.a(this.getPastStatus(21)) + "     ║    " + this.a(this.getPastStatus(22)) + "     ║    " + this.a(this.getPastStatus(23)) + "     ║    " + this.a(this.getPastStatus(24)) + "     ║");
+            console.log("╚══════════╩══════════╩══════════╩══════════╩══════════╝");
+            console.log("");
         }
 
         a(statusA)
