@@ -4,6 +4,8 @@
     <script src="random.min.js"></script>
     <script src="CloudCoin.js"></script>
     <script src="DetectionAgent.js"></script>
+    <script src="RaidaResponse.js"></script>
+    <script src="RAIDA_Status.js"></script>
 
 </head>
 <body>
@@ -27,30 +29,40 @@ if(da.fullUrl != "https://RAIDA20.cloudcoin.global/service/"){alert("RAIDA full 
 
 
 <h2>Test Echo()</h2>
-<button onclick="testEcho()">Test</button>
+<button onclick="testEchoR(testEcho)">Test</button>
 <script>
-function testEcho(){
+
+var testEcho = (function(){
 let da = new DetectionAgent(0, 5000);
-    let rr = da.echo();//rr is RaidaResponse;
+    return  da.echo();//rr is RaidaResponse;
+    
+})();
+function testEchoR(rr) {
 if( !rr.success){ 
     alert("echo failed. See Console"); 
-    Console.log(rr.fullRequest);
-    Console.log(rr.fullResponse);
-    } //end if
+    console.log(rr.fullRequest);
+    console.log(rr.fullResponse);
+    console.log(rr.outcome);
+} //end if
+console.log(rr.fullResponse);
   alert("Test Complete");
 }
 </script>
 
+
+
 <h2>Test Detect()</h2>
-<button onclick="testDetect()">Test</button>
+<button onclick="testDetect(testD)">Test</button>
 <script>
-function testDetect(){
+var testD = (function() {
     let da = new DetectionAgent(22, 5000);
-        let rr = da.detect( 1, 3900697, "805f4f97b2e75f9ea6a37635f306b392", "805f4f97b2e75f9ea6a37635f306b392", 5);//rr is RaidaResponse;
-    if( !rr.success){ 
+       return  da.detect( 1, 3900697, "805f4f97b2e75f9ea6a37635f306b392", "805f4f97b2e75f9ea6a37635f306b392", 5);//rr is RaidaResponse;
+  })();
+   function testDetect(rr){
+   if( !rr.success){ 
         alert("Detect failed. See Console"); 
-        Console.log(rr.fullRequest);
-        Console.log(rr.fullResponse);
+        console.log(rr.fullRequest);
+        console.log(rr.fullResponse);
         } //end if
     alert("Test Complete");
 }
@@ -58,24 +70,26 @@ function testDetect(){
 </script>
 
 <h2>Test get_ticket()</h2>
-<button onclick="testget_ticket()">Test</button>
+<button onclick="testget_ticket(testget)">Test</button>
 <script>
-function testget_ticket(){
+var testget = (function() {
 let da = new DetectionAgent(22, 5000);
-    let rr = da.get_ticket( 1, 3900697, "805f4f97b2e75f9ea6a37635f306b392", 5);//rr is RaidaResponse;
+    return da.get_ticket( 1, 3900697, "805f4f97b2e75f9ea6a37635f306b392", 5);//rr is RaidaResponse;
+})();
+function testget_ticket(rr){
 if( !rr.success && rr.outcome.length != 44){ 
     alert("Detect failed. See Console"); 
-    Console.log(rr.fullRequest);
-    Console.log(rr.fullResponse);
+    console.log(rr.fullRequest);
+    console.log(rr.fullResponse);
     } //end if
   alert("Test Complete");
 }
 </script>
 
 <h2>Test fix()</h2>
-<button onclick="testfix()">Test</button>
+<button onclick="testfix(testf)">Test</button>
 <script>
-function testfix(){
+
 
 //Fix RAIDA12 9838d3fcd087bdfd38f7712924696427
 //Get three tickets using corner 1 (Servers 6,7 and 11)
@@ -87,13 +101,15 @@ let rr7 = da7.get_ticket( 1, 3900697, "ba6611626c3db50e19fcc38d4e7cf95c", 5);//r
 let rr11 = da11.get_ticket( 1, 3900697, "5566ff64a5ffc630b5f514418cdc78ab", 5);//rr is RaidaResponse;
 let triad =[6,7,11];
 //send them to 
-
+var testf = (function() {
 let da = new DetectionAgent(0, 5000);
-    let rr = da.fix( triad, rr6.outcome, rr7.outcome, rr11.outcome,  "9838d3fcd087bdfd38f7712924696427"  );//rr is RaidaResponse;
+    return da.fix( triad, rr6.outcome, rr7.outcome, rr11.outcome,  "9838d3fcd087bdfd38f7712924696427"  );//rr is RaidaResponse;
+})();
+function testfix(rr){
 if( !rr.success){ 
     alert("Fix failed. See Console"); 
-    Console.log(rr.fullRequest);
-    Console.log(rr.fullResponse);
+    console.log(rr.fullRequest);
+    console.log(rr.fullResponse);
     } //end if
   alert("Test Complete");
 }
