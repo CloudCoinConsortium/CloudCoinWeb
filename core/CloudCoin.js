@@ -557,27 +557,27 @@ class CloudCoin
             console.log("╔══════════════════════════════════════════════════════╗");
             console.log( report.cloudcoin_report +  this.sn + report.cloudcoin_denomination + this.getDenomination() + " ║");
             console.log("╠══════════╦══════════╦══════════╦══════════╦══════════╣");
-            console.log("║    " + this.getPastStatus(0) +"     ║    " + this.getPastStatus(1) + "     ║    " + this.getPastStatus(2) + "     ║    " + this.getPastStatus(3) + "     ║    " + this.getPastStatus(4) + "     ║");
-            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
-            console.log("║    " + this.getPastStatus(5) + "     ║    " + this.getPastStatus(6) + "     ║    " + this.getPastStatus(7) + "     ║    " + this.getPastStatus(8) + "     ║    " + this.getPastStatus(9) + "     ║");
-            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
-            console.log("║    " + this.getPastStatus(10) + "     ║    " + this.getPastStatus(11) + "     ║    " + this.getPastStatus(12) + "     ║    " + this.getPastStatus(13) + "     ║    " + this.getPastStatus(14) + "     ║");
-            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
-            console.log("║    " + this.getPastStatus(15) + "     ║    " + this.getPastStatus(16) + "     ║    " + this.getPastStatus(17) + "     ║    " + this.getPastStatus(18) + "     ║    " + this.getPastStatus(19) + "     ║");
-            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
-            console.log("║    " + this.getPastStatus(20) + "     ║    " + this.getPastStatus(21) + "     ║    " + this.getPastStatus(22) + "     ║    " + this.getPastStatus(23) + "     ║    " + this.getPastStatus(24) + "     ║");
-            console.log("╚══════════╩══════════╩══════════╩══════════╩══════════╝");
-            console.log("");
+            console.log("║    " + this.a(this.getPastStatus(0)) +"     ║    " + this.a(this.getPastStatus(1)) + "     ║    " + this.a(this.getPastStatus(2)) + "     ║    " + this.a(this.getPastStatus(3)) + "     ║    " + this.a(this.getPastStatus(4)) + "     ║");
+ +            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
+ +            console.log("║    " + this.a(this.getPastStatus(5)) + "     ║    " + this.a(this.getPastStatus(6)) + "     ║    " + this.a(this.getPastStatus(7)) + "     ║    " + this.a(this.getPastStatus(8)) + "     ║    " + this.a(this.getPastStatus(9)) + "     ║");
+ +            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
+ +            console.log("║    " + this.a(this.getPastStatus(10)) + "     ║    " + this.a(this.getPastStatus(11)) + "     ║    " + this.a(this.getPastStatus(12)) + "     ║    " + this.a(this.getPastStatus(13)) + "     ║    " + this.a(this.getPastStatus(14)) + "     ║");
+ +            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
+ +            console.log("║    " + this.a(this.getPastStatus(15)) + "     ║    " + this.a(this.getPastStatus(16)) + "     ║    " + this.a(this.getPastStatus(17)) + "     ║    " + this.a(this.getPastStatus(18)) + "     ║    " + this.a(this.getPastStatus(19)) + "     ║");
+ +            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
+ +            console.log("║    " + this.a(this.getPastStatus(20)) + "     ║    " + this.a(this.getPastStatus(21)) + "     ║    " + this.a(this.getPastStatus(22)) + "     ║    " + this.a(this.getPastStatus(23)) + "     ║    " + this.a(this.getPastStatus(24)) + "     ║");
+ +            console.log("╚══════════╩══════════╩══════════╩══════════╩══════════╝");
+ +            console.log("");
         }
 
-        a(status)
+        a(statusA)
         {
-            if(status == 'p') {
-                console.log("♥");
-            } else if (status == 'f') {
-                console.log("█");
+            if(statusA === "pass" ) {
+                return "<3";
+            } else if (statusA === "fail") {
+                return "X";
             } else {
-                console.log("U");
+                return "U";
             }
         }
 
