@@ -573,9 +573,9 @@ class CloudCoin
         a(statusA)
         {
             if(statusA === "pass" ) {
-                return "<3";
+                return "♥";
             } else if (statusA === "fail") {
-                return "X";
+                return "█";
             } else {
                 return "U";
             }
