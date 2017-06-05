@@ -114,13 +114,13 @@ class CloudCoin
     getFolder()
     {
         let returnString = "";
-        switch(folder)
+        switch(this.folder)
         {
-            case FolderEn.Bank: returnString = "Bank"; break;
-            case FolderEn.Counterfeit: returnString = "Counterfeit"; break;
-            case FolderEn.Fracked: returnString = "Fracked"; break;
-            case FolderEn.Suspect: returnString = "Suspect"; break;
-            case FolderEn.Trash: returnString = "Trash"; break;
+            case this.FolderEn.Bank: returnString = "Bank"; break;
+            case this.FolderEn.Counterfeit: returnString = "Counterfeit"; break;
+            case this.FolderEn.Fracked: returnString = "Fracked"; break;
+            case this.FolderEn.Suspect: returnString = "Suspect"; break;
+            case this.FolderEn.Trash: returnString = "Trash"; break;
 
         }//end switch
         return returnString;
@@ -129,13 +129,13 @@ class CloudCoin
     setFolder(folderName)
     {
         let setGood = false;
-        switch(folderName.ToLowerCase())
+        switch(folderName.toLowerCase())
         {
-            case "bank": folder = FolderEn.Bank; break;
-            case "counterfeit": folder = FolderEn.Counterfeit; break;
-            case "fracked": folder = FolderEn.Fracked; break;
-            case "suspect": folder = FolderEn.Suspect; break;
-            case "trash": folder = FolderEn.Trash; break;
+            case "bank": this.folder = this.FolderEn.Bank; break;
+            case "counterfeit": this.folder = this.FolderEn.Counterfeit; break;
+            case "fracked": this.folder = this.FolderEn.Fracked; break;
+            case "suspect": this.folder = this.FolderEn.Suspect; break;
+            case "trash": this.folder = this.FolderEn.Trash; break;
         }
         return setGood;
     }
@@ -169,7 +169,7 @@ class CloudCoin
             }
             else
             {
-                nom = '0';
+                nom = 0;
             }
 
             return nom;
@@ -183,6 +183,7 @@ class CloudCoin
                 this.hp--;
             }
         }
+        return this.hp;
      }//end calc hp
 
      /*gradeCoin() //does same thing as calcpown and report detection results
@@ -314,7 +315,7 @@ class CloudCoin
      {
          let d = new Date();
          let e = new Date("August 1, 2016");
-         d.setFullYear(d.getFullYear() + YEARSTILEXPIRE);
+         d.setFullYear(d.getFullYear() + this.YEARSTILEXPIRE);
          let f = d.getMonth() - e.getMonth() + ((d.getFullYear() - e.getFullYear())*12);
          this.ed = d.getMonth() + " - " + d.getFullYear();
          this.edHex = f;
@@ -532,11 +533,11 @@ class CloudCoin
             {
                 if (this.pown[i] == 'p')//1 means pass
                 {
-                    ans[i] = pans[i];
+                    this.ans[i] = this.pans[i];
                 }
                 else if (this.pown[i] == 'u' && !RAIDA_Status.failsEcho[i] )//Timed out but there server echoed. So it probably changed the PAN just too slow of a response
                 {
-                    ans[i] = pans[i];
+                    this.ans[i] = this.pans[i];
                 }
                 else
                 {
@@ -548,33 +549,35 @@ class CloudCoin
 
         consoleReport()
         {
-            //import StringHolder from "StringHolder";
-            Console.log("");
             
-            Console.log("╔══════════════════════════════════════════════════════╗");
-            Console.log( StringHolder.cloudcoin_report +  this.sn + StringHolder.cloudcoin_denomination + this.getDenomination() + " ║");
-            Console.log("╠══════════╦══════════╦══════════╦══════════╦══════════╣");
-            Console.log("║    "); a(this.getPastStatus[0]);  Console.log("     ║    "); a(this.getPastStatus[1]);   Console.log("     ║    "); a(this.getPastStatus[2]);  Console.log("     ║    "); a(this.getPastStatus[3]);  Console.log("     ║    "); a(this.getPastStatus[4]);  Console.log("     ║");
-            Console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
-            Console.log("║    "); a(this.getPastStatus[5]); Console.log("     ║    "); a(this.getPastStatus[6]);    Console.log("     ║    "); a(this.getPastStatus[7]);  Console.log("     ║    "); a(this.getPastStatus[8]);  Console.log("     ║    "); a(this.getPastStatus[9]);  Console.log("     ║");
-            Console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
-            Console.log("║    "); a(this.getPastStatus[10]); Console.log("     ║    "); a(this.getPastStatus[11]);  Console.log("     ║    "); a(this.getPastStatus[12]); Console.log("     ║    "); a(this.getPastStatus[13]); Console.log("     ║    "); a(this.getPastStatus[14]); Console.log("     ║");
-            Console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
-            Console.log("║    "); a(this.getPastStatus[15]); Console.log("     ║    "); a(this.getPastStatus[16]);  Console.log("     ║    "); a(this.getPastStatus[17]); Console.log("     ║    "); a(this.getPastStatus[18]); Console.log("     ║    "); a(this.getPastStatus[19]); Console.log("     ║");
-            Console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
-            Console.log("║    "); a(this.getPastStatus[20]); Console.log("     ║    "); a(this.getPastStatus[21]);  Console.log("     ║    "); a(this.getPastStatus[22]); Console.log("     ║    "); a(this.getPastStatus[23]); Console.log("     ║    "); a(this.getPastStatus[24]); Console.log("     ║");
-            Console.log("╚══════════╩══════════╩══════════╩══════════╩══════════╝");
-            Console.log("");
+            //import StringHolder from "StringHolder";
+            let report = new StringHolder();
+            console.log("");
+            
+            console.log("╔══════════════════════════════════════════════════════╗");
+            console.log( report.cloudcoin_report +  this.sn + report.cloudcoin_denomination + this.getDenomination() + " ║");
+            console.log("╠══════════╦══════════╦══════════╦══════════╦══════════╣");
+            console.log("║    " + this.getPastStatus(0) +"     ║    " + this.getPastStatus(1) + "     ║    " + this.getPastStatus(2) + "     ║    " + this.getPastStatus(3) + "     ║    " + this.getPastStatus(4) + "     ║");
+            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
+            console.log("║    " + this.getPastStatus(5) + "     ║    " + this.getPastStatus(6) + "     ║    " + this.getPastStatus(7) + "     ║    " + this.getPastStatus(8) + "     ║    " + this.getPastStatus(9) + "     ║");
+            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
+            console.log("║    " + this.getPastStatus(10) + "     ║    " + this.getPastStatus(11) + "     ║    " + this.getPastStatus(12) + "     ║    " + this.getPastStatus(13) + "     ║    " + this.getPastStatus(14) + "     ║");
+            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
+            console.log("║    " + this.getPastStatus(15) + "     ║    " + this.getPastStatus(16) + "     ║    " + this.getPastStatus(17) + "     ║    " + this.getPastStatus(18) + "     ║    " + this.getPastStatus(19) + "     ║");
+            console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");
+            console.log("║    " + this.getPastStatus(20) + "     ║    " + this.getPastStatus(21) + "     ║    " + this.getPastStatus(22) + "     ║    " + this.getPastStatus(23) + "     ║    " + this.getPastStatus(24) + "     ║");
+            console.log("╚══════════╩══════════╩══════════╩══════════╩══════════╝");
+            console.log("");
         }
 
         a(status)
         {
             if(status == 'p') {
-                Console.log("♥");
+                console.log("♥");
             } else if (status == 'f') {
-                Console.log("█");
+                console.log("█");
             } else {
-                Console.log("U");
+                console.log("U");
             }
         }
 

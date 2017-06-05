@@ -3,6 +3,7 @@
 
     <script src="random.min.js"></script>
     <script src="CloudCoin.js"></script>
+    <script src="StringHolder.js"></script>
 
 </head>
 <body>
@@ -89,27 +90,33 @@ function testgetFolder(){
 
 let testCoin = makeTestCoin();
 testCoin.setFolder("Fracked");
-if( testCoin.getfolder !="Fracked"){ alert("getFolder failed");}
+if( testCoin.getFolder() !="Fracked"){ alert("getFolder failed");}
 testCoin.setFolder("Trash");
-if( testCoin.getfolder !="Trash"){ alert("getFolder failed");}
+if( testCoin.getFolder() !="Trash"){ alert("getFolder failed");}
 testCoin.setFolder("Counterfeit");
-if( testCoin.getfolder !="Counterfeit"){ alert("getFolder failed");}
+if( testCoin.getFolder() !="Counterfeit"){ alert("getFolder failed");}
 testCoin.setFolder("Bank");
-if( testCoin.getfolder !="Bank"){ alert("getFolder failed");}
+if( testCoin.getFolder() !="Bank"){ alert("getFolder failed");}
 alert("Test Complete");
 }
 </script>
 <h2>Test getDenomination()</h2>
 <button onclick="testDenomination()">Test</button>
 <script>
-function testgetDenomination(){
-let testCoin = makeTestCoin();
+function testDenomination(){
+let testaoid = ["owner=470603102f95f581689cf0fe13951cce", "account=yes"];
+    let testans = ["470603102f95f581689cf0fe13951cce", "470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce"];
+   let testCoin250 = new CloudCoin(1, 16777216, testans, "2012-03-19:07:22", testaoid );
+   let testCoin1 = new CloudCoin(1, 2, testans, "2012-03-19:07:22", testaoid );
+   let testCoin5 = new CloudCoin(1, 4194301, testans, "2012-03-19:07:22", testaoid );
+   let testCoin25 = new CloudCoin(1, 6291451, testans, "2012-03-19:07:22", testaoid );
+   let testCoin100 = new CloudCoin(1, 14680061, testans, "2012-03-19:07:22", testaoid );
 
-if( testCoin.getDenomination(1)!=1){alert("failed getDenominaiton 1");}
-if( testCoin.getDenomination(4194300)!=5){alert("failed getDenominaiton 5");}
-if( testCoin.getDenomination(6291450)!=25){alert("failed getDenominaiton 25");}
-if( testCoin.getDenomination(14680060)!=100){alert("failed getDenominaiton 100");}
-if( testCoin.getDenomination(16700000)!=250){alert("failed getDenominaiton 250");}
+if( testCoin1.getDenomination(1)!=1){alert("failed getDenominaiton 1");}
+if( testCoin5.getDenomination(4194300)!=5){alert("failed getDenominaiton 5");}
+if( testCoin25.getDenomination(6291450)!=25){alert("failed getDenominaiton 25");}
+if( testCoin100.getDenomination(14680060)!=100){alert("failed getDenominaiton 100");}
+if( testCoin250.getDenomination(16700000)!=250){alert("failed getDenominaiton 250");}
 alert("Test Complete");
 }
 </script>
@@ -123,14 +130,15 @@ for(let i = 0; i < 25; i++)
 {
 testCoin.setPastStatus("fail", i);
 }
-
+alert(testCoin.pown);
 
 if( testCoin.calculateHP() !=0){alert("failed calcHP with all fails");}
 testCoin.setPastStatus("pass", 0);
 testCoin.setPastStatus("pass", 1);
 testCoin.setPastStatus("pass", 2);
-if( testCoin.calculateHP() !=22){alert("failed calcHP, with 3 passes");}
-}
+alert(testCoin.pown);
+if( testCoin.calculateHP() !=3){alert("failed calcHP, with 3 passes");} //22
+} 
 </script>
 <h2>Test testreportDetectionResults() (was called gradeCoin)</h2>
 <button onclick="testreportDetectionResults()">Test</button>
@@ -144,19 +152,19 @@ for(let i = 0; i < 25; i++)
 testCoin.setPastStatus("fail", i);
 }
 
-alert("All fails:" + reportDetectionResults());
+alert("All fails:" + testCoin.reportDetectionResults());
 
 for(let i = 0; i < 25; i++)
 {
 testCoin.setPastStatus("pass", i);
 }
-alert("All pass:" + reportDetectionResults());
+alert("All pass:" + testCoin.reportDetectionResults());
 
 for(let i = 0; i < 25; i++)
 {
 testCoin.setPastStatus("undetected", i);
 }
-alert("All undetected:" + reportDetectionResults());
+alert("All undetected:" + testCoin.reportDetectionResults());
 
 }
 </script>
@@ -167,7 +175,7 @@ function testcalcExpirationDate(){
 
 let testCoin = makeTestCoin();
 testCoin.calcExpirationDate();
-alert("Zero month was Aug 2016. Expiration date if powned today would be "+ testCoin.ex +", binary "+ testCoin.exHex);
+alert("Zero month was Aug 2016. Expiration date if powned today would be "+ testCoin.ed +", binary "+ testCoin.edHex);
 alert("Test Complete");
 }
 </script>
@@ -217,6 +225,7 @@ function testAnsToPansIfPassed(){
 <script>
 function testconsoleReport(){
   let testCoin = makeTestCoin();
+  let testString = new StringHolder();
   testCoin.consoleReport();
 }
 </script>
