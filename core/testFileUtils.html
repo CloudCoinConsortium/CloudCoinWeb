@@ -6,6 +6,9 @@
     <script src="StringHolder.js"></script>
     <script src="FileUtils.js"></script>
     <script src="FileSaver.js"></script>
+    <script src="DetectionAgent.js"></script>
+    <script src="RAIDA_Status.js"></script>
+    <script src="RaidaResponse.js"></script>
     <script type="text/javascript">
     //prefixes of implementation that we want to test
          window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
@@ -124,6 +127,16 @@ function readdb() {
         alert(request.result.pown);
 }}}
     </script>
-
+<h2>Detect Test Coin</h2>
+<button onclick="detectCoin()">Load</button>
+<script>
+function detectCoin() {
+    var fileU = new FileUtils();
+    let rr = fileU.detectOneCloudCoinFromJsonFile("cctestjson");
+    alert(rr.outcome);
+    
+    
+}
+    </script>
 </body>
 </html>

@@ -43,9 +43,95 @@ class FileUtils
         document.getElementById("output").innerHTML = returnCC.nn + " " + returnCC.sn;
         return returnCC;
           
-    }
+    } }
     
         //if fracked goes here
+
+        //testing
+        detectOneCloudCoinFromJsonFile(loadFilePath)
+    {
+        //load file as json
+        //let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));//adjust this later for webstorage
+        
+        //import detect from "DetectionAgent.js";
+        let dad = new DetectionAgent(22, 5000);
+        let transaction = db.transaction(["cloudcoin"]);
+        let objectStore = transaction.objectStore("cloudcoin");
+        let request = objectStore.get(loadFilePath);
+        request.onsuccess = function(event) {
+            console.log("success");
+        let incomeJson = request.result;
+        let nn = incomeJson.nn;
+        
+        let sn = incomeJson.sn;
+        let ans = incomeJson.an;
+        let ed = incomeJson.ed;
+        let aoid = incomeJson.aoid;
+        let pown = incomeJson.pown;
+        var returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
+        let rr = dad.detect(returnCC.nn, returnCC.sn, returnCC.ans, returnCC.pan, returnCC.getDenomination());
+        alert(rr.outcome);
+        return rr;
+        
+          
+    }}
+
+    ticketOneCloudCoinFromJsonFile(loadFilePath)
+    {
+        //load file as json
+        //let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));//adjust this later for webstorage
+        
+        //import detect from "DetectionAgent.js";
+        let dad = new DetectionAgent(22, 5000);
+        let transaction = db.transaction(["cloudcoin"]);
+        let objectStore = transaction.objectStore("cloudcoin");
+        let request = objectStore.get(loadFilePath);
+        request.onsuccess = function(event) {
+            console.log("success");
+        let incomeJson = request.result;
+        let nn = incomeJson.nn;
+        
+        let sn = incomeJson.sn;
+        let ans = incomeJson.an;
+        let ed = incomeJson.ed;
+        let aoid = incomeJson.aoid;
+        let pown = incomeJson.pown;
+        var returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
+        let rr = dad.get_ticket(returnCC.nn, returnCC.sn, returnCC.ans, returnCC.getDenomination());
+        alert(rr.outcome);
+        return rr;
+        
+          
+    }}
+
+    fixOneCloudCoinFromJsonFile(loadFilePath) //wip
+
+    {
+        //load file as json
+        //let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));//adjust this later for webstorage
+        
+        //import detect from "DetectionAgent.js";
+        let dad = new DetectionAgent(22, 5000);
+        let transaction = db.transaction(["cloudcoin"]);
+        let objectStore = transaction.objectStore("cloudcoin");
+        let request = objectStore.get(loadFilePath);
+        request.onsuccess = function(event) {
+            console.log("success");
+        let incomeJson = request.result;
+        let nn = incomeJson.nn;
+        
+        let sn = incomeJson.sn;
+        let ans = incomeJson.an;
+        let ed = incomeJson.ed;
+        let aoid = incomeJson.aoid;
+        let pown = incomeJson.pown;
+        var returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
+        let rr;
+        
+        return rr;
+        
+          
+    }
 
         
 
