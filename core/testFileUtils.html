@@ -5,6 +5,40 @@
     <script src="CloudCoin.js"></script>
     <script src="StringHolder.js"></script>
     <script src="FileUtils.js"></script>
+    <script src="FileSaver.js"></script>
+    <script type="text/javascript">
+    //prefixes of implementation that we want to test
+         window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
+         
+         //prefixes of window.IDB objects
+         window.IDBTransaction = window.IDBTransaction || window.webkitIDBTransaction || window.msIDBTransaction;
+         window.IDBKeyRange = window.IDBKeyRange || window.webkitIDBKeyRange || window.msIDBKeyRange
+         
+         if (!window.indexedDB) {
+            window.alert("Your browser doesn't support a stable version of IndexedDB.")
+         }
+
+         var db;
+        var request = indexedDB.open("localcloudcoins");
+        request.onerror = function(event) {
+            console.log("error: ");
+         };
+         
+         request.onsuccess = function(event) {
+            db = request.result;
+            console.log("success: "+ db);
+            
+         };
+         request.onupgradeneeded = function(event) {
+            console.log("upgrading");
+            var db = event.target.result;
+            var objectStore = db.createObjectStore("cloudcoin", {keyPath: "filename"});
+            
+            
+            }
+         
+        
+         </script>
 
 </head>
 <body>
@@ -20,12 +54,12 @@ document.getElementById("output").innerHTML = testCoin.nn + " " + testCoin.sn;
     </script>
 
 <script>
-var testCoin = (function (){
+var testCoin;
 let testaoid = ["owner=470603102f95f581689cf0fe13951cce", "account=yes"];
     let testans = ["470603102f95f581689cf0fe13951cce", "470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce"];
-   let testCoin = new CloudCoin(1, 16777216, testans, "2012-03-19:07:22", testaoid );
-   return testCoin;
-})();
+   testCoin = new CloudCoin(1, 16777216, testans, "2012-03-19:07:22", testaoid );
+   
+
 
     </script>
 
@@ -52,7 +86,7 @@ function alertSaved() {
 function saveNewCoin() {
     var fileU = new FileUtils();
     let newCoin = new CloudCoin();
-    fileU.saveCloudCoinToJsonFile(newCoin, "cctestjson");
+    fileU.saveCloudCoinToJsonFile(newCoin, "cctest0json");
 }
     </script>
 
@@ -61,8 +95,35 @@ function saveNewCoin() {
 <script>
 function loadCoin() {
     var fileU = new FileUtils();
-    testCoin = fileU.loadOneCloudCoinFromJsonFile("cctestjson");
+    testCoin = fileU.loadOneCloudCoinFromJsonFile("cctest0json");
+    
+    
 }
     </script>
+<h2>delete</h2>
+<button onclick="deletedb()">Load</button>
+<script>
+function deletedb() {
+    var request = indexedDB.deleteDatabase("localcloudcoins");
+}
+    </script>
+<h2>read</h2>
+<button onclick="readdb()">Load</button>
+<script>
+function readdb() {
+    let transaction = db.transaction(["cloudcoin"]);
+        let objectStore = transaction.objectStore("cloudcoin");
+        let request = objectStore.get("cctest0json");
+        request.onsuccess = function(event) {
+      if(request.result) {
+        alert(request.result.nn) ;
+         alert(request.result.sn);
+        alert(request.result.an);
+        alert(request.result.ed);
+        alert(request.result.aoid);
+        alert(request.result.pown);
+}}}
+    </script>
+
 </body>
 </html>
