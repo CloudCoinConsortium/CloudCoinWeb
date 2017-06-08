@@ -95,6 +95,7 @@ class RAIDA
 
         //Promise.all(promises).then(function(){})
         //get data from the detection agents
+        return promises;
     }
 
 
