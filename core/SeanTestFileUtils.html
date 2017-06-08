@@ -1,0 +1,56 @@
+<html>
+<head>
+
+    <script src="random.min.js"></script>
+    <script src="CloudCoin.js"></script>
+    <script src="StringHolder.js"></script>
+    <script src="FileUtils.js"></script>
+    <script src="FileSaver.js"></script>
+    <script src="DetectionAgent.js"></script>
+    <script src="RAIDA_Status.js"></script>
+    <script src="RaidaResponse.js"></script>
+    <script type="text/javascript">
+
+           
+         </script>
+
+</head>
+<body>
+
+
+
+
+
+<h2>Sean Test</h2>
+<button onclick="seanTest1()">Save coin and read it</button>
+<script>
+function seanTest1(){
+ let newCoin = seanTest();
+ alert("New coin's sn is " + newCoin.sn);
+
+}//end test 1
+
+function seanTest() {
+    //Store coin as comma seperated values
+    localStorage.setItem("seancoin","1,16777215, 470603102f95f581689cf0fe13951cce, 470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce");
+    
+    //Read coin 
+    let rawString = localStorage.getItem("seancoin");
+    //Slit on comma
+    let arrayString = rawString.split(",");
+    let nn = arrayString[0];
+    let sn = arrayString[1];
+    let ans = [ arrayString[2], arrayString[3], arrayString[4], arrayString[5], arrayString[6], arrayString[7], arrayString[8], arrayString[9], arrayString[10], arrayString[11], arrayString[12], arrayString[13], arrayString[14], arrayString[15], arrayString[16], arrayString[17], arrayString[18], arrayString[19], arrayString[20], arrayString[21], arrayString[22], arrayString[23], arrayString[24], arrayString[25], arrayString[26]  ];
+    //Make coin from string parts
+    let myCoin = new CloudCoin(nn, sn, ans, 4, "", "uuuuuuuuuuuuuuuuuuuuuuuuu" );
+    return myCoin
+
+    
+}
+    </script>
+
+
+
+
+</body>
+</html>

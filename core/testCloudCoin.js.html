@@ -3,7 +3,7 @@
 
     <script src="random.min.js"></script>
     <script src="CloudCoin.js"></script>
-    <script src="StringHolder.js"></script>
+    <!--<script src="StringHolder.js"></script>-->
 
 </head>
 <body>
@@ -13,6 +13,7 @@
 
 <script>
 function makeTestCoin(){
+
 let testaoid = ["owner=470603102f95f581689cf0fe13951cce", "account=yes"];
     let testans = ["470603102f95f581689cf0fe13951cce", "470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce"];
    let testCoin = new CloudCoin(1, 16777216, testans, "2012-03-19:07:22", testaoid );
@@ -227,7 +228,7 @@ function testconsoleReport(){
     //╔
   let testCoin = makeTestCoin();
   testCoin.pown = "pufpufpufpupfpupfpupfpufp";
-  let testString = new StringHolder();
+  //let testString = new StringHolder();
   testCoin.consoleReport();
 }
 </script>

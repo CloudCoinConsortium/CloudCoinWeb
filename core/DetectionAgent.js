@@ -10,7 +10,7 @@ class DetectionAgent
          * @param RAIDANumber The number of the RAIDA server 0-24
          */
 
-    constructor (RAIDANumber, readTimeout)
+    constructor (RAIDANumber = 0, readTimeout = 2000)
     {
         this.RAIDANumber = RAIDANumber;
         this.fullUrl = "https://RAIDA" + RAIDANumber + ".cloudcoin.global/service/";
@@ -22,41 +22,60 @@ class DetectionAgent
         * Method doECHO
         * @param raidaID The number of the RAIDA server 0-24
         */
-    echo(raidaID = this.RAIDANumber) 
+    echo() 
     {
+        let raidaID = this.RAIDANumber;
         let rStatus = this.RAIDAStatus;
-        var echoResponce = new RaidaResponse();
-        echoResponce.fullRequest = this.fullUrl + "echo?b=t";
+        var echoResponse = new RaidaResponse();
+        echoResponse.fullRequest = this.fullUrl + "echo?b=t";
         let before = (new Date()).getTime();
-        fetch(echoResponce.fullRequest)
+        return fetch(echoResponse.fullRequest)
         .then(
             function(response) {
                 //alert("!");
                 response.json().then(function(data){
-                    echoResponce.fullResponse = JSON.stringify(data);
-                    if(data.status === "ready") {echoResponce.success = true;
-                        echoResponce.outcome = "ready";
+                    echoResponse.fullResponse = JSON.stringify(data);
+                    //alert(echoResponce.fullResponse);
+                    if(data.status === "ready") 
+                    {
+                        echoResponse.success = true;
+                        echoResponse.outcome = "ready";
+                        let ts = (new Date()).getTime() - before;
+        echoResponse.milliseconds = ts;
+        rStatus.echoTime[raidaID] = ts;
+                        //callback(echoResponce, raidaID);
+                        
+                        return echoResponse;
                     }else {
-                        echoResponce.success = false;
-                        echoResponce.outcome = "error";
+                        echoResponse.success = false;
+                        echoResponse.outcome = "error";
                         rStatus.failsEcho[raidaID] = true;
+                        let ts = (new Date()).getTime() - before;
+        echoResponse.milliseconds = ts;
+        rStatus.echoTime[raidaID] = ts;
+                        //callback(echoResponce, raidaID);
+                        return echoResponse;                        
+                        
                     }
                 });
             }
         )
         .catch(function(error)
         {
-            echoResponce.outcome = "error";
-            echoResponce.success = false;
+            echoResponse.outcome = "error";
+            echoResponse.success = false;
             rStatus.failsEcho[raidaID] = true;
-            echoResponce.fullResponse = error;
+            echoResponse.fullResponse = error;
+            let ts = (new Date()).getTime() - before;
+        echoResponse.milliseconds = ts;
+        rStatus.echoTime[raidaID] = ts;
+                        //callback(echoResponce, raidaID);
+                        return echoResponse;
         });
         //catch
-        let ts = (new Date()).getTime() - before;
-        echoResponce.milliseconds = ts;
-        rStatus.echoTime[raidaID] = ts;
         
-        return echoResponce;
+        
+        //return echoResponce;
 
     }// end echo
 

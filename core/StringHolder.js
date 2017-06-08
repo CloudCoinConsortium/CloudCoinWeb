@@ -1,4 +1,4 @@
-class StringHolder
+export default class StringHolder
 {
     constructor()
     {

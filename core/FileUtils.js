@@ -25,13 +25,16 @@ class FileUtils
     loadOneCloudCoinFromJsonFile(loadFilePath)
     {
         //load file as json
-        //let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));//adjust this later for webstorage
+        let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));//adjust this later for webstorage
+        //indexdb code that we might not use
+        /*
         let transaction = db.transaction(["cloudcoin"]);
         let objectStore = transaction.objectStore("cloudcoin");
         let request = objectStore.get(loadFilePath);
         request.onsuccess = function(event) {
             console.log("success");
         let incomeJson = request.result;
+        */
         let nn = incomeJson.nn;
         
         let sn = incomeJson.sn;
@@ -40,10 +43,11 @@ class FileUtils
         let aoid = incomeJson.aoid;
         let pown = incomeJson.pown;
         var returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
-        document.getElementById("output").innerHTML = returnCC.nn + " " + returnCC.sn;
+        //document.getElementById("output").innerHTML = returnCC.nn + " " + returnCC.sn;
         return returnCC;
           
-    } }
+        //} //end on success
+    }
     
         //if fracked goes here
 
@@ -102,7 +106,8 @@ class FileUtils
         return rr;
         
           
-    }}
+        }
+    }
 
     fixOneCloudCoinFromJsonFile(loadFilePath) //wip
 
@@ -131,9 +136,7 @@ class FileUtils
         return rr;
         
           
-    }
-
-        
+        } //end on success
 
     }
 
@@ -166,11 +169,11 @@ class FileUtils
             ed: cc.ed,
             aoid: cc.aoid,
             pown: cc.pown,
-            filename: saveFilePath
+            //filename: saveFilePath
         }
         let file = JSON.stringify(coin);
         /* indexed Database */
-        
+        /*
          let request = db.transaction(["cloudcoin"], "readwrite")
          .objectStore("cloudcoin")
          .add(coin);
@@ -182,7 +185,7 @@ class FileUtils
                alert("Unable to add test coin is aready exist in your database! ");
             };
 
-
+            */
         //let fileBlob = new Blob([file], {type: "test/plain"});
         //saveAs(fileBlob, "cloudcointest.txt");
         localStorage.setItem(saveFilePath, file);

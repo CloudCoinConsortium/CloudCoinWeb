@@ -3,12 +3,13 @@
 
     <script src="random.min.js"></script>
     <script src="CloudCoin.js"></script>
-    <script src="StringHolder.js"></script>
+    
     <script src="FileUtils.js"></script>
-    <script src="FileSaver.js"></script>
+    <!-- <script src="FileSaver.js"></script> -->
     <script src="DetectionAgent.js"></script>
     <script src="RAIDA_Status.js"></script>
     <script src="RaidaResponse.js"></script>
+    <!--
     <script type="text/javascript">
     //prefixes of implementation that we want to test
          window.indexedDB = window.indexedDB || window.mozIndexedDB || window.webkitIndexedDB || window.msIndexedDB;
@@ -42,7 +43,7 @@
          
         
          </script>
-
+-->
 </head>
 <body>
 <h1>Test FileUtils.js</h1>
@@ -89,7 +90,7 @@ function alertSaved() {
 function saveNewCoin() {
     var fileU = new FileUtils();
     let newCoin = new CloudCoin();
-    fileU.saveCloudCoinToJsonFile(newCoin, "cctest0json");
+    fileU.saveCloudCoinToJsonFile(newCoin, "cctestjson");
 }
     </script>
 
@@ -98,11 +99,12 @@ function saveNewCoin() {
 <script>
 function loadCoin() {
     var fileU = new FileUtils();
-    testCoin = fileU.loadOneCloudCoinFromJsonFile("cctest0json");
+    testCoin = fileU.loadOneCloudCoinFromJsonFile("cctestjson");
     
     
 }
     </script>
+<!--
 <h2>delete</h2>
 <button onclick="deletedb()">Load</button>
 <script>
@@ -138,5 +140,6 @@ function detectCoin() {
     
 }
     </script>
+    -->
 </body>
 </html>

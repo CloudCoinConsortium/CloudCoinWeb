@@ -362,12 +362,12 @@ class CloudCoin
         consoleReport()
         {
             
-            //import StringHolder from "StringHolder";
-            let report = new StringHolder();
+            //import StringHolder from "StringHolder.js";
+            //const report = new StringHolder();
             console.log("");
             
             console.log("╔══════════════════════════════════════════════════════╗");
-            console.log( report.cloudcoin_report +  this.sn + report.cloudcoin_denomination + this.getDenomination() + " ║");
+            console.log( "║  Authenticity Report SN #" +  this.sn + ", Denomination: " + this.getDenomination() + " ║");
             console.log("╠══════════╦══════════╦══════════╦══════════╦══════════╣");
             console.log("║    " + this.a(this.getPastStatus(0)) +"     ║    " + this.a(this.getPastStatus(1)) + "     ║    " + this.a(this.getPastStatus(2)) + "     ║    " + this.a(this.getPastStatus(3)) + "     ║    " + this.a(this.getPastStatus(4)) + "     ║");
             console.log("╠══════════╬══════════╬══════════╬══════════╬══════════╣");

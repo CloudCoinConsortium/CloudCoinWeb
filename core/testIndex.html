@@ -1,0 +1,67 @@
+<html>
+    <head>
+    <script src="DetectionAgent.js"></script>
+    <script src="RAIDA_Status.js"></script>
+    <script src="RaidaResponse.js"></script>
+    <script src="random.min.js"></script>
+    <script src="CloudCoin.js"></script>
+    <script src="FileUtils.js"></script>
+    <script src="testMain.js"></script>
+    <script src="RAIDA.js"></script>
+
+    </head>
+    <body>
+    <h1>Welcome to CloudCoin</h1>
+    <h2>Raida Status</h2>
+    <table>
+        <tr>
+            <th>Raida</th>
+            <td>0<td><td>1<td><td>2<td><td>3<td><td>4<td><td>5<td><td>6<td><td>7<td>
+            <td>8<td><td>9<td><td>10<td><td>11<td><td>12<td><td>13<td><td>14<td>
+            <td>15<td><td>16<td><td>17<td><td>18<td><td>19<td><td>20<td><td>21<td>
+            <td>22<td><td>23<td><td>24</td>
+        </tr>
+        <tr>
+            <th>Status</th>
+            <td id="r_0"><td><td id="r_1"><td><td id="r_2"><td><td id="r_3"><td>
+            <td id="r_4"><td><td id="r_5"><td><td id="r_6"><td><td id="r_7"><td>
+            <td id="r_8"><td><td id="r_9"><td><td id="r_10"><td><td id="r_11"><td>
+            <td id="r_12"><td><td id="r_13"><td><td id="r_14"><td><td id="r_15"><td>
+            <td id="r_16"><td><td id="r_17"><td><td id="r_18"><td><td id="r_19"><td>
+            <td id="r_20"><td><td id="r_21"><td><td id="r_22"><td><td id="r_23"><td>
+            <td id="r_24"></td>
+        </tr>
+        <tr>
+            <th>Ping</th>
+            <td id="p_0"><td><td id="p_1"><td><td id="p_2"><td><td id="p_3"><td>
+            <td id="p_4"><td><td id="p_5"><td><td id="p_6"><td><td id="p_7"><td>
+            <td id="p_8"><td><td id="p_9"><td><td id="p_10"><td><td id="p_11"><td>
+            <td id="p_12"><td><td id="p_13"><td><td id="p_14"><td><td id="p_15"><td>
+            <td id="p_16"><td><td id="p_17"><td><td id="p_18"><td><td id="p_19"><td>
+            <td id="p_20"><td><td id="p_21"><td><td id="p_22"><td><td id="p_23"><td>
+            <td id="p_24"></td>
+        </tr>
+    </table>
+    <script>
+    
+    let raida = new RAIDA(2000);
+    raida.echoAll();
+    
+    
+    for(let i = 0; i < 25; i++)
+    {
+        
+        populate(raida.responseArray[i], i);
+    }    
+    
+    
+    </script>
+
+
+    </body>
+    
+    
+    
+    
+    
+</html>
