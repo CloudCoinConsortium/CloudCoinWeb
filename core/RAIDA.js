@@ -5,8 +5,8 @@ class RAIDA
         this.agent = [];
         this.responseArray = [];
         for(let i = 0; i < 25; i++){
-            this.agent[i] = new DetectionAgent(i, milliSecondsToTimeOut);
-            this.responseArray[i] = new RaidaResponse();
+            this.agent.push( new DetectionAgent(i, milliSecondsToTimeOut));
+            this.responseArray.push( new RaidaResponse());
         }
         this.returnCoin = new CloudCoin;
         this.working_triad = [0, 1, 2];
@@ -28,41 +28,74 @@ class RAIDA
     echoOne(raida_id)
     {
         
-        this.agent[raida_id].echo()
-        .then((echoResponse)=>{this.responseArray[raida_id] = echoResponse});
-        
+        return this.agent[raida_id].echo(this.setResponse, this);
+        //alert(this.responseArray[raida_id].outcome);
     }
 
     echoAll()
     {
-        this.echoOne(0);
-        this.echoOne(1);
-        this.echoOne(2);
-        this.echoOne(3);
-        this.echoOne(4);
-        this.echoOne(5);
-        this.echoOne(6);
-        this.echoOne(7);
-        this.echoOne(8);
-        this.echoOne(9);
-        this.echoOne(10);
-        this.echoOne(11);
-        this.echoOne(12);
-        this.echoOne(13);
-        this.echoOne(14);
-        this.echoOne(15);
-        this.echoOne(16);
-        this.echoOne(17);
-        this.echoOne(18);
-        this.echoOne(19);
-        this.echoOne(20);
-        this.echoOne(21);
-        this.echoOne(22);
-        this.echoOne(23);
-        this.echoOne(24);
+        
+        let promises = [];
+        for(let i = 0; i <25; i++)
+        {
+            promises.push(this.echoOne(i));
+        }
+        return promises;
+        
+    }
+
+    setResponse(resp, id)
+    {
+        //alert(resp.outcome);
+        this.responseArray[id] = resp;
         
     }
     
+    detectOne(raida_id, nn, sn, an, pan, d)
+    {
+        
+        return this.agent[raida_id].detect(nn, sn, an, pan, d, this.setResponse, this);
+    }
+
+    detectCoin(cc)
+    {
+        let returnCoin = cc;
+        let promises = [];
+        for(let i = 0; i < 25; i++)
+        {
+            promises.push(this.detectOne(i, cc.nn, cc.ans[i], cc.pans[i], cc.getDenomination()));
+        }
+        Promise.all(promises).then(function(){
+            for(let j = 0; j < 25; j++)
+            {
+                if(this.responseArray[i] != null)
+                {returnCoin.setPastStatus(responseArray[i].outcome, i)}
+                else{returnCoin.setPastStatus("undetected", i)}
+            }
+            returnCoin.setAnsToPansIfPassed();
+            returnCoin.calculateHP();
+            returnCoin.reportDetectionResults();
+            returnCoin.calcExpirationDate();
+            
+            return returnCoin;
+        });
+    }
+
+    get_Ticket(raidaID, nn, sn, an, d)
+    {
+        return this.agent[raidaID].get_ticket(nn, sn, an, d, this.setResponse, this);
+    }
+
+    get_Tickets(triad, ans, nn, sn, denomination)
+    {
+        let promises = [];
+        promises.push(get_Ticket(triad[0], nn, sn, ans[0], denomination));
+        promises.push(get_Ticket(triad[1], nn, sn, ans[1], denomination));
+        promises.push(get_Ticket(triad[2], nn, sn, ans[2], denomination));
+
+        //Promise.all(promises).then(function(){})
+        //get data from the detection agents
+    }
 
 
 }

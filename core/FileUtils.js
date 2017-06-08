@@ -52,6 +52,9 @@ class FileUtils
         //if fracked goes here
 
         //testing
+        
+        /*
+        //this code might not be needed, not sure yet
         detectOneCloudCoinFromJsonFile(loadFilePath)
     {
         //load file as json
@@ -139,6 +142,7 @@ class FileUtils
         } //end on success
 
     }
+    */
 
     loadManyCloudCoinFromJsonFile(loadFilePath)
     {

@@ -45,7 +45,8 @@
     <script>
     
     let raida = new RAIDA(2000);
-    raida.echoAll();
+    Promise.all(raida.echoAll()).then(function(){
+    
     
     
     for(let i = 0; i < 25; i++)
@@ -53,7 +54,7 @@
         
         populate(raida.responseArray[i], i);
     }    
-    
+    });
     
     </script>
 
