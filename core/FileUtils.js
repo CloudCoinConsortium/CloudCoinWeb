@@ -44,6 +44,7 @@ class FileUtils
         let pown = incomeJson.pown;
         var returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
         //document.getElementById("output").innerHTML = returnCC.nn + " " + returnCC.sn;
+        if(pown.includes("f") && !this.frackedFolder.includes(loadFilePath)){this.frackedFolder += loadFilePath + ",";}
         return returnCC;
           
         //} //end on success

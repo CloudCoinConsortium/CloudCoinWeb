@@ -22,13 +22,13 @@ class RAIDA
         "noreply", "noreply", "noreply", "noreply", "noreply", "noreply", "noreply", "noreply", 
         "noreply", "noreply", "noreply", "noreply", "noreply", "noreply", "noreply", "noreply", 
         "noreply", "noreply", "noreply"];
-        
+        this.RAIDAStatus = new RAIDA_Status();
     }
 
     echoOne(raida_id)
     {
         
-        return this.agent[raida_id].echo(this.setResponse, this);
+        return this.agent[raida_id].echo(this.setResponseEcho, this);
         //alert(this.responseArray[raida_id].outcome);
     }
 
@@ -44,17 +44,11 @@ class RAIDA
         
     }
 
-    setResponse(resp, id)
-    {
-        //alert(resp.outcome);
-        this.responseArray[id] = resp;
-        
-    }
     
     detectOne(raida_id, nn, sn, an, pan, d)
     {
         
-        return this.agent[raida_id].detect(nn, sn, an, pan, d, this.setResponse, this);
+        return this.agent[raida_id].detect(nn, sn, an, pan, d, this.setResponseDetect, this);
     }
 
     detectCoin(cc)
@@ -83,7 +77,7 @@ class RAIDA
 
     get_Ticket(raidaID, nn, sn, an, d)
     {
-        return this.agent[raidaID].get_ticket(nn, sn, an, d, this.setResponse, this);
+        return this.agent[raidaID].get_ticket(nn, sn, an, d, this.setResponseTicket, this);
     }
 
     get_Tickets(triad, ans, nn, sn, denomination)
@@ -96,6 +90,38 @@ class RAIDA
         //Promise.all(promises).then(function(){})
         //get data from the detection agents
         return promises;
+    }
+
+    setResponseEcho(resp, id)
+    {
+        //alert(resp.outcome);
+        if(!resp.success) {this.RAIDAStatus.failsEcho[id] = true;}
+        this.RAIDAStatus.echoTime[id] = resp.milliseconds;
+        this.responseArray[id] = resp;
+        
+    }
+
+    setResponseDetect(resp, id)
+    {
+        //alert(resp.outcome);
+        if(!resp.success) {this.RAIDAStatus.failsDetect[id] = true;}
+        this.responseArray[id] = resp;
+        
+    }
+    
+    setResponseTicket(resp, id)
+    {
+        //alert(resp.outcome);
+        if(resp.success) {
+            this.RAIDAStatus.hasTicket[id] = true;
+            this.RAIDAStatus.ticketHistory[id] = this.RAIDAStatus.TicketHistoryEn.Success;
+            this.RAIDAStatus.tickets[id] = resp.message;
+        } else {
+            this.RAIDAStatus.hasTicket[id] = false;
+            this.RAIDAStatus.ticketHistory[id] = this.RAIDAStatus.TicketHistoryEn.Failed;
+        }
+        this.responseArray[id] = resp;
+        
     }
 
 

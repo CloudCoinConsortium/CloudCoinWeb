@@ -1,6 +1,6 @@
 class CloudCoin
 {
-    constructor(nn = 0, sn = 0, ans = 0, ed = "", aoid = [], pown = "uuuuuuuuuuuuuuuuuuuuuuuuu") //default value if left blank
+    constructor(nn = 1, sn = 0, ans = 0, ed = "", aoid = [], pown = "uuuuuuuuuuuuuuuuuuuuuuuuu") //default value if left blank
     {
         this.nn = nn;
         this.sn = sn;

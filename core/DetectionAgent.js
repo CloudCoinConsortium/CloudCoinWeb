@@ -15,7 +15,7 @@ class DetectionAgent
         this.RAIDANumber = RAIDANumber;
         this.fullUrl = "https://RAIDA" + RAIDANumber + ".cloudcoin.global/service/";
         this.readTimeout = readTimeout;
-        this.RAIDAStatus = new RAIDA_Status();
+        
     }//Detection Agent Constructor
 
      /**
@@ -26,7 +26,7 @@ class DetectionAgent
     echo(callback, obj) 
     {
         let raidaID = this.RAIDANumber;
-        let rStatus = this.RAIDAStatus;
+        //let rStatus = this.RAIDAStatus;
         var echoResponse = new RaidaResponse();
         echoResponse.fullRequest = this.fullUrl + "echo?b=t";
         let before = (new Date()).getTime();
@@ -45,7 +45,7 @@ class DetectionAgent
                         echoResponse.outcome = "ready";
                         let ts = (new Date()).getTime() - before;
                         echoResponse.milliseconds = ts;
-                        rStatus.echoTime[raidaID] = ts;
+                        //rStatus.echoTime[raidaID] = ts;
                         //alert(echoResponse.outcome);
                         
                         
@@ -53,10 +53,10 @@ class DetectionAgent
                     }else {
                         echoResponse.success = false;
                         echoResponse.outcome = "error";
-                        rStatus.failsEcho[raidaID] = true;
+                        //rStatus.failsEcho[raidaID] = true;
                         let ts = (new Date()).getTime() - before;
                         echoResponse.milliseconds = ts;
-                        rStatus.echoTime[raidaID] = ts;
+                        //rStatus.echoTime[raidaID] = ts;
                         //callback.apply(obj,[echoResponse, raidaID]);
                         //return echoResponse;                        
                         
@@ -69,11 +69,11 @@ class DetectionAgent
         {
             echoResponse.outcome = "error";
             echoResponse.success = false;
-            rStatus.failsEcho[raidaID] = true;
+            //rStatus.failsEcho[raidaID] = true;
             echoResponse.fullResponse = error;
             let ts = (new Date()).getTime() - before;
         echoResponse.milliseconds = ts;
-        rStatus.echoTime[raidaID] = ts;
+        //rStatus.echoTime[raidaID] = ts;
                         //callback(echoResponce, raidaID);
                         callback.apply(obj,[echoResponse, raidaID]);
         });
@@ -96,7 +96,7 @@ class DetectionAgent
          */
     detect(nn, sn, an, pan, d, callback, obj)
     {
-        let rStatus = this.RAIDAStatus;
+        //let rStatus = this.RAIDAStatus;
         var detectResponse = new RaidaResponse();
         let raidaID = this.RAIDANumber;
         detectResponse.fullRequest = this.fullUrl + "detect?nn=" + nn + "&sn=" + sn + "&an=" + an + "&pan=" + pan + "&denomination=" +d + "&b=t"
@@ -121,12 +121,12 @@ class DetectionAgent
                 
                 detectResponse.outcome = "fail";
                 detectResponse.success = false;
-                rStatus.failsDetect[raidaID] = true;
+                //rStatus.failsDetect[raidaID] = true;
                 
             } else {
                 detectResponse.outcome = "error";
                 detectResponse.success = false;
-                rStatus.failsDetect[raidaID] = true;
+                //rStatus.failsDetect[raidaID] = true;
                 
             }//end if
             callback.apply(obj,[detectResponse, raidaID]);
@@ -155,7 +155,7 @@ class DetectionAgent
     get_ticket(nn, sn, an , d, callback, obj)
     {
         let raidaID = this.RAIDANumber;
-        let rStatus = this.RAIDAStatus;
+        //let rStatus = this.RAIDAStatus;
         var get_ticketResponse = new RaidaResponse();
         get_ticketResponse.fullRequest = this.fullUrl + "get_ticket?nn=" + nn + "&sn=" + sn + "&an=" + an + "&pan=" + an + "&denomination=" + d;
         let before = (new Date()).getTime();
@@ -173,13 +173,11 @@ class DetectionAgent
             {
                 get_ticketResponse.outcome = data.message;
                 get_ticketResponse.success = true;
-                rStatus.hasTicket[raidaID] = true;
-                rStatus.ticketHistory[raidaID] = rStatus.TicketHistoryEn.Success;
-                rStatus.tickets[raidaID] = data.message;
+                
             } else {
                 get_ticketResponse.success = false;
-                rStatus.hasTicket[raidaID] = false;
-                rStatus.ticketHistory[raidaID] = rStatus.TicketHistoryEn.Failed;
+                //rStatus.hasTicket[raidaID] = false;
+                //rStatus.ticketHistory[raidaID] = rStatus.TicketHistoryEn.Failed;
             }//end if
             callback.apply(obj,[get_ticketResponse, raidaID]);
             });
@@ -188,8 +186,7 @@ class DetectionAgent
             get_ticketResponse.outcome = "error";
             get_ticketResponse.fullResponse = error;
             get_ticketResponse.success = false;
-            rStatus.hasTicket[raidaID] = false;
-            rStatus.ticketHistory[raidaID] = rStatus.TicketHistoryEn.Failed;
+            
             callback.apply(obj, [get_ticketResponse, raidaID]);
         });//end catch
         //return get_ticketResponse;
@@ -206,7 +203,7 @@ class DetectionAgent
          * @return string status sent back from the server: sucess, fail or error. 
          */
 
-        fix(triad, m1, m2, m3, pan, callback) 
+        fix(triad, m1, m2, m3, pan, callback, obj) 
         {
             
             var fixResponse= new RaidaResponse();
@@ -230,14 +227,14 @@ class DetectionAgent
                 fixResponse.outcome = "fail";
                 fixResponse.success = false;
             }//end if
-            callback(fixResponse);
+            callback.apply(obj, [fixResponse]);
         });
             })
         .catch(function(error){
             fixResponse.outcome = "error";
             fixResponse.fullResponse = error;
             fixResponse.success = false;
-            callback(fixResponse);
+            callback.apply(obj,[fixResponse]);
         });
         //return fixResponse;
         }
