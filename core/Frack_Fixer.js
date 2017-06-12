@@ -154,6 +154,7 @@ class Frack_Fixer
         brokeCoin.calculateHP();
         brokeCoin.reportDetectionResults();
         brokeCoin.calcExpirationDate();
+        this.fileUtil.saveCloudCoinToJsonFile(brokeCoin, brokeCoin.sn);
         return brokeCoin;
     }
 }

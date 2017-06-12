@@ -58,6 +58,9 @@ document.getElementById("output").innerHTML = testCoin.nn + " " + testCoin.sn;
     </script>
 
 <script>
+    localStorage.removeItem("cctestjson");
+    localStorage.removeItem("seancoin");
+    localStorage.removeItem("cctest0json");
 var testCoin;
 let testaoid = ["owner=470603102f95f581689cf0fe13951cce", "account=yes"];
     let testans = ["470603102f95f581689cf0fe13951cce", "470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce","470603102f95f581689cf0fe13951cce"];
@@ -72,7 +75,7 @@ let testaoid = ["owner=470603102f95f581689cf0fe13951cce", "account=yes"];
 <script>
 function saveCoin() {
     var fileU = new FileUtils();
-    fileU.saveCloudCoinToJsonFile(testCoin, "cctestjson");
+    fileU.saveCloudCoinToJsonFile(testCoin, testCoin.sn);
 }
     </script>
 
@@ -80,7 +83,7 @@ function saveCoin() {
 <button onclick="alertSaved()">Test</button>
 <script>
 function alertSaved() {
-    alert(localStorage.getItem("cctestjson"));
+    alert(localStorage.getItem("seancoin"));
 }
     </script>
 
@@ -90,7 +93,15 @@ function alertSaved() {
 function saveNewCoin() {
     var fileU = new FileUtils();
     let newCoin = new CloudCoin();
-    fileU.saveCloudCoinToJsonFile(newCoin, "cctestjson");
+    let rawString = "1,16777215,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce,470603102f95f581689cf0fe13951cce";
+    let arrayString = rawString.split(",");
+    let nn = arrayString[0];
+    let sn = arrayString[1];
+    let ans = [ arrayString[2], arrayString[3], arrayString[4], arrayString[5], arrayString[6], arrayString[7], arrayString[8], arrayString[9], arrayString[10], arrayString[11], arrayString[12], arrayString[13], arrayString[14], arrayString[15], arrayString[16], arrayString[17], arrayString[18], arrayString[19], arrayString[20], arrayString[21], arrayString[22], arrayString[23], arrayString[24], arrayString[25], arrayString[26]  ];
+    //Make coin from string parts
+    let myCoin = new CloudCoin(nn, sn, ans, 4, "", "uuuuuuuuuuuuuuuuuuuuuuuuu" );
+    fileU.saveCloudCoinToJsonFile(newCoin, "0");
+    fileU.saveCloudCoinToJsonFile(myCoin, myCoin.sn);
 }
     </script>
 
@@ -99,7 +110,7 @@ function saveNewCoin() {
 <script>
 function loadCoin() {
     var fileU = new FileUtils();
-    testCoin = fileU.loadOneCloudCoinFromJsonFile("cctestjson");
+    testCoin = fileU.loadOneCloudCoinFromJsonFile("cctest0json");
     
     
 }

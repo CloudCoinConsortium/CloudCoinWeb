@@ -168,6 +168,8 @@ class FileUtils
 
     saveCloudCoinToJsonFile(cc, saveFilePath)
     {
+        //if(localStorage.getItem(saveFilePath) === null)
+        //{
         let coin = {
             nn: cc.nn,
             sn: cc.sn,
@@ -195,6 +197,7 @@ class FileUtils
         //let fileBlob = new Blob([file], {type: "test/plain"});
         //saveAs(fileBlob, "cloudcointest.txt");
         localStorage.setItem(saveFilePath, file);
+        //} else {console.log("coin already in local storage");}
 
     }
 

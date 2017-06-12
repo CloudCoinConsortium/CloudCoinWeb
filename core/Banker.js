@@ -13,25 +13,25 @@ class Banker
         let returnCounts = [0, 0, 0, 0, 0, 0];
         for(let i = 0; i < coins.length; i ++)
         {
-            switch(coins.getDenomination())
+            switch(coins[i].getDenomination())
             {
-                    case "1":
+                    case 1:
                         returnCounts[0]++;
                         returnCounts[1]++;
                         break;
-                    case "5":
+                    case 5:
                         returnCounts[0] += 5;
                         returnCounts[2]++;
                         break;
-                    case "25":
+                    case 25:
                         returnCounts[0] += 25;
                         returnCounts[3]++;
                         break;
-                    case "100":
+                    case 100:
                         returnCounts[0] += 100;
                         returnCounts[4]++;
                         break;
-                    case "250":
+                    case 250:
                         returnCounts[0] += 250;
                         returnCounts[5]++;
                         break;

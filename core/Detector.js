@@ -41,6 +41,7 @@ class Detector
                     
                     break;
             }//end switch
+            this.fileUtil.saveCloudCoinToJsonFile(coins[i], coins[i].sn);
         }
         results[0] = totalValueToBank;
             results[1] = totalValueToCounterfeit;
