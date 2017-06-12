@@ -44,7 +44,8 @@ class FileUtils
         let pown = incomeJson.pown;
         var returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
         //document.getElementById("output").innerHTML = returnCC.nn + " " + returnCC.sn;
-        if(pown.includes("f") && !this.frackedFolder.includes(loadFilePath)){this.frackedFolder += loadFilePath + ",";}
+        //if(pown.includes("f") && !this.frackedFolder.includes(loadFilePath)){this.frackedFolder += loadFilePath + ",";}
+
         return returnCC;
           
         //} //end on success
@@ -256,5 +257,19 @@ class FileUtils
             bytes[i/2] = bytes[i/2].substring((bytes[i/2].length - 8) ,bytes[i/2].length)
         }
         return bytes;
+    }
+
+    writeTo(folder, filename)
+    {
+        if(!folder.includes(filename))
+        {
+            folder += filename = ",";
+        }
+    }//End Write To
+
+    overWrite(folder, filename)
+    {
+        this.frackedFolder.replace(filename + ",", "");
+        this.writeTo(folder, filename);
     }
 }
