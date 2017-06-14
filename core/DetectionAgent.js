@@ -30,11 +30,12 @@ class DetectionAgent
         var echoResponse = new RaidaResponse();
         echoResponse.fullRequest = this.fullUrl + "echo?b=t";
         let before = (new Date()).getTime();
-        return fetch(echoResponse.fullRequest)
+        return Promise.race([
+        fetch(echoResponse.fullRequest)
         .then(
             function(response) {
                 
-                response.text()
+                return response.text()
                 .then(function(data){
                     
                     
@@ -61,10 +62,14 @@ class DetectionAgent
                         //return echoResponse;                        
                         
                     }//end if
+                    
                     callback.apply(obj,[echoResponse, raidaID]);
-                });
+                    
+                    return echoResponse;
+                    
             }
         )
+            })
         .catch(function(error)
         {
             echoResponse.outcome = "error";
@@ -76,10 +81,16 @@ class DetectionAgent
         //rStatus.echoTime[raidaID] = ts;
                         //callback(echoResponce, raidaID);
                         callback.apply(obj,[echoResponse, raidaID]);
-        });
-        //catch
-        
-        
+                        return echoResponse;
+        }),
+        new Promise((resolve, reject) =>setTimeout(()=> {
+            echoResponse.success = false;
+                        echoResponse.outcome = "error";
+                        echoResponse.milliseconds = "timeout";
+                        callback.apply(obj,[echoResponse, raidaID]);
+                        resolve();
+            }, this.readTimeout))
+        ])
         //return echoResponce; 
 
     }// end echo
@@ -101,22 +112,23 @@ class DetectionAgent
         let raidaID = this.RAIDANumber;
         detectResponse.fullRequest = this.fullUrl + "detect?nn=" + nn + "&sn=" + sn + "&an=" + an + "&pan=" + pan + "&denomination=" +d + "&b=t"
         let before = (new Date()).getTime();
-        return fetch(detectResponse.fullRequest)
+        return Promise.race([
+        fetch(detectResponse.fullRequest)
          .then(
             function(response) {
                 //alert("!");
-                response.json().then(function(data){
-            detectResponse.fullResponse = JSON.stringify(data);
+                return response.text().then(function(data){
+            //detectResponse.fullResponse = JSON.stringify(data);
             let ts = (new Date()).getTime() - before;
             detectResponse.milliseconds = ts;
 
-            if(data.status === "pass") 
+            if(data.includes( "pass")) 
             {
                 detectResponse.outcome = "pass";
                 detectResponse.success = true;
                 
                 
-            } else if(data.status === "fail" && detectResponse.fullResponse.length < 200)
+            } else if(data.includes("fail") && data.length < 200)
             {
                 
                 detectResponse.outcome = "fail";
@@ -130,15 +142,28 @@ class DetectionAgent
                 
             }//end if
             callback.apply(obj,[detectResponse, raidaID]);
+            return detectResponse.outcome;
+            //alert(detectResponse.outcome);
+            
         });
+        
         })
         .catch(function(error){
             detectResponse.outcome = "error";
             detectResponse.fullResponse = error;
             detectResponse.success = false;
             callback.apply(obj,[detectResponse, raidaID]);
+            return detectResponse.outcome;
             
-        });
+        }),
+        new Promise((resolve, reject) =>setTimeout(()=> {
+            detectResponse.success = false;
+                        detectResponse.outcome = "error";
+                        //echoResponse.milliseconds = "timeout";
+                        callback.apply(obj,[detectResponse, raidaID]);
+                        resolve();
+            }, this.readTimeout))
+        ])
         //return detectResponse;
     }//end detect
 

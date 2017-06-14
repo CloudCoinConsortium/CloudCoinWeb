@@ -48,8 +48,18 @@
             <td id="p_24"></td>
         </tr>
     </table>
-    <div> <h2>Your Coins</h2>
-        <ul id="coinlist">
+    <div> <h2>Your Coins</h2><button onclick="showFolder()">Folder</button>
+        <h3>Bank</h3>
+        <ul id="coinlistbank">
+        </ul>
+        <h3>Counterfeit</h3>
+        <ul id="coinlistcounterfeit">
+        </ul>
+        <h3>Fracked</h3>
+        <ul id="coinlistfracked">
+        </ul>
+        <h3>Suspect</h3>
+        <ul id="coinlistsuspect">
         </ul>
         <p id="cointotal"></p>
     </div>
@@ -57,21 +67,25 @@
     
     let raida = new RAIDA(3000);
     let files = new FileUtils();
-    Promise.all(raida.echoAll()).then(function(){
+    let echo = raida.echoAll()
     
     
     
     for(let i = 0; i < 25; i++)
     {
-        
+        echo[i].then(function(rr){
+            //alert(rr.success)
         populate(raida.responseArray[i], i);
-    }    
-    });
-    let importer = new Importer(files);
-    let coins = importer.importAll();
+        
+});
+    }
+    //let detect = new Detector(files, 3000);
+    //detect.detectAll();
+    let importer = new Importer();
+    let coins = importer.importAll(files);
     coins.forEach(coinlist);
-    let banker = new Banker(files);
-    let total = banker.countCoins();
+    let banker = new Banker();
+    let total = banker.countCoins(files);
     document.getElementById("cointotal").innerHTML ="total: " + total[0];
     </script>
     

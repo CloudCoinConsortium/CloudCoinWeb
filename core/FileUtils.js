@@ -38,7 +38,7 @@ class FileUtils
         let nn = incomeJson.nn;
         
         let sn = incomeJson.sn;
-        let ans = incomeJson.an;
+        let ans = incomeJson.ans;
         let ed = incomeJson.ed;
         let aoid = incomeJson.aoid;
         let pown = incomeJson.pown;
@@ -264,15 +264,63 @@ class FileUtils
 
     writeTo(folder, filename)
     {
-        if(!folder.includes(filename))
+        //alert("called");
+        switch(folder)
         {
-            folder += filename = ",";
+            case "bank":
+        if(!this.bankFolder.includes(filename))
+        {
+            this.bankFolder += filename + ",";
+        }break;
+        case "fracked":
+        if(!this.frackedFolder.includes(filename))
+        {
+            this.frackedFolder += filename + ",";
+        }break;
+        case "counterfeit":
+        if(!this.counterfeitFolder.includes(filename))
+        {
+            this.counterfeitFolder += filename + ",";
+        }break;
+        case "suspect":
+        if(!this.suspectFolder.includes(filename))
+        {
+            this.suspectFolder += filename + ",";
+        }break;
         }
     }//End Write To
 
-    overWrite(folder, filename)
+    overWrite(folderold, foldernew, filename)
     {
-        this.frackedFolder.replace(filename + ",", "");
-        this.writeTo(folder, filename);
+        switch(folderold)
+        {
+            case "bank":
+        //if(this.bankFolder.includes(filename))
+        //{
+            this.bankFolder = this.bankFolder.replace(filename + ",", "");
+        //}
+        break;
+        case "fracked":
+        //if(this.frackedFolder.includes(filename))
+        //{
+            this.frackedFolder = this.frackedFolder.replace(filename + ",", "");
+        //}
+        break;
+        case "counterfeit":
+        //if(this.counterfeitFolder.includes(filename))
+        //{
+            this.counterfeitFolder = this.counterfeitFolder.replace(filename + ",", "");
+        //}
+        break;
+        case "suspect":
+        //if(this.suspectFolder.includes(filename))
+        //{
+            //alert(this.suspectFolder.includes(filename + ","));
+            this.suspectFolder = this.suspectFolder.replace(filename + ",", "");
+        //}
+        break;
+        }
+        
+        this.writeTo(foldernew, filename);
     }
 }

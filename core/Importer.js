@@ -1,11 +1,11 @@
 class Importer
 {
-    constructor(fileUtil)
+    constructor()
     {
-        this.fileUtil = fileUtil;
+        //this.fileUtil = fileUtil;
     }
 
-    importAll()
+    importAll(fileUtil)
     {
         let fnames = [];
         let coins = [];
@@ -16,10 +16,36 @@ class Importer
         else{
             for(let i = 0; i < fnames.length; i++){
                 console.log(fnames[i]);
-                coins.push(this.fileUtil.loadOneCloudCoinFromJsonFile(fnames[i]));
+                coins.push(fileUtil.loadOneCloudCoinFromJsonFile(fnames[i]));
+                this.updateFolder(coins[i], fileUtil);
             }
             return coins;
         }
+    }
+
+    updateFolder(cc, fileUtil)
+    {
+        cc.reportDetectionResults();
+        //alert(cc.getFolder().toLowerCase());
+                switch (cc.getFolder().toLowerCase())
+            {
+                case "bank":
+                    //totalValueToBank++;
+                    fileUtil.writeTo("bank", cc.sn);
+                    break;
+                case "fracked":
+                    //totalValueToFractured++;
+                    fileUtil.writeTo("fracked", cc.sn);
+                    break;
+                case "counterfeit":
+                    //totalValueToCounterfeit++;
+                    fileUtil.writeTo("counterfeit", cc.sn);
+                    break;
+                case "suspect":
+                    //totalValueToKeptInSuspect++;
+                    fileUtil.writeTo("suspect", cc.sn);
+                    break;
+            }//end switch
     }
     
 }

@@ -3,6 +3,7 @@ class RAIDA
     constructor(milliSecondsToTimeOut) 
     {
         this.agent = [];
+        this.milliSecondsToTimeOut = milliSecondsToTimeOut;
         this.responseArray = [];
         for(let i = 0; i < 25; i++){
             this.agent.push( new DetectionAgent(i, milliSecondsToTimeOut));
@@ -24,6 +25,15 @@ class RAIDA
         "noreply", "noreply", "noreply"];
         this.RAIDAStatus = new RAIDA_Status();
     }
+
+    /*timeout(promise, err)
+    {
+        let timeTillFail = this.milliSecondsToTimeOut;
+        return new Promise(function(resolve, reject){
+            promise.then(resolve, reject);
+    setTimeout(reject.bind(null, err), timeTillFail);
+        });
+    }*/
 
     echoOne(raida_id)
     {
@@ -55,25 +65,31 @@ class RAIDA
     {
         let returnCoin = cc;
         let promises = [];
+        
+        //alert(cc.ans[0]);
         for(let i = 0; i < 25; i++)
         {
-            promises.push(this.detectOne(i, cc.nn, cc.ans[i], cc.pans[i], cc.getDenomination()));
+            
+            promises.push(this.detectOne(i, cc.nn, cc.sn, cc.ans[i], cc.pans[i], cc.getDenomination()));
         }
-        Promise.all(promises).then(function(){
+        return Promise.all(promises).then(function(data){
             for(let j = 0; j < 25; j++)
             {
-                if(this.responseArray[i] != null)
-                {returnCoin.setPastStatus(responseArray[i].outcome, i)}
-                else{returnCoin.setPastStatus("undetected", i)}
+                if(data[j] != null)
+                {returnCoin.setPastStatus(data[j], j)}
+                else{returnCoin.setPastStatus("undetected", j)}
             }
             returnCoin.setAnsToPansIfPassed();
             returnCoin.calculateHP();
             returnCoin.reportDetectionResults();
             returnCoin.calcExpirationDate();
             
+            
             return returnCoin;
         });
+        
     }
+    
 
     get_Ticket(raidaID, nn, sn, an, d)
     {

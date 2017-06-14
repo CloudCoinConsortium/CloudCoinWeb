@@ -1,0 +1,58 @@
+<html>
+    <head>
+    <script src="DetectionAgent.js"></script>
+    <script src="RAIDA_Status.js"></script>
+    <script src="RaidaResponse.js"></script>
+    <script src="random.min.js"></script>
+    <script src="CloudCoin.js"></script>
+    <script src="FileUtils.js"></script>
+    <script src="testMain.js"></script>
+    <script src="RAIDA.js"></script>
+    <script src="Importer.js"></script>
+    <script src="Detector.js"></script>
+    <script src="Banker.js"></script>
+    <script src="Frack_Fixer.js"></script>
+    <script src="FixitHelper.js"></script>
+    <script src="Exporter.js"></script>
+
+    </head>
+    <body>
+    <h1>Welcome to CloudCoin</h1>
+    
+    <div> <h2>Your Coins</h2><button onclick="showFolder()">Folder</button>
+        <h3>Bank</h3>
+        <ul id="coinlistbank">
+        </ul>
+        <h3>Counterfeit</h3>
+        <ul id="coinlistcounterfeit">
+        </ul>
+        <h3>Fracked</h3>
+        <ul id="coinlistfracked">
+        </ul>
+        <h3>Suspect</h3>
+        <ul id="coinlistsuspect">
+        </ul>
+        <p id="cointotal"></p>
+    </div>
+    <script>
+    
+    //let raida = new RAIDA(3000);
+    let files = new FileUtils();
+   
+    let detect = new Detector(files, 3000);
+    let importer = new Importer();
+    let coins = importer.importAll(files);
+    detect.detectAll(coinlist);
+    coins.forEach(coinlist);
+    
+    
+    </script>
+    
+
+    </body>
+    
+    
+    
+    
+    
+</html>

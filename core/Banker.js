@@ -1,14 +1,14 @@
 class Banker
 {
-    constructor(fileUtil)
+    constructor()
     {
-        this.importer = new Importer(fileUtil);
+        this.importer = new Importer();
 
     }
 
-    countCoins()
+    countCoins(fileUtil)
     {
-        let coins = this.importer.importAll();
+        let coins = this.importer.importAll(fileUtil);
         // 0. Total, 1.1s, 2,5s, 3.25s 4.100s, 5.250s
         let returnCounts = [0, 0, 0, 0, 0, 0];
         for(let i = 0; i < coins.length; i ++)

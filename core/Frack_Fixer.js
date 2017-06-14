@@ -84,13 +84,13 @@ class Frack_Fixer
             {
                 case "bank":
                     this.totalValueToBank++;
-                    this.fileUtil.overWrite(this.fileUtil.bankFolder, frackedFileNames[i]);
+                    this.fileUtil.overWrite("fracked", "bank", frackedFileNames[i]);
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
                     console.log("CloudCoin was moved to Bank");
                     break;
                 case "counterfeit":
                     this.totalValueToCounterfeit++;
-                    this.fileUtil.overWrite(this.fileUtil.counterfeitFolder, frackedFileNames[i]);
+                    this.fileUtil.overWrite("fracked", "counterfeit", frackedFileNames[i]);
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
                     console.log("CloudCoin was moved to Counterfeit");
                     break;
