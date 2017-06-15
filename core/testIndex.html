@@ -86,9 +86,7 @@
     let importer = new Importer();
     let coins = importer.importAll(files);
     coins.forEach(coinlist);
-    let banker = new Banker();
-    let total = banker.countCoins(files);
-    document.getElementById("cointotal").innerHTML ="total: " + total[0];
+    updateTotal(files);
     </script>
     
 

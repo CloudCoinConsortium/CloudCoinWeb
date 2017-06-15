@@ -20,11 +20,24 @@ function showFolder(){
     }
 	
 function uploadButtonAppear(){
-	document.getElementById("upButtonDiv").innerHTML =
-	"<button id='upButton' onclick='uploadFile(files)'>Upload</button>";
+	document.getElementById("upButtonDiv").innerHTML="<button id='upButton' onclick='uploadFile(files)'>Upload</button>";
 }
 
 function uploadFile(fileUtil){
 	let upJson = document.getElementById("myFile").files[0];
-	fileUtil.uploadCloudCoinFromJsonFile(upJson);
+	fileUtil.uploadCloudCoinFromJsonFile(upJson, fileUtil.saveCloudCoinToJsonFile);
+	
+	setTimeout(function(){
+		let importer = new Importer();
+    let coins = importer.importAll(fileUtil);
+		coins.forEach(coinlist);
+		updateTotal(fileUtil);
+		}, 500);
+}
+
+function updateTotal(fileUtil)
+{
+	let banker = new Banker();
+    let total = banker.countCoins(fileUtil);
+    document.getElementById("cointotal").innerHTML ="total: " + total[0];
 }
