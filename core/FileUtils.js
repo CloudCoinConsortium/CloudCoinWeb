@@ -200,6 +200,18 @@ class FileUtils
         //} else {console.log("coin already in local storage");}
 
     }
+	
+	uploadCloudCoinFromJsonFile(loadFile)
+	{
+		var reader = new FileReader();
+		reader.onload = function(e){
+			var data = JSON.parse(reader.result);
+		}
+		reader.readAsText(loadFile);
+		let cc = data.cloudcoin[0];
+		let upCoin = new CloudCoin(cc.nn, cc.sn, cc.ans, cc.ed, cc.aoid, cc.pown);
+		saveCloudCoinToJsonFile(upCoin, upCoin.sn);
+	}//make this work for multiple files later
 
     //importJSON not neccessary for javascript
 

@@ -18,3 +18,13 @@ function showFolder(){
         alert("s:" + files.suspectFolder);
         alert("f:" + files.frackedFolder);
     }
+	
+function uploadButtonAppear(){
+	document.getElementById("upButtonDiv").innerHTML =
+	"<button id='upButton' onclick='uploadFile(files)'>Upload</button>";
+}
+
+function uploadFile(fileUtil){
+	let upJson = document.getElementById("myFile").files[0];
+	fileUtil.uploadCloudCoinFromJsonFile(upJson);
+}
