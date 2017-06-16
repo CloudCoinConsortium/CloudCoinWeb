@@ -15,9 +15,43 @@ class Importer
         if(fnames.length == 0){return false;}
         else{
             for(let i = 0; i < fnames.length; i++){
-                console.log(fnames[i]);
+                //console.log(fnames[i]);
                 coins.push(fileUtil.loadOneCloudCoinFromJsonFile(fnames[i]));
                 this.updateFolder(coins[i], fileUtil);
+            }
+            return coins;
+        }
+    }
+
+    importAllFromFolder(fileUtil, folder)
+    {
+        switch(folder)
+        {
+            case "bank":
+            folder = fileUtil.bankFolder;
+            break;
+            case "counterfeit":
+            folder = fileUtil.counterfeitFolder;
+            break;
+            case "fracked":
+            folder = fileUtil.frackedFolder;
+            break;
+            case "suspect":
+            folder = fileUtil.suspectFolder;
+            break;
+        }
+        let fnames = [];
+        let coins = [];
+        for(var key in localStorage){
+            if(folder.includes(key))
+            fnames.push(key);
+        }
+        if(fnames.length == 0){return false;}
+        else{
+            for(let i = 0; i < fnames.length; i++){
+                //console.log(fnames[i]);
+                coins.push(fileUtil.loadOneCloudCoinFromJsonFile(fnames[i]));
+                //this.updateFolder(coins[i], fileUtil);
             }
             return coins;
         }

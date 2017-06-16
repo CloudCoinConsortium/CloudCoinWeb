@@ -14,6 +14,7 @@
     <script src="Frack_Fixer.js"></script>
     <script src="FixitHelper.js"></script>
     <script src="Exporter.js"></script>
+    <script src="FileSaver.js"></script>
 
     </head>
     <body>
@@ -48,7 +49,8 @@
             <td id="p_24"></td>
         </tr>
     </table>
-    <div> <h2>Your Coins</h2><button onclick="showFolder()">Folder</button>
+    <div> <h2>Your Coins   <button onclick="showFolder()">Folder</button></h2>
+    <h3>Upload Coin</h3>
 	<input type="file" id="myFile" onchange="uploadButtonAppear()"><div id="upButtonDiv"></div>
 	
         <h3>Bank</h3>
@@ -60,7 +62,7 @@
         <h3>Fracked</h3>
         <ul id="coinlistfracked">
         </ul>
-        <h3>Suspect</h3>
+        <h3>Suspect  <button onclick="detect.detectAllSuspect(updates)">Detect</button></h3>
         <ul id="coinlistsuspect">
         </ul>
         <p id="cointotal"></p>
@@ -84,6 +86,7 @@
     //let detect = new Detector(files, 3000);
     //detect.detectAll();
     let importer = new Importer();
+    let detect = new Detector(files, 3000);
     let coins = importer.importAll(files);
     coins.forEach(coinlist);
     updateTotal(files);

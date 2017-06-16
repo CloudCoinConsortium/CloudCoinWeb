@@ -45,7 +45,7 @@ class Detector
                     break;
             }//end switch
             files.saveCloudCoinToJsonFile(cc, cc.sn);
-            callback(cc);    
+            callback(cc, files);    
         });
     }
 
@@ -56,7 +56,7 @@ class Detector
             return results;
     }
 
-    detectAllSusupect(callback)
+    detectAllSuspect(callback)
     {
         let results = [0, 0, 0, 0];
         let totalValueToBank = 0;
@@ -93,7 +93,7 @@ class Detector
                     
                     break;
             }//end switch
-            callback(cc);
+            callback(cc, files);
             files.saveCloudCoinToJsonFile(cc, cc.sn);
              });
         }

@@ -42,7 +42,7 @@
     let detect = new Detector(files, 3000);
     let importer = new Importer();
     let coins = importer.importAll(files);
-    detect.detectAll(coinlist);
+    detect.detectAll(coinlist, files);
     coins.forEach(coinlist);
     
     

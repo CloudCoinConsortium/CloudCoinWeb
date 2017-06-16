@@ -25,7 +25,7 @@ class FileUtils
     loadOneCloudCoinFromJsonFile(loadFilePath)
     {
         //load file as json
-        let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));//adjust this later for webstorage
+        let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));
         //indexdb code that we might not use
         /*
         let transaction = db.transaction(["cloudcoin"]);
@@ -38,7 +38,7 @@ class FileUtils
         let nn = incomeJson.nn;
         
         let sn = incomeJson.sn;
-        let ans = incomeJson.ans;
+        let ans = incomeJson.an;
         let ed = incomeJson.ed;
         let aoid = incomeJson.aoid;
         let pown = incomeJson.pown;
@@ -51,100 +51,7 @@ class FileUtils
         //} //end on success
     }
     
-        //if fracked goes here
-
-        //testing
-        
-        /*
-        //this code might not be needed, not sure yet
-        detectOneCloudCoinFromJsonFile(loadFilePath)
-    {
-        //load file as json
-        //let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));//adjust this later for webstorage
-        
-        //import detect from "DetectionAgent.js";
-        let dad = new DetectionAgent(22, 5000);
-        let transaction = db.transaction(["cloudcoin"]);
-        let objectStore = transaction.objectStore("cloudcoin");
-        let request = objectStore.get(loadFilePath);
-        request.onsuccess = function(event) {
-            console.log("success");
-        let incomeJson = request.result;
-        let nn = incomeJson.nn;
-        
-        let sn = incomeJson.sn;
-        let ans = incomeJson.an;
-        let ed = incomeJson.ed;
-        let aoid = incomeJson.aoid;
-        let pown = incomeJson.pown;
-        var returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
-        let rr = dad.detect(returnCC.nn, returnCC.sn, returnCC.ans, returnCC.pan, returnCC.getDenomination());
-        alert(rr.outcome);
-        return rr;
-        
-          
-    }}
-
-    ticketOneCloudCoinFromJsonFile(loadFilePath)
-    {
-        //load file as json
-        //let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));//adjust this later for webstorage
-        
-        //import detect from "DetectionAgent.js";
-        let dad = new DetectionAgent(22, 5000);
-        let transaction = db.transaction(["cloudcoin"]);
-        let objectStore = transaction.objectStore("cloudcoin");
-        let request = objectStore.get(loadFilePath);
-        request.onsuccess = function(event) {
-            console.log("success");
-        let incomeJson = request.result;
-        let nn = incomeJson.nn;
-        
-        let sn = incomeJson.sn;
-        let ans = incomeJson.an;
-        let ed = incomeJson.ed;
-        let aoid = incomeJson.aoid;
-        let pown = incomeJson.pown;
-        var returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
-        let rr = dad.get_ticket(returnCC.nn, returnCC.sn, returnCC.ans, returnCC.getDenomination());
-        alert(rr.outcome);
-        return rr;
-        
-          
-        }
-    }
-
-    fixOneCloudCoinFromJsonFile(loadFilePath) //wip
-
-    {
-        //load file as json
-        //let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));//adjust this later for webstorage
-        
-        //import detect from "DetectionAgent.js";
-        let dad = new DetectionAgent(22, 5000);
-        let transaction = db.transaction(["cloudcoin"]);
-        let objectStore = transaction.objectStore("cloudcoin");
-        let request = objectStore.get(loadFilePath);
-        request.onsuccess = function(event) {
-            console.log("success");
-        let incomeJson = request.result;
-        let nn = incomeJson.nn;
-        
-        let sn = incomeJson.sn;
-        let ans = incomeJson.an;
-        let ed = incomeJson.ed;
-        let aoid = incomeJson.aoid;
-        let pown = incomeJson.pown;
-        var returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
-        let rr;
-        
-        return rr;
-        
-          
-        } //end on success
-
-    }
-    */
+    
 
     loadManyCloudCoinFromJsonFile(loadFilePath)
     {
@@ -170,15 +77,20 @@ class FileUtils
     {
         //if(localStorage.getItem(saveFilePath) === null)
         //{
+            
+            let uploadTime = new Date();
+
         let coin = {
             nn: cc.nn,
             sn: cc.sn,
-            ans: cc.ans,
+            an: cc.ans,
             ed: cc.ed,
             aoid: cc.aoid,
             pown: cc.pown,
+            time: uploadTime.getTime()
             //filename: saveFilePath
         }
+        
         let file = JSON.stringify(coin);
         /* indexed Database */
         /*
@@ -206,13 +118,46 @@ class FileUtils
 		var reader = new FileReader();
 		reader.onload = function(e){
 			var data = JSON.parse(reader.result);
-			let cc = data.cloudcoin[0];
-		let upCoin = new CloudCoin(cc.nn, cc.sn, cc.ans, cc.ed, cc.aoid, cc.pown);
-		callback(upCoin, upCoin.sn);
-		}
+        for(let i = 0; i < data.cloudcoin.length; i++){
+			let cc = data.cloudcoin[i];
+		let upCoin = new CloudCoin(cc.nn, cc.sn, cc.an, cc.ed, cc.aoid, cc.pown);
+        let currentCoin = JSON.parse(localStorage.getItem(upCoin.sn));
+        if(currentCoin != null){
+            if(upCoin.sn == currentCoin.sn && loadFile.lastModified < currentCoin.time)
+            {
+                alert("This app has the current version of that coin.");
+            }else{callback(upCoin, upCoin.sn);}
+        }else{callback(upCoin, upCoin.sn);}
+        }}
 		reader.readAsText(loadFile);
 		
 	}//make this work for multiple files later
+
+    downloadCloudCoinToJsonFile(saveFile, tag="")
+    {
+        let obj = {
+            cloudcoin:[
+
+            ]
+            
+        };
+        let coin = JSON.parse(localStorage.getItem(saveFile));
+        delete coin.pown;
+        delete coin.time;
+        let cc = new CloudCoin(coin.nn, coin.sn);
+        obj.cloudcoin.push(coin);
+        if(tag === ""){
+            tag += coin.sn;
+            tag = tag.slice(0, 3);
+            tag += coin.an[0];
+            tag = tag.slice(0,7);
+        }
+        let filedata = JSON.stringify(obj);
+        let fullFileName = cc.getDenomination() + ".CloudCoins." + tag + ".stack";
+        let downFile = new File([filedata], fullFileName);
+        saveAs(downFile, fullFileName);
+
+    }
 
     //importJSON not neccessary for javascript
 

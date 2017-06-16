@@ -161,7 +161,7 @@ class DetectionAgent
                         detectResponse.outcome = "error";
                         //echoResponse.milliseconds = "timeout";
                         callback.apply(obj,[detectResponse, raidaID]);
-                        resolve();
+                       resolve();
             }, this.readTimeout))
         ])
         //return detectResponse;
