@@ -72,6 +72,11 @@
     let raida = new RAIDA(3000);
     let files = new FileUtils();
     let echo = raida.echoAll()
+    let importer = new Importer();
+    let detect = new Detector(files, 3000);
+    let coins = importer.importAll(files);
+    //alert(coins);
+    
     
     
     
@@ -85,10 +90,9 @@
     }
     //let detect = new Detector(files, 3000);
     //detect.detectAll();
-    let importer = new Importer();
-    let detect = new Detector(files, 3000);
-    let coins = importer.importAll(files);
-    coins.forEach(coinlist);
+    
+    for(let j = 0; j < coins.length; j++){
+    coinlist(coins[j]);}
     updateTotal(files);
     </script>
     

@@ -9,18 +9,17 @@ class Importer
     {
         let fnames = [];
         let coins = [];
-        for(var key in localStorage){
-            fnames.push(key);
+        for(var j = 0; j< localStorage.length; j++){
+            fnames.push(localStorage.key(j));
         }
-        if(fnames.length == 0){return false;}
-        else{
+        
             for(let i = 0; i < fnames.length; i++){
                 //console.log(fnames[i]);
                 coins.push(fileUtil.loadOneCloudCoinFromJsonFile(fnames[i]));
                 this.updateFolder(coins[i], fileUtil);
             }
             return coins;
-        }
+        
     }
 
     importAllFromFolder(fileUtil, folder)
@@ -42,9 +41,9 @@ class Importer
         }
         let fnames = [];
         let coins = [];
-        for(var key in localStorage){
-            if(folder.includes(key))
-            fnames.push(key);
+        for(var j = 0; j< localStorage.length; j++){
+            if(folder.includes(localStorage.key(j)))
+            fnames.push(localStorage.key(j));
         }
         if(fnames.length == 0){return false;}
         else{

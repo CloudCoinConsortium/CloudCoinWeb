@@ -148,7 +148,7 @@ class FileUtils
         obj.cloudcoin.push(coin);
         if(tag === ""){
             tag += coin.sn;
-            tag = tag.slice(0, 3);
+            tag = tag.slice(-3);
             tag += coin.an[0];
             tag = tag.slice(0,7);
         }
