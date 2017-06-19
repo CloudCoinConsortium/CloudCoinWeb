@@ -189,7 +189,7 @@ class DetectionAgent
         .then(
             function(response) {
                 //alert("!");
-                response.json().then(function(data){
+            return    response.json().then(function(data){
             get_ticketResponse.fullResponse = JSON.stringify(data);
             let ts = (new Date()).getTime() - before;
             get_ticketResponse.milliseconds = ts;
@@ -205,6 +205,7 @@ class DetectionAgent
                 //rStatus.ticketHistory[raidaID] = rStatus.TicketHistoryEn.Failed;
             }//end if
             callback.apply(obj,[get_ticketResponse, raidaID]);
+            return get_ticketResponse;
             });
         })
         .catch(function(error){
@@ -228,7 +229,7 @@ class DetectionAgent
          * @return string status sent back from the server: sucess, fail or error. 
          */
 
-        fix(triad, m1, m2, m3, pan, callback, obj) 
+        fix(triad, m1, m2, m3, pan) 
         {
             
             var fixResponse= new RaidaResponse();
@@ -241,7 +242,7 @@ class DetectionAgent
          .then(
             function(response) {
                 //alert("!");
-                response.json().then(function(data){
+            return    response.json().then(function(data){
             fixResponse.fullResponse = JSON.stringify(data);
             if(data.status === "success") 
             {
@@ -252,14 +253,16 @@ class DetectionAgent
                 fixResponse.outcome = "fail";
                 fixResponse.success = false;
             }//end if
-            callback.apply(obj, [fixResponse]);
+            return fixResponse.success;
+            //callback.apply(obj, [fixResponse]);
         });
             })
         .catch(function(error){
             fixResponse.outcome = "error";
             fixResponse.fullResponse = error;
             fixResponse.success = false;
-            callback.apply(obj,[fixResponse]);
+            return fixResponse.success;
+            //callback.apply(obj,[fixResponse]);
         });
         //return fixResponse;
         }

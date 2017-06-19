@@ -43,10 +43,10 @@ class FixitHelper
         this.trustedTriad4 = [ this.trustedServers[4], this.trustedServers[6], this.trustedServers[7] ];
         this.currentTriad = this.trustedTriad1;
 
-        this.ans1 = [ ans[trustedTriad1[0]], ans[trustedTriad1[1]], ans[trustedTriad1[2]] ];
-        this.ans2 = [ ans[trustedTriad2[0]], ans[trustedTriad2[1]], ans[trustedTriad2[2]] ];
-        this.ans3 = [ ans[trustedTriad3[0]], ans[trustedTriad3[1]], ans[trustedTriad3[2]] ];
-        this.ans4 = [ ans[trustedTriad4[0]], ans[trustedTriad4[1]], ans[trustedTriad4[2]] ];
+        this.ans1 = [ ans[this.trustedTriad1[0]], ans[this.trustedTriad1[1]], ans[this.trustedTriad1[2]] ];
+        this.ans2 = [ ans[this.trustedTriad2[0]], ans[this.trustedTriad2[1]], ans[this.trustedTriad2[2]] ];
+        this.ans3 = [ ans[this.trustedTriad3[0]], ans[this.trustedTriad3[1]], ans[this.trustedTriad3[2]] ];
+        this.ans4 = [ ans[this.trustedTriad4[0]], ans[this.trustedTriad4[1]], ans[this.trustedTriad4[2]] ];
 
         this.currentAns = this.ans1;
     }

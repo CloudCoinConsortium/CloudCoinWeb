@@ -59,7 +59,7 @@
         <h3>Counterfeit</h3>
         <ul id="coinlistcounterfeit">
         </ul>
-        <h3>Fracked</h3>
+        <h3>Fracked  <button onclick="fix.fixAll(updates)">Fix</button></h3>
         <ul id="coinlistfracked">
         </ul>
         <h3>Suspect  <button onclick="detect.detectAllSuspect(updates)">Detect</button></h3>
@@ -71,10 +71,11 @@
     
     let raida = new RAIDA(3000);
     let files = new FileUtils();
-    let echo = raida.echoAll()
+    let echo = raida.echoAll();
     let importer = new Importer();
     let detect = new Detector(files, 3000);
     let coins = importer.importAll(files);
+    let fix = new Frack_Fixer(files, 60000);
     //alert(coins);
     
     

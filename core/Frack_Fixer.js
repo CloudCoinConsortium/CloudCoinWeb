@@ -1,8 +1,8 @@
 class Frack_Fixer 
 {
-    constructor(fileUitil, timeout)
+    constructor(fileUtil, timeout)
     {
-        this.fileUtil = new FileUtils();
+        this.fileUtil = fileUtil;
         this.raida = new RAIDA(timeout);
         this.totalValueToBank = 0;
         this.totalValueToCounterfeit = 0;
@@ -13,6 +13,7 @@ class Frack_Fixer
     fixOneGuidCorner(raida_ID, cc, corner, trustedTriad)
     {
         let stat = this.raida.RAIDAStatus;
+
         /*1. WILL THE BROKEN RAIDA FIX? check to see if it has problems echo, detect, or fix. */
         if(stat.failsFix[raida_ID] || stat.failsEcho[raida_ID])
         {
@@ -25,17 +26,19 @@ class Frack_Fixer
         {
             /*3. GET TICKETS AND UPDATE RAIDA STATUS TICKETS*/
             let ans = [cc.ans[trustedTriad[0]], cc.ans[trustedTriad[1]], cc.ans[trustedTriad[2]]];
-            Promise.all(this.raida.get_Tickets(trustedTriad, ans, cc.nn, cc.sn, cc.getDenomination())).then(function(){
+            return Promise.all(this.raida.get_Tickets(trustedTriad, ans, cc.nn, cc.sn, cc.getDenomination())).then(function(){
+                //alert(stat.tickets[trustedTriad[0]]);
             /*4. ARE ALL TICKETS GOOD?*/
-            if(stat.hasTicket[trustedTriad[0]] && stat.hasTicket[trustedTriad[0]] && stat.hasTicket[trustedTriad[0]])
+            //alert(stat.tickets[trustedTriad[1]]);
+            if(stat.hasTicket[trustedTriad[0]] && stat.hasTicket[trustedTriad[1]] && stat.hasTicket[trustedTriad[2]])
             {
             /*5.T YES, so REQUEST FIX*/
                 let da = new DetectionAgent(raida_ID, 5000);
-                da.fix(trustedTriad, stat.tickets[trustedTriad[0]],
+                return da.fix(trustedTriad, stat.tickets[trustedTriad[0]],
                 stat.tickets[trustedTriad[1]], stat.tickets[trustedTriad[2]],
-                 cc.ans[raida_ID], this.didFixWork, this).then(function(){
+                 cc.ans[raida_ID]).then(function(outcome){
             /*6. DID THE FIX WORK?*/
-                if(this.fixed)
+                if(outcome)
                 {
                     console.log("RAIDA" + raida_ID + "unfracked successfully");
                     return "RAIDA" + raida_ID + "unfracked successfully";
@@ -55,7 +58,7 @@ class Frack_Fixer
         }    
     }//end fix one guid
 
-    didFixWork(fixResponse)
+    /*didFixWork(fixResponse)
     {
         if(fixResponse.success)
             {
@@ -63,46 +66,51 @@ class Frack_Fixer
             } else {
                 this.fixed = false;
             }
-    }
+    }*/
 
-    fixAll()
+    fixAll(callback)
     {
         let results = [0, 0, 0];
         let frackedFileNames = this.fileUtil.frackedFolder.split(",");
         frackedFileNames.pop();
+        let files = this.fileUtil;
+        //alert(frackedFileNames);
         let frackedCC;
         if(frackedFileNames.length < 0){console.log("You have no fracked coins");}
 
         for(let i = 0; i < frackedFileNames.length; i++)
         {
             console.log("unfracking" + (i+1) + " of " + frackedFileNames.length);
-            frackedCC = fileUtil.loadOneCloudCoinFromJsonFile(frackedFileNames[i]);
-            frackedCC.consoleReport();
-            let fixedCC = fixCoin(frackedCC);
-            fixedCC.consoleReport();
+            frackedCC = files.loadOneCloudCoinFromJsonFile(frackedFileNames[i]);
+            //alert(frackedCC.sn);
+            //frackedCC.consoleReport();
+            this.fixCoin(frackedCC).then(function(fixedCC){
+            //fixedCC.consoleReport();
             switch(fixedCC.getFolder().toLowerCase())
             {
                 case "bank":
-                    this.totalValueToBank++;
-                    this.fileUtil.overWrite("fracked", "bank", frackedFileNames[i]);
+                    //this.totalValueToBank++;
+                    files.overWrite("fracked", "bank", frackedFileNames[i]);
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
                     console.log("CloudCoin was moved to Bank");
                     break;
                 case "counterfeit":
-                    this.totalValueToCounterfeit++;
-                    this.fileUtil.overWrite("fracked", "counterfeit", frackedFileNames[i]);
+                    //this.totalValueToCounterfeit++;
+                    files.overWrite("fracked", "counterfeit", frackedFileNames[i]);
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
                     console.log("CloudCoin was moved to Counterfeit");
                     break;
                 default:
-                    this.totalValueToFractured++;
+                    //this.totalValueToFractured++;
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
                     //this.fileUtil.overWrite(this.fileUtil.frackedFolder);
                     console.log("CloudCoin was moved back to Fraked folder");
                     break;
             }//end switch
-
+            callback(frackedCC, files);
+            });
         }
+        
         results[0] = this.totalValueToBank;
         results[1] = this.totalValueToCounterfeit;
         results[2] = this.totalValueToFractured;
@@ -118,43 +126,57 @@ class Frack_Fixer
 
     fixCoin(brokeCoin)
     {
+        //alert(brokeCoin.sn);
         this.raida.RAIDAStatus.resetTickets();
         this.raida.RAIDAStatus.newCoin();
-
+        let fileUtil = this.fileUtil;
         brokeCoin.setAnsToPans();
         let before = (new Date()).getTime();
 
         let fix_result = "";
         let fixer;
-
+        //let fixedIds = [];
         let corner = 1;
+        let promises = [];
         for(let id = 0; id < 25; id++)
         {
             if(brokeCoin.getPastStatus(id).toLowerCase() == "fail")
             {
                 console.log("Attempting to fix RAIDA " + id);
                 fixer = new FixitHelper(id, brokeCoin.ans);
-                while(!fixer.finnished)
-                {
-                    console.log("Using corner" + corner);
-                    fix_result = fixOneGuidCorner(id, brokeCoin, corner, fixer.currentTriad);
+                promises.push(this.fixLoop(id, brokeCoin, corner, fixer, this.fixLoop, this));
+                //fixedIds.push(id);
+            }// end if fail
+        }//end for all raida
+        return Promise.all(promises).then(function(fixCoin){
+        let ts = (new Date()).getTime() - before;
+        
+        console.log("Time spent fixing RAIDA in milliseconds " + ts);
+        fixCoin.calculateHP();
+        fixCoin.reportDetectionResults();
+        //alert(fixCoin.getFolder());
+        fixCoin.calcExpirationDate();
+        fileUtil.saveCloudCoinToJsonFile(fixCoin, fixCoin.sn);
+        return fixCoin;
+        })
+    }
+
+
+fixLoop(id, brokeCoin, corner, fixer, callback, obj)
+{
+ console.log("Using corner" + corner);
+                return obj.fixOneGuidCorner(id, brokeCoin, corner, fixer.currentTriad).then(function(fix_result){
                     if(fix_result.includes("success"))
                     {
                         brokeCoin.setPastStatus("pass", id);
                         fixer.finnished = true;
+                        return brokeCoin;
                     } else {
                         corner++;
                         fixer.setCornerToCheck(corner);
-                    }//end if fixed
-                }//end while not done
-            }// end if fail
-        }//end for all raida
-        let ts = (new Date()).getTime() - before;
-        console.log("Time spent fixing RAIDA in milliseconds " + ts);
-        brokeCoin.calculateHP();
-        brokeCoin.reportDetectionResults();
-        brokeCoin.calcExpirationDate();
-        this.fileUtil.saveCloudCoinToJsonFile(brokeCoin, brokeCoin.sn);
-        return brokeCoin;
-    }
+                        if(!fixer.finnished)
+                        callback(id, brokeCoin, corner, fixer, callback, obj);
+                    }
+                    });//end if fixed
+}
 }

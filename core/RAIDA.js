@@ -99,9 +99,9 @@ class RAIDA
     get_Tickets(triad, ans, nn, sn, denomination)
     {
         let promises = [];
-        promises.push(get_Ticket(triad[0], nn, sn, ans[0], denomination));
-        promises.push(get_Ticket(triad[1], nn, sn, ans[1], denomination));
-        promises.push(get_Ticket(triad[2], nn, sn, ans[2], denomination));
+        promises.push(this.get_Ticket(triad[0], nn, sn, ans[0], denomination));
+        promises.push(this.get_Ticket(triad[1], nn, sn, ans[1], denomination));
+        promises.push(this.get_Ticket(triad[2], nn, sn, ans[2], denomination));
 
         //Promise.all(promises).then(function(){})
         //get data from the detection agents
@@ -129,9 +129,10 @@ class RAIDA
     {
         //alert(resp.outcome);
         if(resp.success) {
+            //alert(resp.outcome);
             this.RAIDAStatus.hasTicket[id] = true;
             this.RAIDAStatus.ticketHistory[id] = this.RAIDAStatus.TicketHistoryEn.Success;
-            this.RAIDAStatus.tickets[id] = resp.message;
+            this.RAIDAStatus.tickets[id] = resp.outcome;
         } else {
             this.RAIDAStatus.hasTicket[id] = false;
             this.RAIDAStatus.ticketHistory[id] = this.RAIDAStatus.TicketHistoryEn.Failed;
