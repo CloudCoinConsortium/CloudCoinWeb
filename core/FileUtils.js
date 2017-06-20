@@ -161,7 +161,7 @@ class FileUtils
 
     //importJSON not neccessary for javascript
 
-    embedCloudCoinInJpeg(jpeg, cc, callback)
+    jpegToBase64(jpeg, callback)
     {
         var img = new Image();
   //img.crossOrigin = 'Anonymous';
@@ -173,7 +173,7 @@ class FileUtils
     canvas.width = this.width;
     ctx.drawImage(this, 0, 0);
     dataURL = canvas.toDataURL("image/jpeg");
-    dataURL = callback(cc) + dataURL;
+    callback(dataURL);
   };
   img.src = jpeg;
   if (img.complete || img.complete === undefined) {
