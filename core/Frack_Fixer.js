@@ -135,9 +135,10 @@ class Frack_Fixer
 
         let fix_result = "";
         let fixer;
-        //let fixedIds = [];
+        let fixedIds = [];
         let corner = 1;
         let promises = [];
+        let i = 0;
         for(let id = 0; id < 25; id++)
         {
             if(brokeCoin.getPastStatus(id).toLowerCase() == "fail")
@@ -145,20 +146,27 @@ class Frack_Fixer
                 console.log("Attempting to fix RAIDA " + id);
                 fixer = new FixitHelper(id, brokeCoin.ans);
                 promises.push(this.fixLoop(id, brokeCoin, corner, fixer, this.fixLoop, this));
+                promises[i].then(function(fixed){if(fixed){fixedIds.push(id)}});
                 //fixedIds.push(id);
+                i++;
             }// end if fail
         }//end for all raida
-        return Promise.all(promises).then(function(fixCoin){
-        let ts = (new Date()).getTime() - before;
         
+        return Promise.all(promises)
+        .then(function(){
+        for(let i = 0; i< fixedIds.length; i++)
+        brokeCoin.setPastStatus("pass", fixedIds[i]);
+        let ts = (new Date()).getTime() - before;
         console.log("Time spent fixing RAIDA in milliseconds " + ts);
-        fixCoin.calculateHP();
-        fixCoin.reportDetectionResults();
+        brokeCoin.calculateHP();
+        brokeCoin.reportDetectionResults();
         //alert(fixCoin.getFolder());
-        fixCoin.calcExpirationDate();
-        fileUtil.saveCloudCoinToJsonFile(fixCoin, fixCoin.sn);
-        return fixCoin;
+        brokeCoin.calcExpirationDate();
+        fileUtil.saveCloudCoinToJsonFile(brokeCoin, brokeCoin.sn);
+        return brokeCoin;
         })
+    
+    
     }
 
 
@@ -168,9 +176,9 @@ fixLoop(id, brokeCoin, corner, fixer, callback, obj)
                 return obj.fixOneGuidCorner(id, brokeCoin, corner, fixer.currentTriad).then(function(fix_result){
                     if(fix_result.includes("success"))
                     {
-                        brokeCoin.setPastStatus("pass", id);
+                        //brokeCoin.setPastStatus("pass", id);
                         fixer.finnished = true;
-                        return brokeCoin;
+                        return true;
                     } else {
                         corner++;
                         fixer.setCornerToCheck(corner);
@@ -179,4 +187,9 @@ fixLoop(id, brokeCoin, corner, fixer, callback, obj)
                     }
                     });//end if fixed
 }
+
+
+
+    
+
 }

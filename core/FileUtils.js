@@ -161,52 +161,47 @@ class FileUtils
 
     //importJSON not neccessary for javascript
 
-    writeJpeg(cc, tag)
+    embedCloudCoinInJpeg(jpeg, cc, callback)
     {
-        let fileSaveSuccessfully = true;
-        //build the cloudcoin string
-        let cloudCoinStr = "01C34A46494600010101006000601D05"; //THUMBNAIL HEADER BYTES
-        for(let i = 0; i < 25; i++) {
-            cloudCoinStr = cloudCoinStr + cc.ans[i];
-        }
-
-        cloudCoinStr += "204f42455920474f4420262044454645415420545952414e545320";
-        cloudCoinStr += "00";// HC: Has comments. 00 = No
-        cloudCoinStr += "00"; // LHC = 100%
-        cc.calcExpirationDate();
-        cloudCoinStr += cc.edHex;
-        cloudCoinStr += "01"; //cc.nn// network number
-        let hexSN = cc.sn.toString(16);
-        let fullHexSN = "";
-        switch (hexSN.Length)
-        {
-                case 1:fullHexSN = ("00000" + hexSN);   break;
-                case 2:fullHexSN = ("0000" + hexSN);    break;
-                case 3: fullHexSN = ("000" + hexSN);    break;
-                case 4:fullHexSN = ("00" + hexSN);      break;
-                case 5: fullHexSN = ("0" + hexSN);   break;
-                case 6:fullHexSN = hexSN;     break;
-        }
-        cloudCoinStr = (cloudCoinStr + fullHexSN);
-        /* BYTES THAT WILL GO FROM 04 to 454 (Inclusive)*/
-        let ccArray = this.hexStringToByteArray(cloudCoinStr);
-
-        /* READ JPEG TEMPLATE*/
-        let jpegBytes = [];
-        switch (cc.getDenomination())
-        {
-            case   1: jpegBytes = readAllBytes(this.templateFolder + "jpeg1.jpg");   break;
-            case   5: jpegBytes = readAllBytes(this.templateFolder + "jpeg5.jpg");   break;
-            case  25: jpegBytes = readAllBytes(this.templateFolder + "jpeg25.jpg");  break;
-            case 100: jpegBytes = readAllBytes(this.templateFolder + "jpeg100.jpg"); break;
-            case 250: jpegBytes = readAllBytes(this.templateFolder + "jpeg250.jpg"); break;
-        }
-
-         /* WRITE THE SERIAL NUMBER ON THE JPEG */
-
-         
+        var img = new Image();
+  //img.crossOrigin = 'Anonymous';
+  img.onload = function() {
+    var canvas = document.createElement('CANVAS');
+    var ctx = canvas.getContext('2d');
+    var dataURL;
+    canvas.height = this.height;
+    canvas.width = this.width;
+    ctx.drawImage(this, 0, 0);
+    dataURL = canvas.toDataURL("image/jpeg");
+    dataURL = callback(cc) + dataURL;
+  };
+  img.src = jpeg;
+  if (img.complete || img.complete === undefined) {
+    img.src = "data:image/jpeg;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==";
+    img.src = jpeg;
+  }
     }
     
+    cloudcoinToBase64(cc)
+    {
+        let app0 = "ffd8ffe001c34a46494600010101006000601d05";
+        let an;
+        for(let i = 0; i < 25; i++){
+            an+= cc.ans;
+        }
+        let aoid = "00000000000000000000000000000000";
+        let pown = cc.pown.replace(/p/g, "1");
+        pown = pown.replace(/u/g, "0");
+        let hc = "00";
+        cc.calcExpirationDate();
+        let ed = cc.edHex;
+        let nn = "01";
+        let sn = cc.sn.toString(16);
+        let fullHexHeader = app0 + an + aoid + pown + hc + ed + nn + sn;
+        return this.hexToBase64(fullHexHeader);
+    }
+
+
     hexStringToByteArray(HexString)
     {
         let NumberChars = HexString.length;
@@ -219,6 +214,12 @@ class FileUtils
         }
         return bytes;
     }
+
+    hexToBase64(str) {
+  return btoa(String.fromCharCode.apply(null,
+    str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
+  );
+}
 
     writeTo(folder, filename)
     {
@@ -281,4 +282,6 @@ class FileUtils
         
         this.writeTo(foldernew, filename);
     }
+
+
 }

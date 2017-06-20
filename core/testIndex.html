@@ -51,12 +51,12 @@
     </table>
     <div> <h2>Your Coins   <button onclick="showFolder()">Folder</button></h2>
     <h3>Upload Coin</h3>
-	<input type="file" id="myFile" onchange="uploadButtonAppear()"><div id="upButtonDiv"></div>
+	<input type="file" id="myFile" multiple onchange="uploadButtonAppear()"><div id="upButtonDiv"></div>
 	
         <h3>Bank</h3>
         <ul id="coinlistbank">
         </ul>
-        <h3>Counterfeit</h3>
+        <h3>Counterfeit  <button onclick="trash(files)">Trash</button></h3>
         <ul id="coinlistcounterfeit">
         </ul>
         <h3>Fracked  <button onclick="fix.fixAll(updates)">Fix</button></h3>
@@ -93,7 +93,8 @@
     //detect.detectAll();
     
     for(let j = 0; j < coins.length; j++){
-    coinlist(coins[j]);}
+        //alert(j);
+    coinlist(coins[j], files);}
     updateTotal(files);
     </script>
     
