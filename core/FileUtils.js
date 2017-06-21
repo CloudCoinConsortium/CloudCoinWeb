@@ -160,11 +160,42 @@ class FileUtils
     }
 
     //importJSON not neccessary for javascript
+    embedOneCloudCoinToJpeg(jpeg, cc, callback)
+    {
+        let coin64 = this.cloudcoinToHex(cc);
+        //alert(coin64);
+        var reader = new FileReader();
+        var files = this;
+		reader.onload = function(e){
+            let newImage64 = reader.result;
+            
+            newImage64 = newImage64.replace("data:image/jpeg;base64,", "");
+            newImage64 = files.base64ToHex(newImage64);
+            newImage64 = newImage64.slice(40);
+            //alert(newImage64);
+            newImage64 = coin64 + newImage64;
+            //alert(newImage64);
+            newImage64 = files.hexToBase64(newImage64);
+            newImage64 = "data:image/jpeg;base64," + newImage64;
+            let newImage = new Image();
+            newImage.src = newImage64;
+            callback(newImage);
+        }
+        reader.readAsDataURL(jpeg);
+        
+        //let newImage64 = this.jpegToBase64(jpeg);
+    
+        //let newImage = new Image();
+        //newImage.src = 'data:image/jpeg;base64,' + newImage64;
+        
+        //return newImage.src;
+    }
 
-    jpegToBase64(jpeg, callback)
+
+    /*jpegToBase64(jpeg, callback)
     {
         var img = new Image();
-  //img.crossOrigin = 'Anonymous';
+  img.crossOrigin = 'Anonymous';
   img.onload = function() {
     var canvas = document.createElement('CANVAS');
     var ctx = canvas.getContext('2d');
@@ -173,6 +204,7 @@ class FileUtils
     canvas.width = this.width;
     ctx.drawImage(this, 0, 0);
     dataURL = canvas.toDataURL("image/jpeg");
+    
     callback(dataURL);
   };
   img.src = jpeg;
@@ -181,24 +213,42 @@ class FileUtils
     img.src = jpeg;
   }
     }
+    */
     
-    cloudcoinToBase64(cc)
+    cloudcoinToHex(cc)
     {
         let app0 = "ffd8ffe001c34a46494600010101006000601d05";
-        let an;
+        let an = "";
         for(let i = 0; i < 25; i++){
-            an+= cc.ans;
+            an+= cc.ans[i];
         }
         let aoid = "00000000000000000000000000000000";
         let pown = cc.pown.replace(/p/g, "1");
         pown = pown.replace(/u/g, "0");
+        pown += "1";
+        
         let hc = "00";
         cc.calcExpirationDate();
         let ed = cc.edHex;
         let nn = "01";
-        let sn = cc.sn.toString(16);
+        let sn = parseInt(cc.sn);
+        sn = sn.toString(16);
+        switch (sn.length)
+            {
+                case 1:sn = ("00000" + sn);   break;
+                case 2:sn = ("0000" + sn);    break;
+                case 3: sn = ("000" + sn);    break;
+                case 4:sn = ("00" + sn);      break;
+                case 5: sn = ("0" + sn);   break;
+                case 6:    break;
+            }
+        
         let fullHexHeader = app0 + an + aoid + pown + hc + ed + nn + sn;
-        return this.hexToBase64(fullHexHeader);
+        //console.log(fullHexHeader)
+        //fullHexHeader =this.hexToBase64(fullHexHeader);
+        
+        return fullHexHeader;
+        
     }
 
 
@@ -219,6 +269,15 @@ class FileUtils
   return btoa(String.fromCharCode.apply(null,
     str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
   );
+}
+
+base64ToHex(str) {
+  for (var i = 0, bin = atob(str.replace(/[ \r\n]+$/, "")), hex = []; i < bin.length; ++i) {
+    var tmp = bin.charCodeAt(i).toString(16);
+    if (tmp.length === 1) tmp = "0" + tmp;
+    hex[hex.length] = tmp;
+  }
+  return hex.join("");
 }
 
     writeTo(folder, filename)

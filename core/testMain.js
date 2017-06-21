@@ -11,9 +11,9 @@ function coinlist(cc, fileUtil)
         document.getElementById(id).remove();
         document.getElementById("tag"+id).remove();}
     let listname = "coinlist" + cc.getFolder().toLowerCase();
-    let htmltext = "<li id ='" +id + "'>sn:" + id + " pown:" + cc.pown + " denomination:"
-    + cc.getDenomination() + " tag:</li><input type='text' id ='tag" +id + "'>";
-    
+    let htmltext = "<li id = '"+id+"'>sn:" + id + " pown:" + cc.pown + " denomination:"
+    + cc.getDenomination() + " tag:</li><input type='text' id ='tag" +id + "'>"
+    + "<button id = 'dl"+id+"'>Download File</button><button id ='im"+id+"'>Download Image</button>";
     document.getElementById(listname).innerHTML += htmltext;
     //let tag = document.getElementById("tag"+ id); 
     let el = document.getElementById(listname);
@@ -22,12 +22,17 @@ function coinlist(cc, fileUtil)
 }
 function download(e)
 {
-    let files = new FileUtils();
-    let tag = document.getElementById("tag" + e.target.id)
-    if(e.target !== e.currentTarget){
-        files.downloadCloudCoinToJsonFile(e.target.id, tag.value);
+    //let files = new FileUtils();
+    let id = e.target.id.slice(2);
+    let tag = document.getElementById("tag" + id)
+    if(e.target.id == "dl" + id){
+        files.downloadCloudCoinToJsonFile(id, tag.value);
+    }else if(e.target.id == "im" + id)
+    {
+        //alert("clicked");
+        embedCC(files.loadOneCloudCoinFromJsonFile(id));
     }
-    e.stopPropogation();
+    //e.stopPropogation();
 }
 
 function showFolder(){
@@ -80,5 +85,14 @@ function trash(fileUtil)
     for(let i = 0; i < fnames.length; i++){
         document.getElementById(fnames[i]).remove();
         document.getElementById("tag"+fnames[i]).remove();
+        document.getElementById("dl"+fnames[i]).remove();
+        document.getElementById("dli"+fnames[i]).remove();
         localStorage.removeItem(fnames[i])}
+}
+
+function embedCC(cc)
+{
+    //alert(files.bankFolder);
+    let oldImg = document.getElementById("jpeg-in").files[0];
+    files.embedOneCloudCoinToJpeg(oldImg, cc, function(img){document.getElementById("jpeg-out").innerHTML= img.outerHTML});
 }
