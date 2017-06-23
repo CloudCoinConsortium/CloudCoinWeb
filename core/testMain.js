@@ -30,13 +30,20 @@ function download(e)
     if(e.target.id == "dl" + id){
         files.downloadCloudCoinToJsonFile(id, tag.value);
         trash(id);
-    }else if(e.target.id == "im" + id && document.getElementById("jpeg-in").files.length != 0)
+    }else if(e.target.id == "im" + id)
     {
-        if(document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg")
+        if(document.getElementById("jpeg-in").files.length != 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
 		{//alert("clicked");
         embedCC(files.loadOneCloudCoinFromJsonFile(id));
         trash(id);
-		} else {alert("thats not a jpeg");}
+		}else if(document.getElementById("jpeg-in").files.length == 0)
+		{
+			
+			embedTemplateCC(files.loadOneCloudCoinFromJsonFile(id));
+			trash(id);
+		}
+		else {
+			alert("thats not a jpeg");}
     }
     //e.stopPropogation();
 }
@@ -128,4 +135,40 @@ function embedCC(cc)
     //alert(files.bankFolder);
     let oldImg = document.getElementById("jpeg-in").files[0];
     files.embedOneCloudCoinToJpeg(oldImg, cc, function(img){document.getElementById("jpeg-out").innerHTML+="image with cloud coin: " + cc.sn + img.outerHTML});
+}
+
+function embedTemplateCC(cc)
+{
+    //alert(files.bankFolder);
+    //let oldImg = document.getElementById("jpeg-in").files[0];
+	let oldImg = new Image();
+	//oldImg.crossorigin = "use-credentials";
+	var c = document.createElement("canvas");
+var ctx = c.getContext("2d");
+
+oldImg.onload = function() {
+  c.width = this.naturalWidth;     // update canvas size to match image
+  c.height = this.naturalHeight;
+  ctx.drawImage(this, 0, 0);       // draw in image
+  c.toBlob(function(blob) {        // get content as JPEG blob
+    files.embedOneCloudCoinToJpeg(blob, cc, function(img){document.getElementById("jpeg-out").innerHTML+="image with cloud coin: " + cc.sn + img.outerHTML});
+  }, "image/jpeg", 0.75);
+};
+ switch(cc.getDenomination()){
+	case 1:
+	oldImg.src = "jpeg1.jpg";
+	break;
+	case 5:
+	oldImg.src = "jpeg5.jpg";
+	break;
+	case 25:
+	oldImg.src = "jpeg25.jpg";
+	break;
+	case 100:
+	oldImg.src = "jpeg1002.jpg"
+	break;
+	case 250:
+	oldImg.src = "jpeg250.jpg"
+	break;
+ }
 }
