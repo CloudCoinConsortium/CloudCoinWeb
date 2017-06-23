@@ -32,9 +32,11 @@ function download(e)
         trash(id);
     }else if(e.target.id == "im" + id && document.getElementById("jpeg-in").files.length != 0)
     {
-        //alert("clicked");
+        if(document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg")
+		{//alert("clicked");
         embedCC(files.loadOneCloudCoinFromJsonFile(id));
         trash(id);
+		} else {alert("thats not a jpeg");}
     }
     //e.stopPropogation();
 }
