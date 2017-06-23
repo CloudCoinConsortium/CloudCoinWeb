@@ -9,6 +9,8 @@ class Banker
     countCoins(fileUtil)
     {
         let coins = this.importer.importAllFromFolder(fileUtil, "bank");
+        //if(this.importer.importAllFromFolder(fileUtil, "fracked"))
+        //coins = coins.concat(this.importer.importAllFromFolder(fileUtil, "fracked"));
         
         // 0. Total, 1.1s, 2,5s, 3.25s 4.100s, 5.250s
         let returnCounts = [0, 0, 0, 0, 0, 0];

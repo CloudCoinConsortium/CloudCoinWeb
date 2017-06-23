@@ -53,10 +53,10 @@
     <h3>Upload Coin</h3>
 	<input type="file" id="myFile" multiple onchange="uploadButtonAppear()"><div id="upButtonDiv"></div>
 	
-        <h3>Bank</h3>
+        <h3>Bank  <button onclick="downloadAll()">Download All</button><input type="text" id ="alltag"></h3>
         <ul id="coinlistbank">
         </ul>
-        <h3>Counterfeit  <button onclick="trash(files)">Trash</button></h3>
+        <h3>Counterfeit  <button onclick="trashFolder(files.counterfeitFolder)">Trash</button></h3>
         <ul id="coinlistcounterfeit">
         </ul>
         <h3>Fracked  <button onclick="fix.fixAll(updates)">Fix</button></h3>
@@ -68,8 +68,8 @@
         <p id="cointotal"></p>
     </div>
     <div>
-        image in:<input type="file" id="jpeg-in">
-        image out:<div id="jpeg-out"></div>
+        <h3>image to put cloudcoin in:<input type="file" id="jpeg-in"></h3>
+        <div id="jpeg-out"></div>
     </div>
     <script>
     

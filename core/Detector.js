@@ -93,8 +93,9 @@ class Detector
                     
                     break;
             }//end switch
-            callback(cc, files);
             files.saveCloudCoinToJsonFile(cc, cc.sn);
+            callback(cc, files);
+            
              });
         }
         results[0] = totalValueToBank;

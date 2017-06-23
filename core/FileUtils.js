@@ -75,10 +75,9 @@ class FileUtils
 
     saveCloudCoinToJsonFile(cc, saveFilePath)
     {
-        //if(localStorage.getItem(saveFilePath) === null)
-        //{
+    
             
-            let uploadTime = new Date();
+        let uploadTime = new Date();
 
         let coin = {
             nn: cc.nn,
@@ -92,22 +91,8 @@ class FileUtils
         }
         
         let file = JSON.stringify(coin);
-        /* indexed Database */
-        /*
-         let request = db.transaction(["cloudcoin"], "readwrite")
-         .objectStore("cloudcoin")
-         .add(coin);
-         request.onsuccess = function(event) {
-               alert("Test Coin has been added to your database.");
-            };
-            
-            request.onerror = function(event) {
-               alert("Unable to add test coin is aready exist in your database! ");
-            };
-
-            */
-        //let fileBlob = new Blob([file], {type: "test/plain"});
-        //saveAs(fileBlob, "cloudcointest.txt");
+        
+        
         localStorage.setItem(saveFilePath, file);
         //} else {console.log("coin already in local storage");}
 
@@ -115,11 +100,13 @@ class FileUtils
 	
 	uploadCloudCoinFromJsonFile(loadFile, callback)
 	{
-		var reader = new FileReader();
+		var files = this;
+        var reader = new FileReader();
 		reader.onload = function(e){
 			var data = JSON.parse(reader.result);
         for(let i = 0; i < data.cloudcoin.length; i++){
 			let cc = data.cloudcoin[i];
+            files.writeTo("suspect", cc.sn);
 		let upCoin = new CloudCoin(cc.nn, cc.sn, cc.an, cc.ed, cc.aoid, cc.pown);
         let currentCoin = JSON.parse(localStorage.getItem(upCoin.sn));
         if(currentCoin != null){
@@ -133,6 +120,30 @@ class FileUtils
 		
 	}//make this work for multiple files later
 
+    uploadCloudCoinFromJpegFile(loadFile, callback)
+	{
+		var reader = new FileReader();
+        var files = this;
+		reader.onload = function(e){
+			var data = reader.result.replace("data:image/jpeg;base64,", "");
+
+            data = files.base64ToHex(data);
+            data = data.slice(40, 910);
+        
+		let upCoin = files.hexToCloudCoin(data);
+        files.writeTo("suspect", upCoin.sn);
+        let currentCoin = JSON.parse(localStorage.getItem(upCoin.sn));
+        if(currentCoin != null){
+            if(upCoin.sn == currentCoin.sn && loadFile.lastModified < currentCoin.time)
+            {
+                alert("This app has the current version of that coin.");
+            }else{callback(upCoin, upCoin.sn);}
+        }else{callback(upCoin, upCoin.sn);}
+        }
+		reader.readAsDataURL(loadFile);
+		
+	}
+
     downloadCloudCoinToJsonFile(saveFile, tag="")
     {
         let obj = {
@@ -142,7 +153,7 @@ class FileUtils
             
         };
         let coin = JSON.parse(localStorage.getItem(saveFile));
-        delete coin.pown;
+        //delete coin.pown;
         delete coin.time;
         let cc = new CloudCoin(coin.nn, coin.sn);
         obj.cloudcoin.push(coin);
@@ -154,6 +165,37 @@ class FileUtils
         }
         let filedata = JSON.stringify(obj);
         let fullFileName = cc.getDenomination() + ".CloudCoins." + tag + ".stack";
+        let downFile = new File([filedata], fullFileName);
+        saveAs(downFile, fullFileName);
+
+    }
+
+    downloadAllCloudCoinToJsonFile(saveFile, tag="")
+    {
+        let obj = {
+            cloudcoin:[
+
+            ]
+            
+        };
+        let coin = [];
+        let total = 0;
+        for(let i = 0; i < saveFile.length; i++){
+        coin.push(JSON.parse(localStorage.getItem(saveFile[i])));
+        //delete coin.pown;
+        delete coin[i].time;
+        let cc = new CloudCoin(1, coin[i].sn);
+        total += cc.getDenomination();
+        obj.cloudcoin.push(coin[i]);
+        }
+        if(tag === ""){
+            tag += coin[0].sn;
+            tag = tag.slice(-3);
+            tag += coin[0].an[0];
+            tag = tag.slice(0,7);
+        }
+        let filedata = JSON.stringify(obj);
+        let fullFileName = total + ".CloudCoins." + tag + ".stack";
         let downFile = new File([filedata], fullFileName);
         saveAs(downFile, fullFileName);
 
@@ -171,7 +213,7 @@ class FileUtils
             
             newImage64 = newImage64.replace("data:image/jpeg;base64,", "");
             newImage64 = files.base64ToHex(newImage64);
-            newImage64 = newImage64.slice(40);
+            newImage64 = newImage64.slice(4); //40
             //alert(newImage64);
             newImage64 = coin64 + newImage64;
             //alert(newImage64);
@@ -248,6 +290,34 @@ class FileUtils
         //fullHexHeader =this.hexToBase64(fullHexHeader);
         
         return fullHexHeader;
+        
+    }
+    hexToCloudCoin(hex)
+    {
+        
+        let an = [];
+        for(let i = 0; i < 25; i++){
+            an.push(hex.slice(i*32, (i*32)+32));
+        }
+        let aoid = [];
+        let pown = hex.slice(832, 857);
+        pown = pown.replace(/1/g, "p");
+        pown = pown.replace(/0/g, "u");
+        let ed = parseInt(hex.slice(860, 862), 16);
+        let y = Math.floor(ed/12);
+        let m = ed%12;
+        let start = new Date("August 1, 2016");
+        start.setMonth(start.getMonth() + m);
+        start.setFullYear(start.getFullYear() + y);
+        ed = start.getMonth(); + "-" + start.getFullYear();
+        let nn = parseInt(hex.slice(862, 864), 16);
+        let sn = parseInt(hex.slice(864, 870), 16);
+        
+        
+        
+        let coin = new CloudCoin(nn, sn, an, ed, aoid, pown);
+        
+        return coin;
         
     }
 
