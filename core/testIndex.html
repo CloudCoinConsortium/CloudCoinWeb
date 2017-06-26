@@ -61,6 +61,12 @@
         <h3>Bank  <input type="checkbox" id="cbAll" onchange="checkAll()"><button onclick="downloadAll()">Download Checked</button><input type="text" id ="alltag"></h3>
         <ul id="coinlistbank">
         </ul>
+		<h3>Mind Inventory  <button onclick="moveToMind()">Move Checked Coins to Mind</button><button onclick="moveFromMind()">Move from Mind</button></h3>
+        username:<input type="text" id ="user">
+		password:<input type="text" id ="pass">
+		<p>Remember your username and password. Do not give it to anyone else. When you want to spend your coins move them from your mind to your bank and then export.</p>
+		<ul id="coinlistmind">
+        </ul>
         <h3>Counterfeit  <button onclick="trashFolder(files.counterfeitFolder)">Trash</button></h3>
         <ul id="coinlistcounterfeit">
         </ul>

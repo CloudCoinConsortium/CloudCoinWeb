@@ -58,8 +58,8 @@ function downloadAll()
     }
     let tag = document.getElementById("alltag").value;
     files.downloadAllCloudCoinToJsonFile(fnames, tag);
-    trashFolder(files.bankFolder);
-    trashFolder(files.frackedFolder);
+    for(let i = 0; i < fnames.length; i++){
+        trash(fnames[i]);}
 }
 
 function checkAll()
@@ -189,4 +189,21 @@ oldImg.onload = function() {
 	oldImg.src = "jpeg250.jpg"
 	break;
  }
+}
+
+function moveToMind()
+{
+	let fnames = [];
+	for(let j = 0; j < coins.length; j++){
+        if(document.getElementById("cb" + coins[j].sn).checked)
+		fnames.push(coins[j].sn);
+    }
+	let usern = document.getElementById("user").value;
+	let passw = document.getElementById("pass").value;
+	
+}
+
+function moveFromMind()
+{
+	
 }
