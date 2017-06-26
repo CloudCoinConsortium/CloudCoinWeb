@@ -336,10 +336,22 @@ class FileUtils
     }
 
     hexToBase64(str) {
-  str = btoa(String.fromCharCode.apply(null,
-    str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" "))
-  );
-  return str;
+  str = str.replace(/\r|\n/g, "").replace(/([\da-fA-F]{2}) ?/g, "0x$1 ").replace(/ +$/, "").split(" ");
+  
+  if(str.length > 40000)
+  {
+	  let holder = "";
+	  for(let i = 0; i<str.length; i += 40000)
+	  {
+		  
+		  holder += String.fromCharCode.apply(null, str.slice(i, i+40000));
+	  }
+	  return btoa(holder);
+  } else
+  {str = btoa(String.fromCharCode.apply(null, str));
+  return str;}
+	
+  
 }
 
 base64ToHex(str) {

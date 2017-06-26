@@ -11,10 +11,11 @@ function coinlist(cc, fileUtil)
         document.getElementById(id).remove();
         document.getElementById("tag"+id).remove();
         document.getElementById("dl"+id).remove();
-        document.getElementById("im"+id).remove();}
+        document.getElementById("im"+id).remove();
+	document.getElementById("cb"+id).remove();}
     let listname = "coinlist" + cc.getFolder().toLowerCase();
     let htmltext = "<li id = '"+id+"'>sn:" + id + " pown:" + cc.pown + " denomination:"
-    + cc.getDenomination() + " tag:</li><input type='text' id ='tag" +id + "'>"
+    + cc.getDenomination() + " tag:</li><input type='checkbox' id='cb"+id+"'><input type='text' id ='tag" +id + "'>"
     + "<button id = 'dl"+id+"'>Download File</button><button id ='im"+id+"'>Download Image</button>";
     document.getElementById(listname).innerHTML += htmltext;
     //let tag = document.getElementById("tag"+ id); 
@@ -50,15 +51,31 @@ function download(e)
 
 function downloadAll()
 {
-    let ffnames = files.frackedFolder.split(",");
-    let bfnames = files.bankFolder.split(",");
-    ffnames.pop();
-    bfnames.pop();
-    let fnames = bfnames.concat(ffnames);
+    let fnames = [];
+	for(let j = 0; j < coins.length; j++){
+        if(document.getElementById("cb" + coins[j].sn).checked)
+		fnames.push(coins[j].sn);
+    }
     let tag = document.getElementById("alltag").value;
     files.downloadAllCloudCoinToJsonFile(fnames, tag);
     trashFolder(files.bankFolder);
     trashFolder(files.frackedFolder);
+}
+
+function checkAll()
+{
+	let ffnames = files.frackedFolder.split(",");
+    let bfnames = files.bankFolder.split(",");
+    ffnames.pop();
+    bfnames.pop();
+    let fnames = bfnames.concat(ffnames);
+	for(let i = 0; i < fnames.length; i++)
+	{
+		if(document.getElementById("cbAll").checked)
+		document.getElementById("cb" + fnames[i]).checked = true;
+		else
+		document.getElementById("cb" + fnames[i]).checked = false;
+	}
 }
 
 function showFolder(){
@@ -113,6 +130,7 @@ function trash(id)
         document.getElementById("tag"+id).remove();
         document.getElementById("dl"+id).remove();
         document.getElementById("im"+id).remove();
+		document.getElementById("cb"+id).remove();
         localStorage.removeItem(id);
         updateTotal(files);
 }
