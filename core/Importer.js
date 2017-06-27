@@ -12,11 +12,15 @@ class Importer
         for(var j = 0; j< localStorage.length; j++){
             fnames.push(localStorage.key(j));
         }
-        
+        let k = 0;
             for(let i = 0; i < fnames.length; i++){
                 //console.log(fnames[i]);
-                coins.push(fileUtil.loadOneCloudCoinFromJsonFile(fnames[i]));
-                this.updateFolder(coins[i], fileUtil);
+				if(localStorage.getItem(fnames[i]).includes("mindstorage") == false){
+                //alert(localStorage.getItem(fnames[i]));
+				coins.push(fileUtil.loadOneCloudCoinFromJsonFile(fnames[i]));
+                this.updateFolder(coins[k], fileUtil);
+				k++;
+				}
             }
             return coins;
         

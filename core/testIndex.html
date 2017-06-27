@@ -61,7 +61,7 @@
         <h3>Bank  <input type="checkbox" id="cbAll" onchange="checkAll()"><button onclick="downloadAll()">Download Checked</button><input type="text" id ="alltag"></h3>
         <ul id="coinlistbank">
         </ul>
-		<h3>Mind Inventory  <button onclick="moveToMind()">Move Checked Coins to Mind</button><button onclick="moveFromMind()">Move from Mind</button></h3>
+		<h3>Mind Inventory  <button onclick="mindStorage(moveToMind)">Move Checked Coins to Mind</button><button onclick="mindStorage(moveFromMind)">Move from Mind</button></h3>
         username:<input type="text" id ="user">
 		password:<input type="text" id ="pass">
 		<p>Remember your username and password. Do not give it to anyone else. When you want to spend your coins move them from your mind to your bank and then export.</p>
@@ -100,13 +100,13 @@
     {
         echo[i].then(function(rr){
             //alert(rr.success)
-        populate(raida.responseArray[i], i);
+        populateRaidaStatus(raida.responseArray[i], i);
         
 });
     }
     //let detect = new Detector(files, 3000);
     //detect.detectAll();
-    
+    mindlist();
     for(let j = 0; j < coins.length; j++){
         //alert(j);
     coinlist(coins[j], files);}

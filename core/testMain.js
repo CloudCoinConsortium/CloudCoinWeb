@@ -1,4 +1,4 @@
-function populate(rr, id)
+function populateRaidaStatus(rr, id)
 {
     document.getElementById("r_" + id).innerHTML = rr.outcome;
     document.getElementById("p_" + id).innerHTML = rr.milliseconds;
@@ -23,6 +23,18 @@ function coinlist(cc, fileUtil)
     el.addEventListener("click",download);
     
 }
+
+function mindlist()
+{
+	document.getElementById("coinlistmind").innerHTML = "";
+		for(var j = 0; j< localStorage.length; j++){
+            if(localStorage.getItem(localStorage.key(j)) == "mindstorage")
+			document.getElementById("coinlistmind").innerHTML +="<li id = 'm" + 
+		localStorage.key(j) + "'>" + localStorage.key(j) + "</li><input type='checkbox' id='mcb"+localStorage.key(j)+"'>";
+        }
+	
+}
+
 function download(e)
 {
     //let files = new FileUtils();
@@ -121,6 +133,7 @@ function updates(cc, fileUtil)
 {
     coinlist(cc, fileUtil);
     updateTotal(fileUtil);
+	mindlist();
 }
 
 function trash(id)
@@ -191,19 +204,90 @@ oldImg.onload = function() {
  }
 }
 
-function moveToMind()
+function mindStorage(callback)
 {
-	let fnames = [];
-	for(let j = 0; j < coins.length; j++){
-        if(document.getElementById("cb" + coins[j].sn).checked)
-		fnames.push(coins[j].sn);
-    }
+	
 	let usern = document.getElementById("user").value;
 	let passw = document.getElementById("pass").value;
+	let phrase1 = "";
+	let phrase2 = "";
+	let combPhrase = "";
+	let fullAn = "";
+	let pan = [];
+	for(let a = 0; a < usern.length; a++)
+		phrase1 += usern.charCodeAt(a).toString(16);
+	for(let b = 0; b < passw.length; b++)
+		phrase2 += passw.charCodeAt(b).toString(16);
+	if(phrase1.length >= phrase2.length){
+		var phrasesize = phrase1.length;
+	}else{
+	var phrasesize = phrase2.length;}
+	//alert(phrase1 + " " + phrase2);
+	if(usern == passw)
+	{
+		alert("Username and Password cannot be the same");
+	}else if(phrase1.length + phrase2.length < 24)
+	{
+		alert("Username or Password is too short");
+	}else if(usern[0] == /\s/ || usern[usern.length-1] == /\s/)
+	{
+		alert("Remove whitespace from the front and end of the Username");
+	}else if(passw[0] == /\s/ || passw[passw.length-1] == /\s/){
+		alert("Remove whitespace from the front and end of the Password");
+	}else
+	{
+		for(let i = 0; i < phrasesize; i++){
+			if(i<phrase1.length)
+			combPhrase += phrase1[i];
+			if(i<phrase2.length)
+			combPhrase += phrase2[i];
+		}
+		console.log(combPhrase);
+		for(let k = 0; k < 800/combPhrase.length;k++)
+			fullAn += combPhrase;
+		fullAn = fullAn.slice(0, 800);
+		for(let l = 0; l < 25; l++)
+			pan.push(fullAn.slice(l*32, (l+1)*32));
+			
+			callback(pan);
+		
+	}
 	
 }
 
-function moveFromMind()
+function moveFromMind(pan)
 {
-	
+	let fnames = [];
+	for(var j = 0; j< localStorage.length; j++){
+            if(localStorage.getItem(localStorage.key(j)) == "mindstorage"){
+			if(document.getElementById("mcb" + localStorage.key(j)).checked)
+			fnames.push(localStorage.key(j));
+			}
+        }
+	for(let i = 0; i < fnames.length; i++)
+	{
+		let cc = new CloudCoin(1, fnames[i], pan);
+		files.saveCloudCoinToJsonFile(cc, cc.sn);
+		files.writeTo("suspect", cc.sn);
+	}
+	detect.detectAllSuspect(updates);
+}
+
+function moveToMind(newPan)
+{
+	//alert(newPan);
+	let toBeMoved = [];
+	for(let j = 0; j < localStorage.length; j++){
+        if(document.getElementById("cb" + localStorage.key(j)).checked)
+		toBeMoved.push(files.loadOneCloudCoinFromJsonFile(localStorage.key(j)));
+    }
+	let promises = [];
+	for(let i = 0; i<toBeMoved.length; i++){
+		toBeMoved[i].pans = newPan;
+		//files.overWrite(toBeMoved[i].getFolder().toLowerCase(), "suspect", toBeMoved[i].sn)
+		promises.push(raida.detectCoin(toBeMoved[i]))
+		trash(toBeMoved[i].sn);
+		localStorage.setItem(toBeMoved[i].sn, "mindstorage");
+	}
+	Promise.all(promises).then(function(){mindlist();});
 }
