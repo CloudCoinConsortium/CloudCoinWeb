@@ -207,8 +207,9 @@ oldImg.onload = function() {
 function mindStorage(callback)
 {
 	
-	let usern = document.getElementById("user").value;
-	let passw = document.getElementById("pass").value;
+	let usern = document.getElementById("email").value;
+	let passw = document.getElementById("user").value;
+	passw += document.getElementById("pass").value;
 	let phrase1 = "";
 	let phrase2 = "";
 	let combPhrase = "";
@@ -223,7 +224,7 @@ function mindStorage(callback)
 	}else{
 	var phrasesize = phrase2.length;}
 	//alert(phrase1 + " " + phrase2);
-	if(usern == passw)
+	if(document.getElementById("user").value == document.getElementById("pass").value)
 	{
 		alert("Username and Password cannot be the same");
 	}else if(phrase1.length + phrase2.length < 24)
@@ -231,9 +232,9 @@ function mindStorage(callback)
 		alert("Username or Password is too short");
 	}else if(usern[0] == /\s/ || usern[usern.length-1] == /\s/)
 	{
-		alert("Remove whitespace from the front and end of the Username");
+		alert("Remove whitespace from the front and end of the Email");
 	}else if(passw[0] == /\s/ || passw[passw.length-1] == /\s/){
-		alert("Remove whitespace from the front and end of the Password");
+		alert("Remove whitespace from the front and end of the Username and Password");
 	}else
 	{
 		for(let i = 0; i < phrasesize; i++){
