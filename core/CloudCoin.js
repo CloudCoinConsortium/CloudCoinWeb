@@ -46,6 +46,7 @@ class CloudCoin
             case 'f': returnString = "fail"; break;
             case 'p': returnString = "pass"; break;
             case 'u': returnString = "undetected"; break;
+			case 'n': returnString = "noresponse"; break;
             default: returnString = "no valid id"; break;
         }
         return returnString;
@@ -66,7 +67,9 @@ class CloudCoin
             case 'p':
             case "pass": newPown+='p'; setGood = true; break;
             case 'u':
-            case "undetected": newPown+='e'; setGood = true; break;
+            case "undetected": newPown+='u'; setGood = true; break;
+			case 'n':
+			case "noresponse": newPown+='n'; setGood = false; break;
             default: console.log("not a possible value for status"); newPown +=this.pown[raida_id]; break;
         }
         for(let j = (raida_id + 1); j < 25; j++)
