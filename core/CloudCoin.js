@@ -338,7 +338,7 @@ class CloudCoin
      setAnsToPans()
      {
         for(let i = 0; i < 25; i++) {
-            this.pans[i] = this.ans[i];
+            this.pans[i] = this.ans[i].toUpperCase();
         }
      }
 
