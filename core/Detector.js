@@ -15,8 +15,8 @@ class Detector
         let totalValueToKeptInSuspect = 0;
         let files = this.fileUtil;
         let fnames = [];
-        for(var key in localStorage){
-            fnames.push(key);
+        for(var j = 0; j< localStorage.length; j++){
+            fnames.push(localStorage.key(j));
         }
         let coins = [];
         for(let i = 0; i < fnames.length; i++)
@@ -65,9 +65,9 @@ class Detector
         let totalValueToKeptInSuspect = 0;
         let fnames = [];
         let files = this.fileUtil;
-        for(var key in localStorage){
-            if(this.fileUtil.suspectFolder.includes(key))
-            fnames.push(key);
+        for(var j = 0; j< localStorage.length; j++){
+            if(this.fileUtil.suspectFolder.includes(localStorage.key(j)))
+            fnames.push(localStorage.key(j));
         }
         let coins = [];
         for(let i = 0; i < fnames.length; i++)
