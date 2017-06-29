@@ -15,7 +15,7 @@ function coinlist(cc, fileUtil)
 	document.getElementById("cb"+id).remove();}
     let listname = "coinlist" + cc.getFolder().toLowerCase();
     let htmltext = "<li id = '"+id+"'>sn:" + id + " pown:" + cc.pown + " denomination:"
-    + cc.getDenomination() + " tag:</li><input type='checkbox' id='cb"+id+"'><input type='text' id ='tag" +id + "'>"
+    + cc.getDenomination() + " tag:</li><input type='checkbox' id='cb"+id+"'><input type='text' id ='tag" +id + "' placeholder='Name this cloudcoin file'>"
     + "<button class='small button' id = 'dl"+id+"'>Download File</button><button class='small button' id ='im"+id+"'>Download Image</button>";
     document.getElementById(listname).innerHTML += htmltext;
     //let tag = document.getElementById("tag"+ id); 
