@@ -16,7 +16,7 @@ function coinlist(cc, fileUtil)
     let listname = "coinlist" + cc.getFolder().toLowerCase();
     let htmltext = "<li id = '"+id+"'>sn:" + id + " pown:" + cc.pown + " denomination:"
     + cc.getDenomination() + " tag:</li><input type='checkbox' id='cb"+id+"'><input type='text' id ='tag" +id + "'>"
-    + "<button id = 'dl"+id+"'>Download File</button><button id ='im"+id+"'>Download Image</button>";
+    + "<button class='small button' id = 'dl"+id+"'>Download File</button><button class='small button' id ='im"+id+"'>Download Image</button>";
     document.getElementById(listname).innerHTML += htmltext;
     //let tag = document.getElementById("tag"+ id); 
     let el = document.getElementById(listname);
@@ -48,12 +48,12 @@ function download(e)
         if(document.getElementById("jpeg-in").files.length != 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
 		{//alert("clicked");
         embedCC(files.loadOneCloudCoinFromJsonFile(id));
-        trash(id);
+        //trash(id);
 		}else if(document.getElementById("jpeg-in").files.length == 0)
 		{
 			
 			embedTemplateCC(files.loadOneCloudCoinFromJsonFile(id));
-			trash(id);
+			//trash(id);
 		}
 		else {
 			alert("thats not a jpeg");}
@@ -185,6 +185,7 @@ function embedCC(cc)
     //alert(files.bankFolder);
     let oldImg = document.getElementById("jpeg-in").files[0];
     files.embedOneCloudCoinToJpeg(oldImg, cc, function(img){document.getElementById("jpeg-out").innerHTML+="image with cloud coin: " + cc.sn + img.outerHTML});
+
 }
 
 function embedTemplateCC(cc)
@@ -206,19 +207,19 @@ oldImg.onload = function() {
 };
  switch(cc.getDenomination()){
 	case 1:
-	oldImg.src = "jpeg1.jpg";
+	oldImg.src = "core/jpeg1.jpg";
 	break;
 	case 5:
-	oldImg.src = "jpeg5.jpg";
+	oldImg.src = "core/jpeg5.jpg";
 	break;
 	case 25:
-	oldImg.src = "jpeg25.jpg";
+	oldImg.src = "core/jpeg25.jpg";
 	break;
 	case 100:
-	oldImg.src = "jpeg1002.jpg"
+	oldImg.src = "core/jpeg1002.jpg"
 	break;
 	case 250:
-	oldImg.src = "jpeg250.jpg"
+	oldImg.src = "core/jpeg250.jpg"
 	break;
  }
 }
