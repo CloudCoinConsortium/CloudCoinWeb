@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foundation for Sites</title>
+    <title>Welcome to CloudCoin</title>
     <link rel="stylesheet" href="css/foundation.css">
     <link rel="stylesheet" href="css/app.css">
 
@@ -15,7 +15,7 @@
     <script src="core/random.min.js"></script>
     <script src="core/CloudCoin.js"></script>
     <script src="core/FileUtils.js"></script>
-    <script src="core/testMain.js"></script>
+    <script src="core/main.js"></script>
     <script src="core/RAIDA.js"></script>
     <script src="core/Importer.js"></script>
     <script src="core/Detector.js"></script>
@@ -24,6 +24,13 @@
     <script src="core/FixitHelper.js"></script>
     <script src="core/Exporter.js"></script>
     <script src="core/FileSaver.js"></script>
+    <style>
+    button.lgfont
+    {
+      font-size: 3rem;
+      border-radius: 3rem;
+    }
+      </style>
   </head>
   <body>
     
@@ -34,7 +41,7 @@
       
       
       <div class="global-nav-title">
-        <button class="menu-icon" data-toggle="offCanvas"><span></span></button>
+        <button class="menu-icon" data-open="offCanvas"  onclick="statusButton()"><span ></span></button>
         <strong>CloudCoin</strong></div>
       </nav>
       
@@ -176,18 +183,98 @@
 </table>
     </div>
 <div class="off-canvas-content" data-off-canvas-content>
+
 <div class="grid-y grid-frame" >
   <div class="large-4 small-1 cell" ></div>
 <div class="grid-x grid-margin-x auto cell">
 
-<button class="large-auto cell button">Import</button>
-<button class="large-auto cell button">Bank</button>
-<button class="large-auto cell button">Export</button>
+<button class="large-auto cell button lgfont" data-open="importModal">Import</button>
+<button class="large-auto cell button lgfont" data-open="bankModal">Bank</button>
+<button class="large-auto cell button lgfont" data-open="exportModal">Export</button>
 
 
 </div>
 <div class="large-4 small-1 cell" ></div>
 </div>
+
+<div class="small reveal" id="importModal" data-reveal data-overlay="false">
+  <h3>Upload Coin</h3>
+	<input type="file" id="myFile" multiple onchange="uploadButtonAppear()">
+  <div id="upButtonDiv"></div>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="reveal" id="bankModal" data-reveal>
+  <table >
+	<tbody>
+		<tr>
+			<th>Value</th>
+			<th>Good</th>
+			<th>Fracked</th>
+			<th>Total</th>
+		</tr>
+		<tr>
+			<td>Ones</td>
+			<td id="b_g1"> </td>
+			<td id="b_f1"> </td>
+			<td id="b_t1"> </td>
+		</tr>
+		<tr>
+			<td>Fives</td>
+			<td id="b_g5"> </td>
+			<td id="b_f5"> </td>
+			<td id="b_t5"> </td>
+		</tr>
+		<tr>
+			<td>Quarters</td>
+			<td id="b_g25"> </td>
+			<td id="b_f25"> </td>
+			<td id="b_t25"> </td>
+		</tr>
+		<tr>
+			<td>Hundreds</td>
+			<td id="b_g100"> </td>
+			<td id="b_f100"> </td>
+			<td id="b_t100"> </td>
+		</tr>
+		<tr>
+			<td>250s</td>
+			<td id="b_g250"> </td>
+			<td id="b_f250"> </td>
+			<td id="b_t250"> </td>
+		</tr>
+		<tr>
+			<td><b>SUM</b></td>
+			<td><b id="b_gs"></b></td>
+			<td><b id="b_fs"></b></td>
+			<td><b id="b_ts"></b></td>
+		</tr>
+	</tbody>
+</table>
+ <button class="button" onclick="fix.fixAll(updates)">Fix Fracked</button>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="reveal" id="exportModal" data-reveal>
+   <h3>Bank  <input type="checkbox" id="cbAll" onchange="checkAll()"><button class="button" onclick="downloadAll()">Download Checked</button><input type="text" id ="alltag"></h3>
+        <ul id="coinlistbank"></ul>
+        <h3>Fracked</h3>
+        <ul id="coinlistfracked"></ul>
+
+        <div style="visibility: hidden;">
+        <h3>image to put cloudcoin in:<input type="file" id="jpeg-in"></h3>
+        <div id="jpeg-out"></div>
+    </div>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+
 </div>
 </div>
 <a class="exit-off-canvas"></a>
@@ -208,7 +295,7 @@
     
     let raida = new RAIDA(3000);
     let files = new FileUtils();
-    let echo = raida.echoAll();
+    
     let importer = new Importer();
     let detect = new Detector(files, 3000);
     let coins = importer.importAll(files);
@@ -218,20 +305,13 @@
     
     
     
-    for(let i = 0; i < 25; i++)
-    {
-        echo[i].then(function(rr){
-            //alert(rr.success)
-        populateRaidaStatus(raida.responseArray[i], i);
-        
-});
-    }
-    //let detect = new Detector(files, 3000);
-    //detect.detectAll();
-    mindlist();
+    
+    
+    //mindlist();
     for(let j = 0; j < coins.length; j++){
-        //alert(j);
-    coinlist(coins[j], files);}
+        
+    coinlist(coins[j], files);
+  }
     updateTotal(files);
     </script>
   </body>
