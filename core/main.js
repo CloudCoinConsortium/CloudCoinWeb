@@ -9,10 +9,8 @@ function coinlist(cc, fileUtil)
     let id = cc.sn;
     if(document.getElementById(id) != null){
         document.getElementById(id).remove();
-        document.getElementById("tag"+id).remove();
-        document.getElementById("dl"+id).remove();
-        document.getElementById("im"+id).remove();
-	document.getElementById("cb"+id).remove();}
+        
+	}
     let listname = "coinlist" + cc.getFolder().toLowerCase();
     let htmltext = "<li id = '"+id+"'><input type='checkbox' id='cb"+id+"'>denomination:"
     + cc.getDenomination() + " sn: "+id+" </li>";
@@ -163,10 +161,9 @@ function trash(id)
 {
     
         document.getElementById(id).remove();
-        document.getElementById("tag"+id).remove();
-        document.getElementById("dl"+id).remove();
-        document.getElementById("im"+id).remove();
-		document.getElementById("cb"+id).remove();
+        
+        
+		
         localStorage.removeItem(id);
         updateTotal(files);
 }
