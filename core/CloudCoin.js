@@ -163,7 +163,7 @@ class CloudCoin
          let start = new Date("August 1, 2016");
          today.setFullYear(today.getFullYear() + this.YEARSTILEXPIRE);
          let delta = today.getMonth() - start.getMonth() + ((today.getFullYear() - start.getFullYear())*12);
-         this.ed = today.getMonth() + " - " + today.getFullYear();
+         this.ed = today.getMonth() + "-" + today.getFullYear();
          this.edHex = delta.toString(16);
          if(this.edHex.length < 2){this.edHex = "0" + this.edHex;}
      }

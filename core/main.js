@@ -184,8 +184,12 @@ function trashFolder(folder)
 function embedCC(cc)
 {
     //alert(files.bankFolder);
+	let tag = document.getElementById("alltag").value;
+	tag+= ".jpeg";
     let oldImg = document.getElementById("jpeg-in").files[0];
-    files.embedOneCloudCoinToJpeg(oldImg, cc, function(img){document.getElementById("jpeg-out").innerHTML+=img.outerHTML});
+    files.embedOneCloudCoinToJpeg(oldImg, cc, function(img){
+		saveAs(img, tag);
+	});
 
 }
 
@@ -194,6 +198,8 @@ function embedTemplateCC(cc)
     //alert(files.bankFolder);
     //let oldImg = document.getElementById("jpeg-in").files[0];
 	let oldImg = new Image();
+	let tag = document.getElementById("alltag").value;
+	tag+= ".jpeg";
 	//oldImg.crossorigin = "use-credentials";
 	var c = document.createElement("canvas");
 var ctx = c.getContext("2d");
@@ -203,7 +209,9 @@ oldImg.onload = function() {
   c.height = this.naturalHeight;
   ctx.drawImage(this, 0, 0);       // draw in image
   c.toBlob(function(blob) {        // get content as JPEG blob
-    files.embedOneCloudCoinToJpeg(blob, cc, function(img){document.getElementById("jpeg-out").innerHTML+=img.outerHTML});
+	files.embedOneCloudCoinToJpeg(blob, cc, function(img){
+		saveAs(img, tag);
+	});
   }, "image/jpeg", 0.75);
 };
  switch(cc.getDenomination()){

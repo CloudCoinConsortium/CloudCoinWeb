@@ -214,14 +214,17 @@ class FileUtils
             newImage64 = newImage64.replace("data:image/jpeg;base64,", "");
             newImage64 = files.base64ToHex(newImage64);
             newImage64 = newImage64.slice(4); //40
-            //alert(newImage64);
+            
             newImage64 = coin64 + newImage64;
-            //alert(newImage64);
-            newImage64 = files.hexToBase64(newImage64);
-            newImage64 = "data:image/jpeg;base64," + newImage64;
-            let newImage = new Image();
-            newImage.src = newImage64;
-            callback(newImage);
+            newImage64 = files.hexStringToBlob(newImage64);
+            //newImage64 = coin64.concat(newImage64);
+
+            
+            //newImage64 = files.hexToBase64(newImage64);
+            //newImage64 = "data:image/jpeg;base64," + newImage64;
+            //let newImage = new Image();
+            //newImage.src = newImage64;
+            callback(newImage64);
         }
         reader.readAsDataURL(jpeg);
         
@@ -288,7 +291,10 @@ class FileUtils
         let fullHexHeader = app0 + an + aoid + pown + hc + ed + nn + sn;
         //console.log(fullHexHeader)
         //fullHexHeader =this.hexToBase64(fullHexHeader);
-        
+        //let hexarray = [];
+        //for(let k = 0; k<fullHexHeader.length; k+=2)
+          //  hexarray.push(fullHexHeader.substring(k,k+2));
+        //return hexarray;
         return fullHexHeader;
         
     }
@@ -322,17 +328,16 @@ class FileUtils
     }
 
 
-    hexStringToByteArray(HexString)
+    hexStringToBlob(str)
     {
-        let NumberChars = HexString.length;
-        let bytes = [];
-        for(let i = 0; i < NumberChars; i += 2)
-        {
-            bytes[i/2] = parseInt(HexString.substring(i, i+2), 16).toString(2);
-            bytes[i/2] = "00000000" + bytes[i/2];
-            bytes[i/2] = bytes[i/2].substring((bytes[i/2].length - 8) ,bytes[i/2].length)
-        }
-        return bytes;
+         var hexStr = str;//.slice(2);
+    var buf = new ArrayBuffer(hexStr.length/2);
+    var byteBuf = new Uint8Array(buf);
+    for (let i=0; i<hexStr.length; i+=2) {
+      byteBuf[i/2] = parseInt(hexStr.slice(i,i+2),16);
+    }
+    var blob = new Blob([byteBuf], {type: "image/jpeg"});
+    return blob;
     }
 
     hexToBase64(str) {
@@ -361,6 +366,7 @@ base64ToHex(str) {
     hex[hex.length] = tmp;
   }
   return hex.join("");
+  //return hex;
 }
 
     writeTo(folder, filename)
