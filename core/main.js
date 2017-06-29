@@ -99,7 +99,7 @@ function showFolder(){
 	
 function uploadButtonAppear(){
 	//alert(document.getElementById("myFile").value);
-    document.getElementById("upButtonDiv").innerHTML="<button id='upButton' onclick='uploadFile()'>Upload</button>";
+    document.getElementById("upButtonDiv").innerHTML="<button class='button' id='upButton' onclick='uploadFile()'>Upload</button>";
 }
 
 function uploadFile(){
@@ -152,7 +152,7 @@ function updates(cc, fileUtil)
 {
     coinlist(cc, fileUtil);
     updateTotal(fileUtil);
-	mindlist();
+	//mindlist();
 }
 
 function trash(id)
