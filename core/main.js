@@ -14,13 +14,13 @@ function coinlist(cc, fileUtil)
         document.getElementById("im"+id).remove();
 	document.getElementById("cb"+id).remove();}
     let listname = "coinlist" + cc.getFolder().toLowerCase();
-    let htmltext = "<li id = '"+id+"'>sn:" + id + " pown:" + cc.pown + " denomination:"
-    + cc.getDenomination() + " tag:</li><input type='checkbox' id='cb"+id+"'><input type='text' id ='tag" +id + "' placeholder='Name this cloudcoin file'>"
-    + "<button class='small button' id = 'dl"+id+"'>Download File</button><button class='small button' id ='im"+id+"'>Download Image</button>";
+    let htmltext = "<li id = '"+id+"'><input type='checkbox' id='cb"+id+"'>denomination:"
+    + cc.getDenomination() + " sn: "+id+" </li>";
+    
     document.getElementById(listname).innerHTML += htmltext;
     //let tag = document.getElementById("tag"+ id); 
-    let el = document.getElementById(listname);
-    el.addEventListener("click",download);
+    //let el = document.getElementById(listname);
+    //el.addEventListener("click",download);
     
 }
 
@@ -35,43 +35,47 @@ function mindlist()
 	
 }
 
-function download(e)
+function downloadImage()
 {
-    //let files = new FileUtils();
-    let id = e.target.id.slice(2);
-    let tag = document.getElementById("tag" + id)
-    if(e.target.id == "dl" + id){
-        files.downloadCloudCoinToJsonFile(id, tag.value);
-        trash(id);
-    }else if(e.target.id == "im" + id)
-    {
+    
+    
+    let fnames = [];
+	for(var j = 0; j< localStorage.length; j++){
+         
+	if(document.getElementById("cb" + localStorage.key(j)).checked)
+ 			fnames.push(localStorage.key(j));
+}
+    for(let i =0 ; i<fnames.length; i++){
         if(document.getElementById("jpeg-in").files.length != 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
 		{//alert("clicked");
-        embedCC(files.loadOneCloudCoinFromJsonFile(id));
+        embedCC(files.loadOneCloudCoinFromJsonFile(fnames[i]));
         //trash(id);
 		}else if(document.getElementById("jpeg-in").files.length == 0)
 		{
 			
-			embedTemplateCC(files.loadOneCloudCoinFromJsonFile(id));
+			embedTemplateCC(files.loadOneCloudCoinFromJsonFile(fnames[i]));
 			//trash(id);
 		}
 		else {
-			alert("thats not a jpeg");}
-    }
+			alert("thats not a jpeg");
+		}
+	}
     //e.stopPropogation();
 }
 
 function downloadAll()
 {
     let fnames = [];
-	for(let j = 0; j < coins.length; j++){
-        if(document.getElementById("cb" + coins[j].sn).checked)
-		fnames.push(coins[j].sn);
-    }
+	for(var j = 0; j< localStorage.length; j++){
+         
+	if(document.getElementById("cb" + localStorage.key(j)).checked)
+ 			fnames.push(localStorage.key(j));
+}
     let tag = document.getElementById("alltag").value;
     files.downloadAllCloudCoinToJsonFile(fnames, tag);
     for(let i = 0; i < fnames.length; i++){
-        trash(fnames[i]);}
+        trash(fnames[i]);
+	}
 }
 
 function checkAll()
@@ -184,7 +188,7 @@ function embedCC(cc)
 {
     //alert(files.bankFolder);
     let oldImg = document.getElementById("jpeg-in").files[0];
-    files.embedOneCloudCoinToJpeg(oldImg, cc, function(img){document.getElementById("jpeg-out").innerHTML+="image with cloud coin: " + cc.sn + img.outerHTML});
+    files.embedOneCloudCoinToJpeg(oldImg, cc, function(img){document.getElementById("jpeg-out").innerHTML+=img.outerHTML});
 
 }
 
@@ -202,7 +206,7 @@ oldImg.onload = function() {
   c.height = this.naturalHeight;
   ctx.drawImage(this, 0, 0);       // draw in image
   c.toBlob(function(blob) {        // get content as JPEG blob
-    files.embedOneCloudCoinToJpeg(blob, cc, function(img){document.getElementById("jpeg-out").innerHTML+="image with cloud coin: " + cc.sn + img.outerHTML});
+    files.embedOneCloudCoinToJpeg(blob, cc, function(img){document.getElementById("jpeg-out").innerHTML+=img.outerHTML});
   }, "image/jpeg", 0.75);
 };
  switch(cc.getDenomination()){
