@@ -47,12 +47,12 @@ function downloadImage()
         if(document.getElementById("jpeg-in").files.length != 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
 		{//alert("clicked");
         embedCC(files.loadOneCloudCoinFromJsonFile(fnames[i]));
-        trash(id);
+        trash(fnames[i]);
 		}else if(document.getElementById("jpeg-in").files.length == 0)
 		{
 			
 			embedTemplateCC(files.loadOneCloudCoinFromJsonFile(fnames[i]));
-			trash(id);
+			trash(fnames[i]);
 		}
 		else {
 			alert("thats not a jpeg");
