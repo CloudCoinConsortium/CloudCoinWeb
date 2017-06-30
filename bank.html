@@ -260,10 +260,10 @@
 </div>
 
 <div class="reveal" id="exportModal" data-reveal>
-   <input type="checkbox" id="cbAll" onchange="checkAll()">
-   <button class="small button" onclick="downloadAll()">Download as Stack</button>
-   <button class="small button" onclick="downloadImage()">Download as Image</button>
+   
+   <h2>Export Coins</h2>
    <input type="text" id ="alltag" placeholder="Name your stack of cloudcoins file">
+   <input type="checkbox" id="cbAll" onchange="checkAll()">  check all
    <h3>Bank  </h3>
         <ul id="coinlistbank"></ul>
         <h3>Fracked</h3>
@@ -272,7 +272,8 @@
         <div >
         <h3 style="visibility: hidden;">image to put cloudcoin in:<input type="file" id="jpeg-in"></h3>
         <div id="jpeg-out" class="thumbnail"></div>
-        
+        <button class="small button" onclick="downloadAll()">Download as Stack</button>
+   <button class="small button" onclick="downloadImage()">Download as Image</button>
       <div style="visibility: hidden;">
         <ul id="coinlistcounterfeit">
         </ul>
