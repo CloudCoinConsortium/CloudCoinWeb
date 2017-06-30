@@ -47,12 +47,12 @@ function downloadImage()
         if(document.getElementById("jpeg-in").files.length != 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
 		{//alert("clicked");
         embedCC(files.loadOneCloudCoinFromJsonFile(fnames[i]));
-        //trash(id);
+        trash(id);
 		}else if(document.getElementById("jpeg-in").files.length == 0)
 		{
 			
 			embedTemplateCC(files.loadOneCloudCoinFromJsonFile(fnames[i]));
-			//trash(id);
+			trash(id);
 		}
 		else {
 			alert("thats not a jpeg");
@@ -184,8 +184,9 @@ function trashFolder(folder)
 function embedCC(cc)
 {
     //alert(files.bankFolder);
-	let tag = document.getElementById("alltag").value;
-	tag+= ".jpeg";
+	let tag = cc.getDenomination() + ".cloudcoin.1." + cc.sn + ".";
+	tag += document.getElementById("alltag").value;
+	tag += ".jpg";
     let oldImg = document.getElementById("jpeg-in").files[0];
     files.embedOneCloudCoinToJpeg(oldImg, cc, function(img){
 		saveAs(img, tag);
@@ -198,8 +199,9 @@ function embedTemplateCC(cc)
     //alert(files.bankFolder);
     //let oldImg = document.getElementById("jpeg-in").files[0];
 	let oldImg = new Image();
-	let tag = document.getElementById("alltag").value;
-	tag+= ".jpeg";
+	let tag = cc.getDenomination() + ".cloudcoin.1." + cc.sn + ".";
+	tag += document.getElementById("alltag").value;
+	tag+= ".jpg";
 	//oldImg.crossorigin = "use-credentials";
 	var c = document.createElement("canvas");
 var ctx = c.getContext("2d");
@@ -208,6 +210,9 @@ oldImg.onload = function() {
   c.width = this.naturalWidth;     // update canvas size to match image
   c.height = this.naturalHeight;
   ctx.drawImage(this, 0, 0);       // draw in image
+  ctx.font = "20px Arial";
+ ctx.fillStyle = 'white';
+ ctx.fillText(cc.sn + " of 16777216 on N: 1" , 40, 58);
   c.toBlob(function(blob) {        // get content as JPEG blob
 	files.embedOneCloudCoinToJpeg(blob, cc, function(img){
 		saveAs(img, tag);
@@ -231,6 +236,7 @@ oldImg.onload = function() {
 	oldImg.src = "core/jpeg250.jpg"
 	break;
  }
+ 
 }
 
 function mindStorage(callback)
