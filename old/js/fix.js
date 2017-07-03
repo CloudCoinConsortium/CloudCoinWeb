@@ -1,6 +1,8 @@
 // JavaScript source code
 //v. 10/23/2016
-
+//s = status. It is a character in the POWN array. Will be u, f, n, etc
+//i = interator, index of the coin being fixed
+//idName1 = id of element on document. 
 function fixer(trustedRAIDA1Url, trustedRAIDA2Url, fracturedURL, idName1, s, i, pan) { //fracturedURL;//Should include fromserver1, fromserver2 and PAN. 
     "use strict";
 
