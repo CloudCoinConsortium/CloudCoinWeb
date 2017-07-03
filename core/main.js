@@ -189,13 +189,22 @@ function updateTotal(fileUtil)
 	document.getElementById("b_t250").innerHTML=total[5] + frackedTotal[5];
 }
 
-function updates(cc, fileUtil)
+function updates(cc, fileUtil, cfnames="", bnames="", frnames="")
 {
     coinlist(cc, fileUtil);
 	scoinlist(cc, fileUtil);
     updateTotal(fileUtil);
+	
+	if(cfnames != "" || bnames != "" || frnames != "")
+	{
+		document.getElementById("importStatus").innerHTML = "<div class='callout success'>Coin(s) to bank:" +
+		bnames + "<br>Coin(s) that are fracked:" + frnames + "</div><br><div class='callout alert'>Coin(s) that are counterfeit:"
+		+ cfnames + "</div>";
+	}
 	document.getElementById("uploadProgress").style.width = "100%";
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
+	document.getElementById("mindProgress").style.width = "100%";
+	document.getElementById("mindProgress").innerHTML="<p class='progress-meter-text'>done</p>";
 	mindlist();
 }
 
@@ -281,13 +290,25 @@ oldImg.onload = function() {
  }
  
 }
+function emptyprogress(bar)
+{
+	document.getElementById(bar).style.width = "0%";
+	document.getElementById(bar).innerHTML="";
+}
 
 function mindStorage(callback)
 {
-	
-	let usern = document.getElementById("email").value;
-	let passw = document.getElementById("user").value;
+	document.getElementById("mindProgress").style.width = "0%";
+	document.getElementById("mindProgress").innerHTML="";
+	if(callback.name == "moveFromMind"){
+	var usern = document.getElementById("email").value;
+	var passw = document.getElementById("user").value;
 	passw += document.getElementById("pass").value;
+	} else {
+		var usern = document.getElementById("email2").value;
+	var passw = document.getElementById("user2").value;
+	passw += document.getElementById("pass2").value;
+	}
 	let phrase1 = "";
 	let phrase2 = "";
 	let combPhrase = "";
@@ -302,9 +323,18 @@ function mindStorage(callback)
 	}else{
 	var phrasesize = phrase2.length;}
 	//alert(phrase1 + " " + phrase2);
-	if(document.getElementById("user").value == document.getElementById("pass").value)
+	if((document.getElementById("user").value == document.getElementById("pass").value)&& callback.name == "moveFromMind")
 	{
-		alert("Username and Password cannot be the same");
+		
+		alert("Username and Password cannot be the same")// +
+		//document.getElementById("user").value + " pass:" + document.getElementById("pass").value
+		//);
+	}else if((document.getElementById("user2").value == document.getElementById("pass2").value)&& callback.name == "moveToMind")
+	{
+		
+		alert("Username and Password cannot be the same")// +
+		//document.getElementById("user").value + " pass:" + document.getElementById("pass").value
+		//);
 	}else if(phrase1.length + phrase2.length < 24)
 	{
 		alert("Username or Password is too short");
@@ -321,13 +351,14 @@ function mindStorage(callback)
 			if(i<phrase2.length)
 			combPhrase += phrase2[i];
 		}
-		console.log(combPhrase);
+		//console.log(combPhrase);
 		for(let k = 0; k < 800/combPhrase.length;k++)
 			fullAn += combPhrase;
 		fullAn = fullAn.slice(0, 800);
 		for(let l = 0; l < 25; l++)
 			pan.push(fullAn.slice(l*32, (l+1)*32));
-			
+			document.getElementById("mindProgress").style.width = "25%";
+	
 			callback(pan);
 		
 	}
@@ -336,6 +367,8 @@ function mindStorage(callback)
 
 function moveFromMind(pan)
 {
+	document.getElementById("mindProgress").style.width = "50%";
+	
 	let fnames = [];
 	for(var j = 0; j< localStorage.length; j++){
             if(localStorage.getItem(localStorage.key(j)) == "mindstorage"){
@@ -349,6 +382,8 @@ function moveFromMind(pan)
 		files.saveCloudCoinToJsonFile(cc, cc.sn);
 		files.writeTo("suspect", cc.sn);
 	}
+	document.getElementById("mindProgress").style.width = "75%";
+	
 	detect.detectAllSuspect(updates);
 }
 

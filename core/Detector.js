@@ -45,7 +45,7 @@ class Detector
                     break;
             }//end switch
             files.saveCloudCoinToJsonFile(cc, cc.sn);
-            callback(cc, files);    
+            callback(cc, files, "");    
         });
     }
 
@@ -64,6 +64,9 @@ class Detector
         let totalValueToFractured = 0;
         let totalValueToKeptInSuspect = 0;
         let fnames = [];
+        let counterfeitNames = [];
+        let bankNames =[];
+        let frackedNames = [];
         let files = this.fileUtil;
         for(var j = 0; j< localStorage.length; j++){
             if(this.fileUtil.suspectFolder.includes(localStorage.key(j)))
@@ -79,14 +82,17 @@ class Detector
                 case "bank":
                     totalValueToBank++;
                     files.overWrite("suspect", "bank", fnames[i]);
+                    bankNames.push(fnames[i]);
                     break;
                 case "fracked":
                     totalValueToFractured++;
                     files.overWrite("suspect", "fracked", fnames[i]);
+                    frackedNames.push(fnames[i]);
                     break;
                 case "counterfeit":
                     totalValueToCounterfeit++;
                     files.overWrite("suspect", "counterfeit", fnames[i]);
+                    counterfeitNames.push(fnames[i]);
                     break;
                 case "suspect":
                     totalValueToKeptInSuspect++;
@@ -94,7 +100,7 @@ class Detector
                     break;
             }//end switch
             files.saveCloudCoinToJsonFile(cc, cc.sn);
-            callback(cc, files);
+            callback(cc, files, counterfeitNames, bankNames, frackedNames);
             
              });
         }

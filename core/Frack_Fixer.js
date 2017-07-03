@@ -138,17 +138,17 @@ class Frack_Fixer
         let fixedIds = [];
         let corner = 1;
         let promises = [];
-        let i = 0;
+        //let i = 0;
         for(let id = 0; id < 25; id++)
         {
             if(brokeCoin.getPastStatus(id).toLowerCase() == "fail")
             {
                 console.log("Attempting to fix RAIDA " + id);
                 fixer = new FixitHelper(id, brokeCoin.ans);
-                promises.push(this.fixLoop(id, brokeCoin, corner, fixer, this.fixLoop, this));
-                promises[i].then(function(fixed){if(fixed){fixedIds.push(id)}});
+                promises.push(this.fixLoop(id, brokeCoin, corner, fixer, this.fixLoop, this)
+                .then(function(fixed){if(fixed){fixedIds.push(id)}}));
                 //fixedIds.push(id);
-                i++;
+                //i++;
             }// end if fail
         }//end for all raida
         
@@ -183,7 +183,7 @@ fixLoop(id, brokeCoin, corner, fixer, callback, obj)
                         corner++;
                         fixer.setCornerToCheck(corner);
                         if(!fixer.finnished)
-                        callback(id, brokeCoin, corner, fixer, callback, obj);
+                        return callback(id, brokeCoin, corner, fixer, callback, obj);
                     }
                     });//end if fixed
 }
