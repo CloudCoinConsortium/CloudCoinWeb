@@ -70,7 +70,7 @@ class Frack_Fixer
 
     fixAll(callback)
     {
-        document.getElementById(fixStatusContainer).innerHTML ="";
+        document.getElementById("fixStatusContainer").innerHTML ="";
         let results = [0, 0, 0];
         let frackedFileNames = this.fileUtil.frackedFolder.split(",");
         frackedFileNames.pop();
