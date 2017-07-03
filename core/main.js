@@ -16,6 +16,26 @@ function coinlist(cc, fileUtil)
     + cc.getDenomination() + " sn: "+id+" </li>";
     
     document.getElementById(listname).innerHTML += htmltext;
+	//document.getElementById("m" +listname).innerHTML += htmltext;
+    //let tag = document.getElementById("tag"+ id); 
+    //let el = document.getElementById(listname);
+    //el.addEventListener("click",download);
+    
+}
+
+function scoinlist(cc, fileUtil)
+{
+    let id = cc.sn;
+    if(document.getElementById("s"+id) != null){
+        document.getElementById("s"+id).remove();
+        
+	}
+    let listname = "mcoinlist" + cc.getFolder().toLowerCase();
+    let htmltext = "<li id = 's"+id+"'><input type='checkbox' id='scb"+id+"'>denomination:"
+    + cc.getDenomination() + " sn: "+id+" </li>";
+    
+    
+	document.getElementById(listname).innerHTML += htmltext;
     //let tag = document.getElementById("tag"+ id); 
     //let el = document.getElementById(listname);
     //el.addEventListener("click",download);
@@ -28,7 +48,7 @@ function mindlist()
 		for(var j = 0; j< localStorage.length; j++){
             if(localStorage.getItem(localStorage.key(j)) == "mindstorage")
 			document.getElementById("coinlistmind").innerHTML +="<li id = 'm" + 
-		localStorage.key(j) + "'>" + localStorage.key(j) + "</li><input type='checkbox' id='mcb"+localStorage.key(j)+"'>";
+		localStorage.key(j) + "'><input type='checkbox' id='mcb"+localStorage.key(j)+"'>" + localStorage.key(j) + "</li>";
         }
 	
 }
@@ -76,20 +96,33 @@ function downloadAll()
 	}
 }
 
-function checkAll()
+function checkAll(mind = false)
 {
 	let ffnames = files.frackedFolder.split(",");
     let bfnames = files.bankFolder.split(",");
     ffnames.pop();
     bfnames.pop();
     let fnames = bfnames.concat(ffnames);
+	if(mind){
+		for(let i = 0; i < fnames.length; i++)
+		{
+		if(document.getElementById("mcbAll").checked)
+		document.getElementById("scb" + fnames[i]).checked = true;
+		else
+		document.getElementById("scb" + fnames[i]).checked = false;
+	}}else{
 	for(let i = 0; i < fnames.length; i++)
 	{
 		if(document.getElementById("cbAll").checked)
 		document.getElementById("cb" + fnames[i]).checked = true;
 		else
 		document.getElementById("cb" + fnames[i]).checked = false;
-	}
+	}}
+}
+
+function uncheckEvery()
+{
+	document.querySelectorAll("input[type=checkbox]").checked = false;
 }
 
 function showFolder(){
@@ -102,19 +135,25 @@ function showFolder(){
 function uploadButtonAppear(){
 	//alert(document.getElementById("myFile").value);
     document.getElementById("upButtonDiv").innerHTML="<button class='button' id='upButton' onclick='uploadFile()'>Upload</button>";
+	document.getElementById("uploadProgress").style.width = "0%";
+	document.getElementById("uploadProgress").innerHTML="";
 }
 
 function uploadFile(){
+	document.getElementById("uploadProgress").style.width = "25%";
 	let elFile = document.getElementById("myFile");
     for(let i = 0; i < elFile.files.length; i++){
     let upJson = elFile.files[i];
     if(elFile.value.slice(-5) == "stack"){
 	files.uploadCloudCoinFromJsonFile(upJson, files.saveCloudCoinToJsonFile);
+	document.getElementById("uploadProgress").style.width = "50%";
     } else if(elFile.value.slice(-4) == "jpeg" || elFile.value.slice(-4) == "jfif" || elFile.value.slice(-3) == "jpg"){
         files.uploadCloudCoinFromJpegFile(upJson, files.saveCloudCoinToJsonFile);
+		document.getElementById("uploadProgress").style.width = "50%";
     } else{alert("Valid File Type Please");}
     }
 	setTimeout(function(){
+		document.getElementById("uploadProgress").style.width = "75%";
 		detect.detectAllSuspect(updates);
         
         //let importer = new Importer();
@@ -153,14 +192,18 @@ function updateTotal(fileUtil)
 function updates(cc, fileUtil)
 {
     coinlist(cc, fileUtil);
+	scoinlist(cc, fileUtil);
     updateTotal(fileUtil);
-	//mindlist();
+	document.getElementById("uploadProgress").style.width = "100%";
+	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
+	mindlist();
 }
 
 function trash(id)
 {
     
         document.getElementById(id).remove();
+		document.getElementById("s"+id).remove();
         
         
 		
@@ -314,7 +357,7 @@ function moveToMind(newPan)
 	//alert(newPan);
 	let toBeMoved = [];
 	for(let j = 0; j < localStorage.length; j++){
-        if(document.getElementById("cb" + localStorage.key(j)).checked)
+        if(document.getElementById("scb" + localStorage.key(j)).checked)
 		toBeMoved.push(files.loadOneCloudCoinFromJsonFile(localStorage.key(j)));
     }
 	let promises = [];
