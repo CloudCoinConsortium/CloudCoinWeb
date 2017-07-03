@@ -70,6 +70,7 @@ class Frack_Fixer
 
     fixAll(callback)
     {
+        document.getElementById(fixStatusContainer).innerHTML ="";
         let results = [0, 0, 0];
         let frackedFileNames = this.fileUtil.frackedFolder.split(",");
         frackedFileNames.pop();
@@ -80,6 +81,9 @@ class Frack_Fixer
 
         for(let i = 0; i < frackedFileNames.length; i++)
         {
+            document.getElementById(fixStatusContainer).innerHTML +=
+            "<div class='success progress' role='progressbar' tabindex='0' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'><div class='progress-meter' id='"+
+            frackedFileNames[i] +"fix'><p class='progress-meter-text'>"+frackedFileNames[i]+"</p></div></div>"
             console.log("unfracking" + (i+1) + " of " + frackedFileNames.length);
             frackedCC = files.loadOneCloudCoinFromJsonFile(frackedFileNames[i]);
             //alert(frackedCC.sn);
@@ -163,6 +167,7 @@ class Frack_Fixer
         //alert(fixCoin.getFolder());
         brokeCoin.calcExpirationDate();
         fileUtil.saveCloudCoinToJsonFile(brokeCoin, brokeCoin.sn);
+        document.getElementById(brokeCoin.sn + "fix").style.width = "100%";
         return brokeCoin;
         })
     
@@ -173,6 +178,7 @@ class Frack_Fixer
 fixLoop(id, brokeCoin, corner, fixer, callback, obj)
 {
  console.log("Using corner" + corner);
+ document.getElementById(brokeCoin.sn + "fix").style.width = id*4 + "%";
                 return obj.fixOneGuidCorner(id, brokeCoin, corner, fixer.currentTriad).then(function(fix_result){
                     if(fix_result.includes("success"))
                     {
