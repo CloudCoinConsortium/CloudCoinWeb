@@ -81,7 +81,7 @@ class Frack_Fixer
 
         for(let i = 0; i < frackedFileNames.length; i++)
         {
-            document.getElementById(fixStatusContainer).innerHTML +=
+            document.getElementById("fixStatusContainer").innerHTML +=
             "<div class='success progress' role='progressbar' tabindex='0' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'><div class='progress-meter' id='"+
             frackedFileNames[i] +"fix'><p class='progress-meter-text'>"+frackedFileNames[i]+"</p></div></div>"
             console.log("unfracking" + (i+1) + " of " + frackedFileNames.length);
