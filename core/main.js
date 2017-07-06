@@ -12,7 +12,8 @@ function coinlist(cc, fileUtil)
         
 	}
     let listname = "coinlist" + cc.getFolder().toLowerCase();
-    let htmltext = "<li id = '"+id+"'><input type='checkbox' id='cb"+id+"'>denomination:"
+    let htmltext = "<li id = '"+id+"'><input type='checkbox' id='cb"+
+	id+"'>denomination:"
     + cc.getDenomination() + " sn: "+id+" </li>";
     
     document.getElementById(listname).innerHTML += htmltext;
@@ -31,7 +32,8 @@ function scoinlist(cc, fileUtil)
         
 	}
     let listname = "mcoinlist" + cc.getFolder().toLowerCase();
-    let htmltext = "<li id = 's"+id+"'><input type='checkbox' id='scb"+id+"'>denomination:"
+    let htmltext = "<li id = 's"+id+"'><input type='checkbox' name='sn[]' id='scb"+
+	id+"' value='"+id+"'>denomination:"
     + cc.getDenomination() + " sn: "+id+" </li>";
     
     
@@ -131,6 +133,14 @@ function showFolder(){
         alert("s:" + files.suspectFolder);
         alert("f:" + files.frackedFolder);
     }
+
+function importMode()
+{
+	document.getElementById("importHead").innerHTML ="Upload Coin";
+	document.getElementById("importButtons").innerHTML = "<input type='file' id='myFile' multiple onchange='uploadButtonAppear()'><div id='upButtonDiv'></div>";
+	document.getElementById("importStatus").innerHTML ="";
+	emptyprogress('uploadProgress');
+}
 	
 function uploadButtonAppear(){
 	//alert(document.getElementById("myFile").value);
@@ -194,17 +204,28 @@ function updates(cc, fileUtil, cfnames="", bnames="", frnames="")
     coinlist(cc, fileUtil);
 	scoinlist(cc, fileUtil);
     updateTotal(fileUtil);
+	let msg = "";
 	
-	if(cfnames != "" || bnames != "" || frnames != "")
+	if(bnames.length > 0 || frnames.length > 0)
 	{
-		document.getElementById("importStatus").innerHTML = "<div class='callout success'>Coin(s) to bank:" +
-		bnames + "<br>Coin(s) that are fracked:" + frnames + "</div><br><div class='callout alert'>Coin(s) that are counterfeit:"
-		+ cfnames + "</div>";
+		if(bnames.length > 0)
+			msg+= "Coin(s) to bank:" + bnames.length + "<br>";
+		if(frnames.length > 0)
+			msg+= "Coin(s) that are fracked:" + frnames.length + "<br>";
+		document.getElementById("importStatus").innerHTML = "<div class='callout success'>"
+		+ msg + "</div>";
+	}
+	if(cfnames.length > 0)
+	{
+		document.getElementById("importStatus").innerHTML +="<div class='callout alert'>Coin(s) that are counterfeit:"
+		+ cfnames.length + "</div>";
 	}
 	document.getElementById("uploadProgress").style.width = "100%";
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
 	document.getElementById("mindProgress").style.width = "100%";
 	document.getElementById("mindProgress").innerHTML="<p class='progress-meter-text'>done</p>";
+	document.getElementById("importHead").innerHTML = "Import Complete";
+	document.getElementById("importButtons").innerHTML= "";
 	mindlist();
 }
 
@@ -389,21 +410,28 @@ function moveFromMind(pan)
 
 function moveToMind(newPan)
 {
+	
 	//alert(newPan);
+	
 	let toBeMoved = [];
+	
 	for(let j = 0; j < localStorage.length; j++){
         if(document.getElementById("scb" + localStorage.key(j)).checked)
 		toBeMoved.push(files.loadOneCloudCoinFromJsonFile(localStorage.key(j)));
+		
     }
+
+
 	let promises = [];
 	for(let i = 0; i<toBeMoved.length; i++){
 		toBeMoved[i].pans = newPan;
 		//files.overWrite(toBeMoved[i].getFolder().toLowerCase(), "suspect", toBeMoved[i].sn)
-		promises.push(raida.detectCoin(toBeMoved[i]))
+		promises.push(raida.detectCoin(toBeMoved[i]));
 		trash(toBeMoved[i].sn);
 		localStorage.setItem(toBeMoved[i].sn, "mindstorage");
 	}
 	Promise.all(promises).then(function(){mindlist();});
+
 }
 
 function statusButton()
