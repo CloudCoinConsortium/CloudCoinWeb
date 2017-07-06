@@ -271,7 +271,7 @@
 <div class="reveal" id="exportModal" data-reveal>
    
    <h2>Export Coins</h2>
-   <input type="text" id ="alltag" placeholder="Name your stack of cloudcoins file">
+   
    <input type="checkbox" id="cbAll" onchange="checkAll()">  check all
    <div class="grid-x">
      <div class="large-6 cell">
@@ -288,7 +288,8 @@
 </div>
         <div >
         <h3  style="visibility: hidden;">image to put cloudcoin in:<input type="file" id="jpeg-in"></h3>
-        <div id="jpeg-out" class="thumbnail"></div>
+        <div style="display:none" id="jpeg-out" class="thumbnail"></div>
+        <input type="text" id ="alltag" placeholder="Name your stack of cloudcoins file">
         <button class="small button" onclick="downloadAll()">Download as Stack</button>
    <button class="small button" onclick="downloadImage()">Download as Image</button>
     <button class="small button"  style="visibility: hidden;" data-open="brokenModal">Hidden Coins</button>
