@@ -351,10 +351,10 @@ class CloudCoin
                 {
                     this.ans[i] = this.pans[i];
                 }
-                else if (this.pown[i] == 'e' /*&& !RAIDA_Status.failsEcho[i]*/ )//Timed out but there server echoed. So it probably changed the PAN just too slow of a response
-                {
-                    this.ans[i] = this.pans[i];
-                } //notsureaboutthispart
+                //else if (this.pown[i] == 'e' /*&& !RAIDA_Status.failsEcho[i]*/ )//Timed out but there server echoed. So it probably changed the PAN just too slow of a response
+                //{
+                //    this.ans[i] = this.pans[i];
+                //} //notsureaboutthispart
                 else
                 {
                     // Just keep the ans and do not change. Hopefully they are not fracked. 
