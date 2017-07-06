@@ -61,7 +61,7 @@ function downloadImage()
     
     let fnames = [];
 	for(var j = 0; j< localStorage.length; j++){
-    if(localStorage.getItem(localStorage.key(j)) == "mindstorage"){     
+    if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){     
 	if(document.getElementById("cb" + localStorage.key(j)).checked)
  			fnames.push(localStorage.key(j));
 	}
@@ -88,7 +88,7 @@ function downloadAll()
 {
     let fnames = [];
 	for(var j = 0; j< localStorage.length; j++){
-    if(localStorage.getItem(localStorage.key(j)) == "mindstorage"){    
+    if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){    
 	if(document.getElementById("cb" + localStorage.key(j)).checked)
  			fnames.push(localStorage.key(j));
 		}
