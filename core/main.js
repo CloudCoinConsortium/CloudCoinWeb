@@ -12,9 +12,9 @@ function coinlist(cc, fileUtil)
         
 	}
     let listname = "coinlist" + cc.getFolder().toLowerCase();
-    let htmltext = "<li id = '"+id+"'><input type='checkbox' id='cb"+
-	id+"'>denomination:"
-    + cc.getDenomination() + " sn: "+id+" </li>";
+    let htmltext = "<tr id = '"+id+"'><td><input type='checkbox' id='cb"+
+	id+"'></td><td>"
+    + cc.getDenomination() + "</td><td>"+id+"</td></tr>";
     
     document.getElementById(listname).innerHTML += htmltext;
 	//document.getElementById("m" +listname).innerHTML += htmltext;
@@ -32,9 +32,9 @@ function scoinlist(cc, fileUtil)
         
 	}
     let listname = "mcoinlist" + cc.getFolder().toLowerCase();
-    let htmltext = "<li id = 's"+id+"'><input type='checkbox' name='sn[]' id='scb"+
-	id+"' value='"+id+"'>denomination:"
-    + cc.getDenomination() + " sn: "+id+" </li>";
+    let htmltext = "<tr id = 's"+id+"'><td><input type='checkbox' name='sn[]' id='scb"+
+	id+"' value='"+id+"'></td><td>"
+    + cc.getDenomination() + "</td><td>"+id+"</td></tr>";
     
     
 	document.getElementById(listname).innerHTML += htmltext;
@@ -61,9 +61,10 @@ function downloadImage()
     
     let fnames = [];
 	for(var j = 0; j< localStorage.length; j++){
-         
+    if(localStorage.getItem(localStorage.key(j)) == "mindstorage"){     
 	if(document.getElementById("cb" + localStorage.key(j)).checked)
  			fnames.push(localStorage.key(j));
+	}
 }
     for(let i =0 ; i<fnames.length; i++){
         if(document.getElementById("jpeg-in").files.length != 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
@@ -87,10 +88,11 @@ function downloadAll()
 {
     let fnames = [];
 	for(var j = 0; j< localStorage.length; j++){
-         
+    if(localStorage.getItem(localStorage.key(j)) == "mindstorage"){    
 	if(document.getElementById("cb" + localStorage.key(j)).checked)
  			fnames.push(localStorage.key(j));
-}
+		}
+	}
     let tag = document.getElementById("alltag").value;
     files.downloadAllCloudCoinToJsonFile(fnames, tag);
     for(let i = 0; i < fnames.length; i++){
@@ -197,6 +199,13 @@ function updateTotal(fileUtil)
 	document.getElementById("b_t25").innerHTML=total[3] + frackedTotal[3];
 	document.getElementById("b_t100").innerHTML=total[4] + frackedTotal[4];
 	document.getElementById("b_t250").innerHTML=total[5] + frackedTotal[5];
+
+	if(frackedTotal[0] == 0)
+	{
+		document.getElementById("fixButton").setAttribute("disabled", "");
+	} else {
+		document.getElementById("fixButton").removeAttribute("disabled");
+	}
 }
 
 function updates(cc, fileUtil, cfnames="", bnames="", frnames="")
@@ -227,6 +236,10 @@ function updates(cc, fileUtil, cfnames="", bnames="", frnames="")
 	document.getElementById("importHead").innerHTML = "Import Complete";
 	document.getElementById("importButtons").innerHTML= "";
 	mindlist();
+	sortTable("coinlistbank");
+	sortTable("coinlistfracked");
+	sortTable("mcoinlistbank");
+	sortTable("mcoinlistfracked");
 }
 
 function trash(id)
@@ -416,9 +429,10 @@ function moveToMind(newPan)
 	let toBeMoved = [];
 	
 	for(let j = 0; j < localStorage.length; j++){
-        if(document.getElementById("scb" + localStorage.key(j)).checked)
+        if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){
+		if(document.getElementById("scb" + localStorage.key(j)).checked)
 		toBeMoved.push(files.loadOneCloudCoinFromJsonFile(localStorage.key(j)));
-		
+		}
     }
 
 
@@ -445,4 +459,39 @@ function statusButton()
         
 });
     }
+}
+
+function sortTable(toSort) {
+  var table, rows, switching, i, x, y, shouldSwitch;
+  table = document.getElementById(toSort);
+  switching = true;
+  /*Make a loop that will continue until
+  no switching has been done:*/
+  while (switching) {
+    //start by saying: no switching is done:
+    switching = false;
+    rows = table.getElementsByTagName("TR");
+    /*Loop through all table rows (except the
+    first, which contains table headers):*/
+    for (i = 1; i < (rows.length - 1); i++) {
+      //start by saying there should be no switching:
+      shouldSwitch = false;
+      /*Get the two elements you want to compare,
+      one from current row and one from the next:*/
+      x = rows[i].getElementsByTagName("TD")[2];
+      y = rows[i + 1].getElementsByTagName("TD")[2];
+      //check if the two rows should switch place:
+      if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
+        //if so, mark as a switch and break the loop:
+        shouldSwitch= true;
+        break;
+      }
+    }
+    if (shouldSwitch) {
+      /*If a switch has been marked, make the switch
+      and mark that a switch has been done:*/
+      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
+      switching = true;
+    }
+  }
 }

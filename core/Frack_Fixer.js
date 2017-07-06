@@ -71,6 +71,7 @@ class Frack_Fixer
     fixAll(callback)
     {
         document.getElementById("fixStatusContainer").innerHTML ="";
+        document.getElementById("fixStatusContainer").style.display = "initial";
         let results = [0, 0, 0];
         let frackedFileNames = this.fileUtil.frackedFolder.split(",");
         frackedFileNames.pop();
@@ -168,6 +169,7 @@ class Frack_Fixer
         brokeCoin.calcExpirationDate();
         fileUtil.saveCloudCoinToJsonFile(brokeCoin, brokeCoin.sn);
         document.getElementById(brokeCoin.sn + "fix").style.width = "100%";
+        document.getElementById(brokeCoin.sn + "fix").innerHTML = "<p class='progress-meter-text'>Done Fixing Fracked</p>";
         return brokeCoin;
         })
     
