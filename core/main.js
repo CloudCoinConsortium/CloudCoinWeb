@@ -271,7 +271,11 @@ function embedCC(cc)
 {
     //alert(files.bankFolder);
 	let tag = cc.getDenomination() + ".cloudcoin.1." + cc.sn + ".";
+	if(document.getElementById("alltag").value != ""){
 	tag += document.getElementById("alltag").value;
+	} else {
+		tag += "image";
+	}
 	tag += ".jpg";
     let oldImg = document.getElementById("jpeg-in").files[0];
     files.embedOneCloudCoinToJpeg(oldImg, cc, function(img){
