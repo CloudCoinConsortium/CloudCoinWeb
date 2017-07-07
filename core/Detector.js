@@ -75,7 +75,11 @@ class Detector
         let coins = [];
         for(let i = 0; i < fnames.length; i++)
         {
+            if(callback.name == "updatesFromMind"){
+                coins.push(this.raida.detectCoin(files.loadMindCloudCoinFromJsonFile(fnames[i])));
+            } else{
             coins.push(this.raida.detectCoin(files.loadOneCloudCoinFromJsonFile(fnames[i])));
+            }
             coins[i].then(function(cc){
             switch (cc.getFolder().toLowerCase())
             {

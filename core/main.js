@@ -231,8 +231,7 @@ function updates(cc, fileUtil, cfnames="", bnames="", frnames="")
 	}
 	document.getElementById("uploadProgress").style.width = "100%";
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
-	document.getElementById("mindProgress").style.width = "100%";
-	document.getElementById("mindProgress").innerHTML="<p class='progress-meter-text'>done</p>";
+	
 	document.getElementById("importHead").innerHTML = "Import Complete";
 	document.getElementById("importButtons").innerHTML= "";
 	mindlist();
@@ -240,6 +239,40 @@ function updates(cc, fileUtil, cfnames="", bnames="", frnames="")
 	sortTable("coinlistfracked");
 	sortTable("mcoinlistbank");
 	sortTable("mcoinlistfracked");
+}
+
+function updatesFromMind(cc, fileUtil, cfnames="", bnames="", frnames="")
+{
+	document.getElementById("mindProgress").style.width = "100%";
+	document.getElementById("mindProgress").innerHTML="<p class='progress-meter-text'>done</p>";
+	let msg = "";
+	
+	if(bnames.length > 0 || frnames.length > 0)
+	{
+		if(bnames.length > 0)
+			msg+= "Coin(s) to bank:" + bnames.length + "<br>";
+		if(frnames.length > 0)
+			msg+= "Coin(s) that are fracked:" + frnames.length + "<br>";
+		document.getElementById("fromMindStatus").innerHTML = "<div class='callout success'>"
+		+ msg + "</div>";
+	}
+	if(cfnames.length > 0)
+	{
+		document.getElementById("fromMindStatus").innerHTML +="<div class='callout alert'>Coin(s) that are counterfeit"
+		+ "(You may have mispelled something.):" + cfnames.length + "</div>";
+	}
+	if(cc.getFolder().toLowerCase() == "counterfeit"){
+		localStorage.setItem(cc.sn, "mindstorage");
+		mindlist();
+	}else{
+	raida.detectCoin(cc).then(function(cc){
+		files.saveCloudCoinToJsonFile(cc, cc.sn);
+            updates(cc, files);
+	});
+	}
+	
+	
+	
 }
 
 function trash(id)
@@ -424,7 +457,7 @@ function moveFromMind(pan)
 	document.getElementById("user").value = "";
 		document.getElementById("pass").value = "";
 		document.getElementById("email").value = "";
-	detect.detectAllSuspect(updates);
+	detect.detectAllSuspect(updatesFromMind);
 }
 
 function moveToMind(newPan)

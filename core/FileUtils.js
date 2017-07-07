@@ -26,15 +26,7 @@ class FileUtils
     {
         //load file as json
         let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));
-        //indexdb code that we might not use
-        /*
-        let transaction = db.transaction(["cloudcoin"]);
-        let objectStore = transaction.objectStore("cloudcoin");
-        let request = objectStore.get(loadFilePath);
-        request.onsuccess = function(event) {
-            console.log("success");
-        let incomeJson = request.result;
-        */
+        
         let nn = incomeJson.nn;
         
         let sn = incomeJson.sn;
@@ -43,9 +35,7 @@ class FileUtils
         let aoid = incomeJson.aoid;
         let pown = incomeJson.pown;
         var returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
-        //document.getElementById("output").innerHTML = returnCC.nn + " " + returnCC.sn;
-        //if(pown.includes("f") && !this.frackedFolder.includes(loadFilePath)){this.frackedFolder += loadFilePath + ",";}
-
+        
         return returnCC;
           
         //} //end on success
@@ -53,24 +43,20 @@ class FileUtils
     
     
 
-    loadManyCloudCoinFromJsonFile(loadFilePath)
+    loadMindCloudCoinFromJsonFile(loadFilePath)
     {
-        returnCoins = [];
         let incomeJson = JSON.parse(localStorage.getItem(loadFilePath));
-        for(let j = 0; j < incomeJson.cloudcoin.length - 1; j++)
-        {
-            let currentCoin = incomeJson.cloudcoin[j];
-            let nn = currentCoin.nn;
-            let sn = currentCoin.sn;
-            let ans = currentCoin.an;
-            let ed = currentCoin.ed;
-            let aoid = currentCoin.aoid;
-            let pown = currentCoin.pown;
-            let returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
-            returnCoins[j] = returnCC;
-
-        }
-        return returnCoins;
+        
+        let nn = incomeJson.nn;
+        
+        let sn = incomeJson.sn;
+        let ans = incomeJson.an;
+        let ed = incomeJson.ed;
+        let aoid = incomeJson.aoid;
+        let pown = incomeJson.pown;
+        var returnCC = new CloudCoin(nn, sn, ans, ed, aoid, pown);
+        returnCC.setAnsToPans();
+        return returnCC;
     }
 
     saveCloudCoinToJsonFile(cc, saveFilePath)
