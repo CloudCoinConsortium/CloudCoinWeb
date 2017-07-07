@@ -262,7 +262,8 @@
 <div id="fixStatusContainer"></div>
  <button class="button" onclick="fix.fixAll(updates)" id="fixButton">Fix Fracked</button>
  <button class="button" data-open="mindToModal" onclick="emptyprogress('toMindMessage')">Bank to Mind</button>
- <button class="button" data-open="mindFromModal" onclick="emptyprogress('mindProgress')">Mind to Bank</button>
+ <button class="button" data-open="mindFromModal" onclick="emptyprogress('mindProgress');document.getElementById('fromMindStatus').innerHTML='';">
+   Mind to Bank</button>
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -313,6 +314,7 @@
   <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
   <div class="progress-meter" id="mindProgress"></div>
 </div>
+<div id="fromMindStatus"></div>
   <button class="close-button" data-close aria-label="Close reveal" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
