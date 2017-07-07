@@ -259,9 +259,9 @@
 		</tr>
 	</tbody>
 </table>
-<div class="callout" id="fixStatusContainer"></div>
+<div id="fixStatusContainer"></div>
  <button class="button" onclick="fix.fixAll(updates)" id="fixButton">Fix Fracked</button>
- <button class="button" data-open="mindToModal" onclick="document.getElementById('toMindMessage').style.display = 'none'">Bank to Mind</button>
+ <button class="button" data-open="mindToModal" onclick="emptyprogress('toMindMessage')">Bank to Mind</button>
  <button class="button" data-open="mindFromModal" onclick="emptyprogress('mindProgress')">Mind to Bank</button>
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
@@ -305,9 +305,9 @@
 <p>Use the exact username, password, and email that you used to put the coins
   in your mind. Note that they are all case sensitive.
 </p>
-        username:<input type="text" id="user">
-		password:<input type="text" id="pass">
-		email:<input type="email" id="email">
+        username:<input type="text" id="user" autocomplete="off">
+		password:<input type="text" id="pass" autocomplete="off">
+		email:<input type="email" id="email" autocomplete="off">
 		
 <button class="small button" onclick="mindStorage(moveFromMind)">Move from Mind</button>
   <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -340,10 +340,10 @@
 </div>
         <div >
 
-        Username(Case Sensitive):<input type="text" id="user2">
-		Password:<input type="text" id="pass2">
+        Username(Case Sensitive):<input type="text" id="user2" autocomplete="off">
+		Password:<input type="text" id="pass2" autocomplete="off">
 		Email(Case Sensitive): (Will be used to send serial number in case of software crash)
-    <input type="email" name="email" id="email2">
+    <input type="email" name="email" id="email2" autocomplete="off">
 		<p>Remember your username and password. Do not give it to anyone else.
        When you want to spend your coins, move them from your mind to your
         bank and then export. Remember that your username, password, and email
@@ -351,7 +351,9 @@
         your mind you will need to remember the case and enter it in exactly correct.</p>
 
 <button class="small button" onclick="mindStorage(moveToMind)">Move Checked Coins to Mind</button>
-  <div style="display: none" id="toMindMessage">Successfully moved coins to mind</div>
+  <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-meter" id="toMindMessage"></div>
+  </div>
   <button class="close-button" data-close aria-label="Close reveal" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
