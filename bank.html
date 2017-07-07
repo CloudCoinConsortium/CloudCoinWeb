@@ -261,7 +261,7 @@
 </table>
 <div class="callout" id="fixStatusContainer"></div>
  <button class="button" onclick="fix.fixAll(updates)" id="fixButton">Fix Fracked</button>
- <button class="button" data-open="mindToModal">Bank to Mind</button>
+ <button class="button" data-open="mindToModal" onclick="document.getElementById('toMindMessage').style.display = 'none'">Bank to Mind</button>
  <button class="button" data-open="mindFromModal" onclick="emptyprogress('mindProgress')">Mind to Bank</button>
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
@@ -320,10 +320,10 @@
 
 <div class="reveal" id="mindToModal" data-reveal>
   <h3>Move into Mind Inventory  </h3>
-  <iframe name="mtmi" style="display:none;"></iframe>
+  <!--<iframe name="mtmi" style="display:none;"></iframe>-->
   <input type="checkbox" id="mcbAll" onchange="checkAll(true)">  check all
    
-   <form action="core/mailMind.php" method="POST" target="mtmi" onsubmit="setTimeout(function(){mindStorage(moveToMind)},1000)">
+  
    <div class="grid-x">
    <div class="large-6 cell">
    <h3>Bank  </h3>
@@ -350,8 +350,8 @@
         are all case sensitive. So when you go to remove your CloudCoins from
         your mind you will need to remember the case and enter it in exactly correct.</p>
 
-<button type="submit" class="small button">Move Checked Coins to Mind</button>
-  </form>
+<button class="small button" onclick="mindStorage(moveToMind)">Move Checked Coins to Mind</button>
+  <div style="display: none" id="toMindMessage">Successfully moved coins to mind</div>
   <button class="close-button" data-close aria-label="Close reveal" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
