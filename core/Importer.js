@@ -53,8 +53,10 @@ class Importer
         else{
             for(let i = 0; i < fnames.length; i++){
                 //console.log(fnames[i]);
+                if(localStorage.getItem(fnames[i]).includes("mindstorage") == false){
                 coins.push(fileUtil.loadOneCloudCoinFromJsonFile(fnames[i]));
                 //this.updateFolder(coins[i], fileUtil);
+                }
             }
             return coins;
         }

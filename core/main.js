@@ -417,23 +417,26 @@ function moveFromMind(pan)
 		files.writeTo("suspect", cc.sn);
 	}
 	document.getElementById("mindProgress").style.width = "75%";
-	
+	document.getElementById("user").value = "";
+		document.getElementById("pass").value = "";
+		document.getElementById("email").value = "";
 	detect.detectAllSuspect(updates);
 }
 
 function moveToMind(newPan)
 {
+	
 	let xhttp = new XMLHttpRequest();
 	//alert(newPan);
 	let data = "email=" + document.getElementById("email2").value;
 	let toBeMoved = [];
-	let i = 0;
+	let k = 0;
 	for(let j = 0; j < localStorage.length; j++){
         if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){
 		if(document.getElementById("scb" + localStorage.key(j)).checked){
 		toBeMoved.push(files.loadOneCloudCoinFromJsonFile(localStorage.key(j)));
-		data += "&sn[" + i + "]=" + toBeMoved[i].sn;
-		i++; 
+		data += "&sn[" + k + "]=" + toBeMoved[k].sn;
+		k++; 
 		}
 		}
     }
@@ -441,6 +444,7 @@ xhttp.open("POST", "core/mailMind.php", true);
 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 xhttp.send(data);
 xhttp.onreadystatechange = function(){
+	document.getElementById("toMindMessage").style.width = "50%";
 	if(this.readyState == 4 && this.status == 200){
 	console.log(this.responseText);
 	let promises = [];
@@ -452,7 +456,11 @@ xhttp.onreadystatechange = function(){
 		localStorage.setItem(toBeMoved[i].sn, "mindstorage");
 	}
 	Promise.all(promises).then(function(){
-		document.getElementById('toMindMessage').style.display = 'inline';
+		document.getElementById("toMindMessage").style.width = "100%";
+		document.getElementById("toMindMessage").innerHTML="<p class='progress-meter-text'>done</p>";
+		document.getElementById("user2").value = "";
+		document.getElementById("pass2").value = "";
+		document.getElementById("email2").value = "";
 		mindlist();});
 }
 if(this.status == 400)
