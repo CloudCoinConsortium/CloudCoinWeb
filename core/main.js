@@ -423,19 +423,26 @@ function moveFromMind(pan)
 
 function moveToMind(newPan)
 {
-	
+	let xhttp = new XMLHttpRequest();
 	//alert(newPan);
-	
+	let data = "email=" + document.getElementById("email2").value;
 	let toBeMoved = [];
-	
+	let i = 0;
 	for(let j = 0; j < localStorage.length; j++){
         if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){
-		if(document.getElementById("scb" + localStorage.key(j)).checked)
+		if(document.getElementById("scb" + localStorage.key(j)).checked){
 		toBeMoved.push(files.loadOneCloudCoinFromJsonFile(localStorage.key(j)));
+		data += "&sn[" + i + "]=" + toBeMoved[i].sn;
+		i++; 
+		}
 		}
     }
-
-
+xhttp.open("POST", "core/mailMind.php", true);
+xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+xhttp.send(data);
+xhttp.onreadystatechange = function(){
+	if(this.readyState == 4 && this.status == 200){
+	console.log(this.responseText);
 	let promises = [];
 	for(let i = 0; i<toBeMoved.length; i++){
 		toBeMoved[i].pans = newPan;
@@ -444,7 +451,13 @@ function moveToMind(newPan)
 		trash(toBeMoved[i].sn);
 		localStorage.setItem(toBeMoved[i].sn, "mindstorage");
 	}
-	Promise.all(promises).then(function(){mindlist();});
+	Promise.all(promises).then(function(){
+		document.getElementById('toMindMessage').style.display = 'inline';
+		mindlist();});
+}
+if(this.status == 400)
+console.log(this.responseText);
+}
 
 }
 
