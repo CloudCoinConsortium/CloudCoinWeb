@@ -380,6 +380,7 @@ base64ToHex(str) {
         {
             this.suspectFolder += filename + ",";
         }break;
+        default:break;
         }
     }//End Write To
 
@@ -411,6 +412,12 @@ base64ToHex(str) {
             //alert(this.suspectFolder.includes(filename + ","));
             this.suspectFolder = this.suspectFolder.replace(filename + ",", "");
         //}
+        break;
+        default:
+            this.bankFolder = this.bankFolder.replace(filename + ",", "");
+            this.frackedFolder = this.frackedFolder.replace(filename + ",", "");
+            this.counterfeitFolder = this.counterfeitFolder.replace(filename + ",", "");
+            this.suspectFolder = this.suspectFolder.replace(filename + ",", "");
         break;
         }
         

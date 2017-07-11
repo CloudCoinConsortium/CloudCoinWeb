@@ -280,7 +280,7 @@ function trash(id)
     
         document.getElementById(id).remove();
 		document.getElementById("s"+id).remove();
-        
+        files.overWrite("", "", id);
         
 		
         localStorage.removeItem(id);
