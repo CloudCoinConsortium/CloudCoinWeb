@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="55px" height="54px" viewBox="0 0 55 54" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 44.1 (41455) - http://www.bohemiancoding.com/sketch -->
+    <title>export cloud</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="cloudcoin-iphone-app" transform="translate(-161.000000, -417.000000)">
+            <g id="spend-coins" transform="translate(58.000000, 415.000000)">
+                <g id="export-cloud" transform="translate(103.000000, 0.000000)">
+                    <path d="M35.0710678,6.07106781 L35.0710678,2.07106781 L33.0710678,2.07106781 L33.0710678,6.07106781 L29.0710678,6.07106781 L29.0710678,8.07106781 L33.0710678,8.07106781 L33.0710678,12.0710678 L35.0710678,12.0710678 L35.0710678,8.07106781 L39.0710678,8.07106781 L39.0710678,6.07106781 L35.0710678,6.07106781 Z" id="Combined-Shape" fill="#CCD4D9" opacity="0.300000012" transform="translate(34.071068, 7.071068) rotate(-315.000000) translate(-34.071068, -7.071068) "></path>
+                    <path d="M17,23 C14.790861,23 13,21.209139 13,19 C13,16.790861 14.790861,15 17,15 C19.209139,15 21,16.790861 21,19 C21,21.209139 19.209139,23 17,23 Z M17,21 C18.1045695,21 19,20.1045695 19,19 C19,17.8954305 18.1045695,17 17,17 C15.8954305,17 15,17.8954305 15,19 C15,20.1045695 15.8954305,21 17,21 Z" id="Oval-2" fill="#BB68D9" fill-rule="nonzero" opacity="0.100000001"></path>
+                    <path d="M32.8940344,49.9669347 L35.1014087,51.6303105 L35.6610974,48.5912484 L32.8940344,49.9669347 Z M36.4822174,55.1750959 L29.1059656,49.6166914 L38.352496,45.0196418 L36.4822174,55.1750959 Z" id="Triangle" fill="#BB68D9" fill-rule="nonzero" opacity="0.400000006"></path>
+                    <path d="M4.54808662,37.6478317 L6.6020884,35.7984002 L3.725656,34.6691142 L4.54808662,37.6478317 Z M10.3452168,35.1193377 L3.48148066,41.2994735 L0.733212955,31.3456695 L10.3452168,35.1193377 Z" id="Triangle" fill="#BB68D9" fill-rule="nonzero" opacity="0.400000006"></path>
+                    <path d="M23,33 L23,37 L27,37 L27,33 L23,33 Z M21,31 L29,31 L29,39 L21,39 L21,31 Z" id="Rectangle-4" fill="#BB68D9" fill-rule="nonzero" opacity="0.400000006"></path>
+                    <path d="M47.3169119,9.25614287 L51.2561429,9.95073558 L51.9507356,6.01150457 L48.0115046,5.31691186 L47.3169119,9.25614287 Z M46.3891854,3 L54.2676474,4.38918542 L52.878462,12.2676474 L45,10.878462 L46.3891854,3 Z" id="Rectangle-4" fill="#BB68D9" fill-rule="nonzero" opacity="0.100000001"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
