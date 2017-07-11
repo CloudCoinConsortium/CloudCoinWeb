@@ -40,11 +40,11 @@ class Frack_Fixer
             /*6. DID THE FIX WORK?*/
                 if(outcome)
                 {
-                    console.log(cc.sn + " RAIDA" + raida_ID + "unfracked successfully");
-                    return cc.sn + " RAIDA" + raida_ID + "unfracked successfully";
+                    console.log(cc.sn + " RAIDA " + raida_ID + " unfracked successfully");
+                    return cc.sn + " RAIDA " + raida_ID + " unfracked successfully";
                 } else {
-                    console.log( cc.sn + " RAIDA " + raida_ID + " failed to accept tickets on corner " + corner);
-                    return cc.sn + " RAIDA " + raida_ID + " failed to accept tickets on corner " + corner;
+                    console.log( cc.sn + " RAIDA " + raida_ID + ": Failed to accept tickets on corner " + corner );
+                    return cc.sn + " RAIDA " + raida_ID + ": Failed to accept tickets on corner " + corner;
                 }//end did the fix work?
                  });
             } else {
@@ -146,7 +146,7 @@ class Frack_Fixer
         //let i = 0;
         for(let id = 0; id < 25; id++)
         {
-            if(brokeCoin.getPastStatus(id).toLowerCase() == "fail")
+            if(brokeCoin.getPastStatus(id).toLowerCase() != "pass") //Will treat all non-passes as fails. 
             {
                 console.log(brokeCoin.sn + " RAIDA " + id +  ": Attempting to fix.");
                 fixer = new FixitHelper(id, brokeCoin.ans);
