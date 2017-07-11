@@ -7,7 +7,7 @@ function populateRaidaStatus(rr, id)
 function coinlist(cc, fileUtil)
 {
     let id = cc.sn;
-    if(document.getElementById(id) != null){
+    if(document.getElementById(id) !== null){
         document.getElementById(id).remove();
         
 	}
@@ -27,7 +27,7 @@ function coinlist(cc, fileUtil)
 function scoinlist(cc, fileUtil)
 {
     let id = cc.sn;
-    if(document.getElementById("s"+id) != null){
+    if(document.getElementById("s"+id) !== null){
         document.getElementById("s"+id).remove();
         
 	}
@@ -67,11 +67,11 @@ function downloadImage()
 	}
 }
     for(let i =0 ; i<fnames.length; i++){
-        if(document.getElementById("jpeg-in").files.length != 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
+        if(document.getElementById("jpeg-in").files.length !== 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
 		{//alert("clicked");
         embedCC(files.loadOneCloudCoinFromJsonFile(fnames[i]));
         trash(fnames[i]);
-		}else if(document.getElementById("jpeg-in").files.length == 0)
+		}else if(document.getElementById("jpeg-in").files.length === 0)
 		{
 			
 			embedTemplateCC(files.loadOneCloudCoinFromJsonFile(fnames[i]));
@@ -200,7 +200,7 @@ function updateTotal(fileUtil)
 	document.getElementById("b_t100").innerHTML=total[4] + frackedTotal[4];
 	document.getElementById("b_t250").innerHTML=total[5] + frackedTotal[5];
 
-	if(frackedTotal[0] == 0)
+	if(frackedTotal[0] === 0)
 	{
 		document.getElementById("fixButton").setAttribute("disabled", "");
 	} else {
@@ -304,7 +304,7 @@ function embedCC(cc)
 {
     //alert(files.bankFolder);
 	let tag = cc.getDenomination() + ".cloudcoin.1." + cc.sn + ".";
-	if(document.getElementById("alltag").value != ""){
+	if(document.getElementById("alltag").value !== ""){
 	tag += document.getElementById("alltag").value;
 	} else {
 		tag += "image";
@@ -371,14 +371,16 @@ function mindStorage(callback)
 {
 	document.getElementById("mindProgress").style.width = "0%";
 	document.getElementById("mindProgress").innerHTML="";
+	var usern = "";
+	var passw = "";
 	if(callback.name == "moveFromMind"){
-	var usern = document.getElementById("email").value;
-	var passw = document.getElementById("user").value;
+	 usern = document.getElementById("email").value;
+	 passw = document.getElementById("user").value;
 	passw += document.getElementById("pass").value;
 	} else {
-		var usern = document.getElementById("email2").value;
-	var passw = document.getElementById("user2").value;
-	passw += document.getElementById("pass2").value;
+		 usern = document.getElementById("email2").value;
+	     passw = document.getElementById("user2").value;
+	     passw += document.getElementById("pass2").value;
 	}
 	let phrase1 = "";
 	let phrase2 = "";
