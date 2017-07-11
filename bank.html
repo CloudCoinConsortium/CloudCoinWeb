@@ -25,35 +25,56 @@
     <script src="core/Exporter.js"></script>
     <script src="core/FileSaver.js"></script>
     <style>
+    body{
+        background-color:blue;
+         background-image:url(img/bank/back_icons.svg);
+         
+          
+    }
     button.lgfont
     {
+        margin:20px;
+      background-color:white;
       font-size: 3rem;
       border-radius: 3rem;
+      color:blue;
+      padding:20px;
+     margin-left:20px;
     }
+    
+    
+    td {
+        text-align:right;
+        margin:0px;
+        padding:1px;
+        line-height:0;
+        color:white;
+        background-color:#333333;
+    }
+   
+
+
       </style>
   </head>
   <body>
-    
-      <div class="off-canvas-wrapper">
-    <div class="title-bar">
-      <nav class="global-nav">
-      
-      
-      
-      <div class="global-nav-title">
-        <button class="menu-icon" data-open="offCanvas"  onclick="statusButton()"><span ></span></button>
-        <strong>CloudCoin</strong></div>
-      </nav>
+    <div class="off-canvas-wrapper">
+      <div class="title-bar">
+       <nav class="global-nav">
+ 
+        <div class="global-nav-title">
+           <button  data-open="offCanvas"  onclick="statusButton()"><span ></span><img src="img/bank/RAIDA-logo-white.svg" width="100"></button>
+           </div>
+      </nav> 
       
       
     </div>
-    <div class="off-canvas position-left" id="offCanvas" data-off-canvas>
-    <h2>Raida Status</h2>
-    <table>
+    <div class="off-canvas position-left" id="offCanvas" data-off-canvas style="background-color:black">
+    <img src="img/bank/RAIDA-logo-white.svg" width="300" style="padding:5px">
+    <table >
   <tr>
     <th>Raida</th>
     <th>Status</th>
-    <th>Ping</th>
+    <th>Millisec</th>
   </tr>
   <tr>
     <td>0</td>
@@ -182,27 +203,49 @@
   </tr>
 </table>
     </div>
+    
+    
+      
+    
 <div class="off-canvas-content" data-off-canvas-content>
-
 <div class="grid-y grid-frame" >
-  <div class="large-4 small-1 cell" ></div>
-<div class="grid-x grid-margin-x auto cell">
+  <div class="large-4 small-1 cell" style="margin-left:auto; margin-right:auto; width=500px" >
+     
+      <img src="img/bank/logo@3x.png">
+  </div>
+<div class="grid-x grid-margin-x auto cell" style="margin-right:40px; margin-left:40px">
 
-<button class="large-auto cell button lgfont" data-open="importModal" onclick="importMode()">Import</button>
-<button class="large-auto cell button lgfont" data-open="bankModal" onclick="document.getElementById('fixStatusContainer').style.display = 'none'">Bank</button>
-<button class="large-auto cell button lgfont" data-open="exportModal">Export</button>
+<button class="large-auto cell button lgfont" data-open="importModal" onclick="importMode()"><img src="img/bank/import_icon.svg"><br>Import</button>
+<button class="large-auto cell button lgfont" data-open="bankModal" onclick="document.getElementById('fixStatusContainer').style.display = 'none'"><img src="img/bank/bank_icon.svg"><br>Bank</button>
+<button class="large-auto cell button lgfont" data-open="exportModal"><img src="img/bank/export_icon.svg" ><br>Export</button>
 
 
 </div>
-<div class="large-4 small-1 cell" ></div>
+<div class="large-4 small-1 cell" style="margin-left:auto; margin-right:auto; width=500px;color:white">
+    
+    
+    
+    CloudCoin Web Edition
+    <br>
+    Version 7.11.2017
+</div>
 </div>
 
-<div class="small reveal" id="importModal" data-reveal data-overlay="false">
-  <h3 id="importHead">Upload Coin</h3>
-  <div id="importButtons">
-	<input type="file" id="myFile" multiple onchange="uploadButtonAppear()">
-  <div id="upButtonDiv"></div>
+<div class="reveal tiny" id="importModal" data-reveal >
+  <h3 id="importHead">Upload Coin</h3> 
+    
+ 
+ <div id="importButtons">
+      
+	<input type="file" id="myFile" multiple onchange="uploadButtonAppear()"> -->
+     <!--<label for="myFile" class="button">Upload File</label>
+    <input type="file" id="myFile" multiple onchange="uploadButtonAppear()" class="show-for-sr">-->
+	
+ <div id="upButtonDiv"></div> 
+  
 </div>
+
+
 <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
   <div class="progress-meter" id="uploadProgress"></div>
 </div>
@@ -210,7 +253,15 @@
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
+  
+  
+
+  
 </div>
+
+
+  
+
 
 <div class="reveal" id="bankModal" data-reveal>
   <table >
