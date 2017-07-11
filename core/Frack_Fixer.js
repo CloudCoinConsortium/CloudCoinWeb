@@ -40,21 +40,21 @@ class Frack_Fixer
             /*6. DID THE FIX WORK?*/
                 if(outcome)
                 {
-                    console.log("RAIDA" + raida_ID + "unfracked successfully");
-                    return "RAIDA" + raida_ID + "unfracked successfully";
+                    console.log(cc.sn + " RAIDA" + raida_ID + "unfracked successfully");
+                    return cc.sn + " RAIDA" + raida_ID + "unfracked successfully";
                 } else {
-                    console.log("RAIDA failed to accept tickets on corner " + corner);
-                    return "RAIDA failed to accept tickets on corner " + corner;
+                    console.log( cc.sn + " RAIDA " + raida_ID + " failed to accept tickets on corner " + corner);
+                    return cc.sn + " RAIDA " + raida_ID + " failed to accept tickets on corner " + corner;
                 }//end did the fix work?
                  });
             } else {
-                console.log("Trusted servers failed to provide tickets for corner " + corner);
-                return "Trusted servers failed to provide tickets for corner " + corner;
+                console.log( cc.sn + " RAIDA " + raida_ID + ": Trusted servers failed to provide tickets for corner " + corner);
+                return cc.sn + " RAIDA " + raida_ID + ": Trusted servers failed to provide tickets for corner " + corner;
             } //end are tickets good
         });
         }// end are trusted raida ready
-        else{console.log("One or more of the trusted triad will not echo and detect. So not trying.");
-        return"One or more of the trusted triad will not echo and detect. So not trying.";
+        else{console.log( cc.sn + " RAIDA " + raida_ID + ": One or more of the trusted triad will not echo and detect. So not trying.");
+        return cc.sn + " RAIDA " + raida_ID + ": One or more of the trusted triad will not echo and detect. So not trying.";
         }    
     }//end fix one guid
 
@@ -85,7 +85,7 @@ class Frack_Fixer
             document.getElementById("fixStatusContainer").innerHTML +=
             "<div class='success progress' role='progressbar' tabindex='0' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'><div class='progress-meter' id='"+
             frackedFileNames[i] +"fix'><p class='progress-meter-text'>"+frackedFileNames[i]+"</p></div></div>"
-            console.log("unfracking" + (i+1) + " of " + frackedFileNames.length);
+            console.log("Unfracking " + (i+1) + " of " + frackedFileNames.length);
             frackedCC = files.loadOneCloudCoinFromJsonFile(frackedFileNames[i]);
             //alert(frackedCC.sn);
             //frackedCC.consoleReport();
@@ -97,19 +97,19 @@ class Frack_Fixer
                     //this.totalValueToBank++;
                     files.overWrite("fracked", "bank", frackedFileNames[i]);
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
-                    console.log("CloudCoin was moved to Bank");
+                    console.log( frackedFileNames[i] + ": CloudCoin was moved to Bank");
                     break;
                 case "counterfeit":
                     //this.totalValueToCounterfeit++;
                     files.overWrite("fracked", "counterfeit", frackedFileNames[i]);
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
-                    console.log("CloudCoin was moved to Counterfeit");
+                    console.log( frackedFileNames[i] + ": CloudCoin was moved to Counterfeit");
                     break;
                 default:
                     //this.totalValueToFractured++;
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
                     //this.fileUtil.overWrite(this.fileUtil.frackedFolder);
-                    console.log("CloudCoin was moved back to Fraked folder");
+                    console.log( frackedFileNames[i] + ": CloudCoin was moved back to Fracked folder");
                     break;
             }//end switch
             callback(frackedCC, files);
@@ -148,7 +148,7 @@ class Frack_Fixer
         {
             if(brokeCoin.getPastStatus(id).toLowerCase() == "fail")
             {
-                console.log("Attempting to fix RAIDA " + id);
+                console.log(brokeCoin.sn + " RAIDA " + id +  ": Attempting to fix.");
                 fixer = new FixitHelper(id, brokeCoin.ans);
                 promises.push(this.fixLoop(id, brokeCoin, corner, fixer, this.fixLoop, this)
                 .then(function(fixed){if(fixed){fixedIds.push(id)}}));
@@ -162,7 +162,7 @@ class Frack_Fixer
         for(let i = 0; i< fixedIds.length; i++)
         brokeCoin.setPastStatus("pass", fixedIds[i]);
         let ts = (new Date()).getTime() - before;
-        console.log("Time spent fixing RAIDA in milliseconds " + ts);
+        console.log( brokeCoin.sn +  ": Time spent fixing in milliseconds " + ts);
         brokeCoin.calculateHP();
         brokeCoin.reportDetectionResults();
         //alert(fixCoin.getFolder());
@@ -179,7 +179,7 @@ class Frack_Fixer
 
 fixLoop(id, brokeCoin, corner, fixer, callback, obj)
 {
- console.log("Using corner" + corner);
+ console.log(brokeCoin.sn + " RAIDA " + id +  ": Using corner " + corner);
  document.getElementById(brokeCoin.sn + "fix").style.width = id*4 + "%";
                 return obj.fixOneGuidCorner(id, brokeCoin, corner, fixer.currentTriad).then(function(fix_result){
                     if(fix_result.includes("success"))
