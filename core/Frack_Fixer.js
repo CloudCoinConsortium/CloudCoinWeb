@@ -109,10 +109,10 @@ class Frack_Fixer
                     //this.totalValueToFractured++;
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
                     //this.fileUtil.overWrite(this.fileUtil.frackedFolder);
-                    console.log( frackedFileNames[i] + ": CloudCoin was moved back to Fracked folder");
+                    console.log( frackedFileNames[i] + ": CloudCoin was moved back in to Folder: " + fixedCC.getFolder());
                     break;
             }//end switch
-            callback(frackedCC, files);
+            callback(fixedCC, files);
             });
         }
         
