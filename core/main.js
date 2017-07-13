@@ -55,6 +55,18 @@ function mindlist()
 	
 }
 
+function emailRecover()
+{
+	let sn = prompt("What is the serial number of the coin you want to recover?");
+	if(sn != "" && !isNaN(parseFloat(sn)) && isFinite(sn) && sn > 0 && sn < 16777216)
+	{
+		localStorage.setItem(sn, "mindstorage");
+		mindlist();
+	}else {
+		alert("Please Enter a valid serial number");
+	}
+}
+
 function downloadImage()
 {
     
