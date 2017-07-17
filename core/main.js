@@ -187,7 +187,7 @@ function uploadFile(){
     //let coins = importer.importAll(fileUtil);
 		//coins.forEach(coinlist);
 		//updateTotal(fileUtil);
-		}, 500 + (totalsize/80));
+		}, 500 + (totalSize/80));
 }
 
 function updateTotal(fileUtil)
