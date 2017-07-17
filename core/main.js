@@ -166,8 +166,10 @@ function uploadButtonAppear(){
 function uploadFile(){
 	document.getElementById("uploadProgress").style.width = "25%";
 	let elFile = document.getElementById("myFile");
+	let totalSize = 0;
     for(let i = 0; i < elFile.files.length; i++){
     let upJson = elFile.files[i];
+	totalSize += upJson.size;
     if(elFile.value.slice(-5) == "stack"){
 	files.uploadCloudCoinFromJsonFile(upJson, files.saveCloudCoinToJsonFile);
 	document.getElementById("uploadProgress").style.width = "50%";
@@ -175,7 +177,8 @@ function uploadFile(){
         files.uploadCloudCoinFromJpegFile(upJson, files.saveCloudCoinToJsonFile);
 		document.getElementById("uploadProgress").style.width = "50%";
     } else{alert("Valid File Type Please");}
-    }
+}
+
 	setTimeout(function(){
 		document.getElementById("uploadProgress").style.width = "75%";
 		detect.detectAllSuspect(updates);
@@ -184,7 +187,7 @@ function uploadFile(){
     //let coins = importer.importAll(fileUtil);
 		//coins.forEach(coinlist);
 		//updateTotal(fileUtil);
-		}, 500);
+		}, 500 + (totalsize/80));
 }
 
 function updateTotal(fileUtil)
