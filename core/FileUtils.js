@@ -92,15 +92,19 @@ class FileUtils
 			var data = JSON.parse(reader.result);
         for(let i = 0; i < data.cloudcoin.length; i++){
 			let cc = data.cloudcoin[i];
-            files.writeTo("suspect", cc.sn);
+            
 		let upCoin = new CloudCoin(cc.nn, cc.sn, cc.an, cc.ed, cc.aoid, cc.pown);
         let currentCoin = JSON.parse(localStorage.getItem(upCoin.sn));
         if(currentCoin != null){
             if(upCoin.sn == currentCoin.sn && loadFile.lastModified < currentCoin.time)
             {
-                alert("This app has the current version of that coin.");
-            }else{callback(upCoin, upCoin.sn);}
-        }else{callback(upCoin, upCoin.sn);}
+                alert("This app has the current version of coin: " + upCoin.sn);
+            }else{
+                files.writeTo("suspect", cc.sn);
+                callback(upCoin, upCoin.sn);}
+        }else{
+            files.writeTo("suspect", cc.sn);
+            callback(upCoin, upCoin.sn);}
         }}
 		reader.readAsText(loadFile);
 		
@@ -117,14 +121,19 @@ class FileUtils
             data = data.slice(40, 910);
         
 		let upCoin = files.hexToCloudCoin(data);
-        files.writeTo("suspect", upCoin.sn);
+        
         let currentCoin = JSON.parse(localStorage.getItem(upCoin.sn));
         if(currentCoin != null){
             if(upCoin.sn == currentCoin.sn && loadFile.lastModified < currentCoin.time)
             {
-                alert("This app has the current version of that coin.");
-            }else{callback(upCoin, upCoin.sn);}
-        }else{callback(upCoin, upCoin.sn);}
+                alert("This app has the current version of coin: " + upCoin.sn);
+            }else{
+                files.writeTo("suspect", upCoin.sn);
+                callback(upCoin, upCoin.sn);
+        }
+    }else{
+        files.writeTo("suspect", upCoin.sn);
+        callback(upCoin, upCoin.sn);}
         }
 		reader.readAsDataURL(loadFile);
 		
