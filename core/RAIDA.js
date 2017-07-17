@@ -77,7 +77,7 @@ class RAIDA
             {
                 if(data[j] != null)
                 {returnCoin.setPastStatus(data[j], j)}
-                else{returnCoin.setPastStatus("undetected", j)}
+                else{returnCoin.setPastStatus("noresponse", j)}
             }
             returnCoin.setAnsToPansIfPassed();
             returnCoin.calculateHP();

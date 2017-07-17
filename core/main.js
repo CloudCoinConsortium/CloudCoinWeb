@@ -164,7 +164,7 @@ function uploadButtonAppear(){
 }
 
 function uploadFile(){
-	document.getElementById("uploadProgress").style.width = "25%";
+	//document.getElementById("uploadProgress").style.width = "25%";
 	let elFile = document.getElementById("myFile");
 	let totalSize = 0;
     for(let i = 0; i < elFile.files.length; i++){
@@ -172,15 +172,15 @@ function uploadFile(){
 	totalSize += upJson.size;
     if(elFile.value.slice(-5) == "stack"){
 	files.uploadCloudCoinFromJsonFile(upJson, files.saveCloudCoinToJsonFile);
-	document.getElementById("uploadProgress").style.width = "50%";
+	//document.getElementById("uploadProgress").style.width = "50%";
     } else if(elFile.value.slice(-4) == "jpeg" || elFile.value.slice(-4) == "jfif" || elFile.value.slice(-3) == "jpg"){
         files.uploadCloudCoinFromJpegFile(upJson, files.saveCloudCoinToJsonFile);
-		document.getElementById("uploadProgress").style.width = "50%";
+		//document.getElementById("uploadProgress").style.width = "50%";
     } else{alert("Valid File Type Please");}
 }
 
 	setTimeout(function(){
-		document.getElementById("uploadProgress").style.width = "75%";
+		//document.getElementById("uploadProgress").style.width = "75%";
 		detect.detectAllSuspect(updates);
         
         //let importer = new Importer();
@@ -223,31 +223,34 @@ function updateTotal(fileUtil)
 	}
 }
 
-function updates(cc, fileUtil, cfnames="", bnames="", frnames="")
+function updates(cc, fileUtil, percent=0, cfnames=0, bnames=0, frnames=0)
 {
     coinlist(cc, fileUtil);
 	scoinlist(cc, fileUtil);
     updateTotal(fileUtil);
 	let msg = "";
-	
-	if(bnames.length > 0 || frnames.length > 0)
+	let fullHtml = "";
+	if(bnames > 0 || frnames> 0)
 	{
-		if(bnames.length > 0)
-			msg+= "Coin(s) to bank:" + bnames.length + "<br>";
-		if(frnames.length > 0)
-			msg+= "Coin(s) that are fracked:" + frnames.length + "<br>";
-		document.getElementById("importStatus").innerHTML = "<div class='callout success'>"
+		if(bnames > 0)
+			msg+= "Coin(s) to bank:" + bnames + "<br>";
+		if(frnames > 0)
+			msg+= "Coin(s) that are fracked:" + frnames + "<br>";
+		fullHtml = "<div class='callout success'>"
 		+ msg + "</div>";
 	}
-	if(cfnames.length > 0)
+	if(cfnames > 0)
 	{
-		document.getElementById("importStatus").innerHTML +="<div class='callout alert'>Coin(s) that are counterfeit:"
-		+ cfnames.length + "</div>";
+		fullHtml +="<div class='callout alert'>Coin(s) that are counterfeit:"
+		+ cfnames + "</div>";
 	}
-	document.getElementById("uploadProgress").style.width = "100%";
+	document.getElementById("importStatus").innerHTML = fullHtml;
+	document.getElementById("uploadProgress").style.width = percent +"%";
+	if(percent == 100){
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
 	
 	document.getElementById("importHead").innerHTML = "Import Complete";
+	}
 	document.getElementById("importButtons").innerHTML= "";
 	mindlist();
 	sortTable("coinlistbank");
@@ -256,26 +259,28 @@ function updates(cc, fileUtil, cfnames="", bnames="", frnames="")
 	sortTable("mcoinlistfracked");
 }
 
-function updatesFromMind(cc, fileUtil, cfnames="", bnames="", frnames="")
+function updatesFromMind(cc, fileUtil, percent = 0, cfnames=0, bnames=0, frnames=0)
 {
-	document.getElementById("mindProgress").style.width = "100%";
+	document.getElementById("mindProgress").style.width = percent +"%";
+	if(percent == 100)
 	document.getElementById("mindProgress").innerHTML="<p class='progress-meter-text'>done</p>";
 	let msg = "";
-	
-	if(bnames.length > 0 || frnames.length > 0)
+	let fullHtml = "";
+	if(bnames > 0 || frnames > 0)
 	{
-		if(bnames.length > 0)
-			msg+= "Coin(s) to bank:" + bnames.length + "<br>";
-		if(frnames.length > 0)
-			msg+= "Coin(s) that are fracked:" + frnames.length + "<br>";
-		document.getElementById("fromMindStatus").innerHTML = "<div class='callout success'>"
+		if(bnames > 0)
+			msg+= "Coin(s) to bank:" + bnames + "<br>";
+		if(frnames > 0)
+			msg+= "Coin(s) that are fracked:" + frnames+ "<br>";
+		fullHtml = "<div class='callout success'>"
 		+ msg + "</div>";
 	}
-	if(cfnames.length > 0)
+	if(cfnames > 0)
 	{
-		document.getElementById("fromMindStatus").innerHTML +="<div class='callout alert'>Coin(s) that are counterfeit"
-		+ "(You may have mispelled something.):" + cfnames.length + "</div>";
+		 fullHtml +="<div class='callout alert'>Coin(s) that are counterfeit"
+		+ "(You may have mispelled something.):" + cfnames + "</div>";
 	}
+	document.getElementById("fromMindStatus").innerHTML = fullHtml;
 	if(cc.getFolder().toLowerCase() == "counterfeit"){
 		localStorage.setItem(cc.sn, "mindstorage");
 		mindlist();
