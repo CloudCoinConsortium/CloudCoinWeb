@@ -3,7 +3,7 @@ class Frack_Fixer
     constructor(fileUtil, timeout)
     {
         this.fileUtil = fileUtil;
-        this.raida = new RAIDA(timeout);
+        //this.raida = new RAIDA(timeout);
         this.totalValueToBank = 0;
         this.totalValueToCounterfeit = 0;
         this.totalValueToFractured = 0;
@@ -12,7 +12,7 @@ class Frack_Fixer
 
     fixOneGuidCorner(raida_ID, cc, corner, trustedTriad)
     {
-        let stat = this.raida.RAIDAStatus;
+        let stat = raida.RAIDAStatus;
 
         /*1. WILL THE BROKEN RAIDA FIX? check to see if it has problems echo, detect, or fix. */
         if(stat.failsFix[raida_ID] || stat.failsEcho[raida_ID])
@@ -26,7 +26,7 @@ class Frack_Fixer
         {
             /*3. GET TICKETS AND UPDATE RAIDA STATUS TICKETS*/
             let ans = [cc.ans[trustedTriad[0]], cc.ans[trustedTriad[1]], cc.ans[trustedTriad[2]]];
-            return Promise.all(this.raida.get_Tickets(trustedTriad, ans, cc.nn, cc.sn, cc.getDenomination())).then(function(){
+            return Promise.all(raida.get_Tickets(trustedTriad, ans, cc.nn, cc.sn, cc.getDenomination())).then(function(){
                 //alert(stat.tickets[trustedTriad[0]]);
             /*4. ARE ALL TICKETS GOOD?*/
             //alert(stat.tickets[trustedTriad[1]]);
@@ -89,7 +89,10 @@ class Frack_Fixer
             frackedCC = files.loadOneCloudCoinFromJsonFile(frackedFileNames[i]);
             //alert(frackedCC.sn);
             //frackedCC.consoleReport();
-            this.fixCoin(frackedCC).then(function(fixedCC){
+            
+            let p= Promise.resolve(this.fixCoin(frackedCC));
+            
+            p.then(function(fixedCC){
             //fixedCC.consoleReport();
             switch(fixedCC.getFolder().toLowerCase())
             {
@@ -129,38 +132,40 @@ class Frack_Fixer
         return deleted;
     }
 
-    fixCoin(brokeCoin)
+    fixCoin(brokeCoin, obj = this, id = 0)
     {
         //alert(brokeCoin.sn);
-        this.raida.RAIDAStatus.resetTickets();
-        this.raida.RAIDAStatus.newCoin();
-        let fileUtil = this.fileUtil;
+        
+        raida.RAIDAStatus.resetTickets();
+        //obj.raida.RAIDAStatus.newCoin();
+        let fileUtil = obj.fileUtil;
         brokeCoin.setAnsToPans();
         let before = (new Date()).getTime();
 
         let fix_result = "";
         let fixer;
-        let fixedIds = [];
+        //let fixedIds = [];
         let corner = 1;
-        let promises = [];
+        //let promises = [];
         //let i = 0;
-        for(let id = 0; id < 25; id++)
-        {
+        // id < 25;
+       
             if(brokeCoin.getPastStatus(id).toLowerCase() != "pass") //Will treat all non-passes as fails. 
             {
                 console.log(brokeCoin.sn + " RAIDA " + id +  ": Attempting to fix.");
                 fixer = new FixitHelper(id, brokeCoin.ans);
-                promises.push(this.fixLoop(id, brokeCoin, corner, fixer, this.fixLoop, this)
-                .then(function(fixed){if(fixed){fixedIds.push(id)}}));
+                return obj.cornerLoop(id, brokeCoin, corner, fixer, obj.cornerLoop, obj)
+                //.then(function(fixed){if(fixed){fixedIds.push(id)}}));
                 //fixedIds.push(id);
                 //i++;
-            }// end if fail
-        }//end for all raida
+            // end if fail
+        //end for all raida
         
-        return Promise.all(promises)
-        .then(function(){
-        for(let i = 0; i< fixedIds.length; i++)
-        brokeCoin.setPastStatus("pass", fixedIds[i]);
+        //return Promise.all(promises)
+        .then(function(result){
+        //for(let i = 0; i< fixedIds.length; i++)
+        if(result)
+        brokeCoin.setPastStatus("pass", id);
         let ts = (new Date()).getTime() - before;
         console.log( brokeCoin.sn +  ": Time spent fixing in milliseconds " + ts);
         brokeCoin.calculateHP();
@@ -170,18 +175,26 @@ class Frack_Fixer
         fileUtil.saveCloudCoinToJsonFile(brokeCoin, brokeCoin.sn);
         document.getElementById(brokeCoin.sn + "fix").style.width = "100%";
         document.getElementById(brokeCoin.sn + "fix").innerHTML = "<p class='progress-meter-text'>Done Fixing Fracked</p>";
-        return brokeCoin;
-        })
+        
+        if(id<24){
+            obj.fixCoin(brokeCoin, obj, id+1);
+        }else{
+        return brokeCoin;}
+        });
+    } else if(id<24){
+        obj.fixCoin(brokeCoin, obj, id+1);
     
-    
-    }
+    }else{ 
+        
+        return brokeCoin; }
+}
 
-
-fixLoop(id, brokeCoin, corner, fixer, callback, obj)
+cornerLoop(id, brokeCoin, corner, fixer, callback, obj)
 {
  console.log(brokeCoin.sn + " RAIDA " + id +  ": Using corner " + corner);
  document.getElementById(brokeCoin.sn + "fix").style.width = id*4 + "%";
-                return obj.fixOneGuidCorner(id, brokeCoin, corner, fixer.currentTriad).then(function(fix_result){
+                return Promise.resolve(obj.fixOneGuidCorner(id, brokeCoin, corner, fixer.currentTriad)
+                .then(function(fix_result){
                     if(fix_result.includes("success"))
                     {
                         //brokeCoin.setPastStatus("pass", id);
@@ -190,10 +203,11 @@ fixLoop(id, brokeCoin, corner, fixer, callback, obj)
                     } else {
                         corner++;
                         fixer.setCornerToCheck(corner);
-                        if(!fixer.finnished)
+                        if(!fixer.finnished){
                         return callback(id, brokeCoin, corner, fixer, callback, obj);
+                        }else{return false;}
                     }
-                    });//end if fixed
+                    }));//end if fixed
 }
 
 
