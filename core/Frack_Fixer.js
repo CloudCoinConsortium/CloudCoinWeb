@@ -90,10 +90,11 @@ class Frack_Fixer
             //alert(frackedCC.sn);
             //frackedCC.consoleReport();
             
-            let p= Promise.resolve(this.fixCoin(frackedCC));
+            let p = this.fixCoin(frackedCC);
             
             p.then(function(fixedCC){
             //fixedCC.consoleReport();
+            
             switch(fixedCC.getFolder().toLowerCase())
             {
                 case "bank":
@@ -177,12 +178,12 @@ class Frack_Fixer
         document.getElementById(brokeCoin.sn + "fix").innerHTML = "<p class='progress-meter-text'>Done Fixing Fracked</p>";
         
         if(id<24){
-            obj.fixCoin(brokeCoin, obj, id+1);
+            return obj.fixCoin(brokeCoin, obj, id+1);
         }else{
         return brokeCoin;}
         });
     } else if(id<24){
-        obj.fixCoin(brokeCoin, obj, id+1);
+        return obj.fixCoin(brokeCoin, obj, id+1);
     
     }else{ 
         
@@ -193,7 +194,7 @@ cornerLoop(id, brokeCoin, corner, fixer, callback, obj)
 {
  console.log(brokeCoin.sn + " RAIDA " + id +  ": Using corner " + corner);
  document.getElementById(brokeCoin.sn + "fix").style.width = id*4 + "%";
-                return Promise.resolve(obj.fixOneGuidCorner(id, brokeCoin, corner, fixer.currentTriad)
+                return obj.fixOneGuidCorner(id, brokeCoin, corner, fixer.currentTriad)
                 .then(function(fix_result){
                     if(fix_result.includes("success"))
                     {
@@ -207,7 +208,7 @@ cornerLoop(id, brokeCoin, corner, fixer, callback, obj)
                         return callback(id, brokeCoin, corner, fixer, callback, obj);
                         }else{return false;}
                     }
-                    }));//end if fixed
+                    });//end if fixed
 }
 
 
