@@ -210,7 +210,7 @@
       
     
 <div class="off-canvas-content" data-off-canvas-content>
-<div class="grid-y large-grid-frame" >
+<div id="ygrid" class="grid-y large-grid-frame" >
   <div class="large-4 small-1 cell" style="margin-left:auto; margin-right:auto; width:500px" >
      
     
@@ -223,7 +223,7 @@
        
   </div>
   
-<div class="grid-x grid-margin-x large-4 small-10 cell" style="margin-right:40px; margin-left:40px">
+<div class="grid-x grid-margin-x large-4 small-10 cell" style="margin-right:1px; margin-left:1px">
 
 <button class="large-auto cell button lgfont" data-open="importModal" onclick="importMode()"><img src="img/bank/import_icon.svg"><br>Import</button>
 <button class="large-auto cell button lgfont" data-open="bankModal" onclick="document.getElementById('fixStatusContainer').style.display = 'none'"><img src="img/bank/bank_icon.svg"><br>Safe</button>
@@ -237,7 +237,7 @@
 
     CloudCoin Web Edition
     <br>
-    Version 7.11.2017
+    Version 7.18.2017
 </div>
 </div>
 
@@ -350,7 +350,7 @@
 </div>
         <div >
         <h3  style="visibility: hidden;">image to put cloudcoin in:<input type="file" id="jpeg-in"></h3>
-        <div style="display:none" id="jpeg-out" class="thumbnail"></div>
+        <!--<div  id="jpeg-out" class="thumbnail"></div>-->
         <input type="text" id ="alltag" placeholder="Name your stack of cloudcoins file">
         <button class="small button" onclick="downloadAll()">Download as Stack</button>
    <button class="small button" onclick="downloadImage()">Download as Image</button>
@@ -442,7 +442,7 @@
 
 
 </div>
-</div>
+</div></div>
 <a class="exit-off-canvas"></a>
       
 
@@ -484,6 +484,8 @@
 	sortTable("coinlistfracked");
 	sortTable("mcoinlistbank");
 	sortTable("mcoinlistfracked");
+	if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+	document.getElementById("ygrid").classList.remove("grid-y", "large-grid-frame");}
     </script>
     
   </body>
