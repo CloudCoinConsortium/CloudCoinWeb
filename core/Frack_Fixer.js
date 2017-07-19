@@ -18,7 +18,7 @@ class Frack_Fixer
         if(stat.failsFix[raida_ID] || stat.failsEcho[raida_ID])
         {
             console.log("RAIDA Fails Echo or Fix. Try again when RAIDA online.");
-            return "RAIDA Fails Echo or Fix. Try again when RAIDA online.";
+            return Promise.resolve("RAIDA Fails Echo or Fix. Try again when RAIDA online.");
         }
         else
              /*2. ARE ALL TRUSTED RAIDA IN THE CORNER READY TO HELP?*/
@@ -54,7 +54,7 @@ class Frack_Fixer
         });
         }// end are trusted raida ready
         else{console.log( cc.sn + " RAIDA " + raida_ID + ": One or more of the trusted triad will not echo and detect. So not trying.");
-        return cc.sn + " RAIDA " + raida_ID + ": One or more of the trusted triad will not echo and detect. So not trying.";
+        return Promise.resolve(cc.sn + " RAIDA " + raida_ID + ": One or more of the trusted triad will not echo and detect. So not trying.");
         }    
     }//end fix one guid
 
