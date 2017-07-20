@@ -4,17 +4,76 @@ function populateRaidaStatus(rr, id)
     document.getElementById("p_" + id).innerHTML = rr.milliseconds;
 }
 
+function exportDialAdd(dem)
+{
+	let dialCount = document.getElementById("dial"+dem).childElementCount - 3;
+	let htmltext ="<option disabled> </option>\n<option selected>0</option>\n";
+	for(let i =1;i<= dialCount+1; i++)
+	{
+		htmltext+="<option>"+i+"</option>";
+	}
+	htmltext +="<option disabled> </option>";
+	document.getElementById("dial"+dem).innerHTML = htmltext;
+}
+
+function exportDialMinus(dem)
+{
+	let dialCount = document.getElementById("dial"+dem).childElementCount - 3;
+	let htmltext ="<option disabled> </option>\n<option selected>0</option>\n";
+	for(let i =1;i<= dialCount-1; i++)
+	{
+		htmltext+="<option>"+i+"</option>";
+	}
+	htmltext +="<option disabled> </option>";
+	document.getElementById("dial"+dem).innerHTML = htmltext;
+}
+
+function dialSet(dem)
+{
+	let box = document.getElementById("dial"+dem);
+	let amount = box.options[box.selectedIndex].text;
+	let checkboxes = document.getElementsByClassName("dem"+dem);
+	for(let i =0; i< checkboxes.length; i++)
+	{
+		if(i < amount){
+			checkboxes[i].checked = true;
+		} else {
+			checkboxes[i].checked = false;
+		}
+	}
+	//console.log(amount);
+}
+
+function scrollSelect(dem)
+{
+	
+	let box = document.getElementById("dial"+dem);
+	posOffsetX = box.getBoundingClientRect().left + 20;
+	posOffsetY = box.getBoundingClientRect().top + 45;
+	
+	
+	//console.log(posOffsetX+","+posOffsetY);
+	document.elementFromPoint(posOffsetX,posOffsetY).selected = true;
+	dialSet(dem);
+	//console.log(document.elementFromPoint(posOffsetX,posOffsetY));
+	
+}
+
 function coinlist(cc, fileUtil)
 {
     let id = cc.sn;
     if(document.getElementById(id) !== null){
         document.getElementById(id).remove();
         
+	} else {
+		if(cc.getFolder().toLowerCase() == "bank" || cc.getFolder().toLowerCase() == "fracked")
+		exportDialAdd(cc.getDenomination());
 	}
     let listname = "coinlist" + cc.getFolder().toLowerCase();
-    let htmltext = "<tr id = '"+id+"'><td><input type='checkbox' id='cb"+
-	id+"'></td><td>"
-    + cc.getDenomination() + "</td><td>"+id+"</td></tr>";
+    let htmltext = "<tr id = '"+id+"'><td><input type='checkbox' id='cb"+id+"' ";
+	if(listname == "coinlistbank" || listname == "coinlistfracked")
+		htmltext += "class='dem"+cc.getDenomination()+"' ";
+	htmltext += "></td><td>"+ cc.getDenomination() + "</td><td>"+id+"</td></tr>";
     
     document.getElementById(listname).innerHTML += htmltext;
 	//document.getElementById("m" +listname).innerHTML += htmltext;
@@ -67,7 +126,7 @@ function emailRecover()
 	}
 }
 
-function downloadImage()
+function downloadImage(N=false)
 {
     
     
@@ -81,12 +140,12 @@ function downloadImage()
     for(let i =0 ; i<fnames.length; i++){
         if(document.getElementById("jpeg-in").files.length !== 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
 		{//alert("clicked");
-        embedCC(files.loadOneCloudCoinFromJsonFile(fnames[i]));
+        embedCC(files.loadOneCloudCoinFromJsonFile(fnames[i]), N);
         trash(fnames[i]);
 		}else if(document.getElementById("jpeg-in").files.length === 0)
 		{
 			
-			embedTemplateCC(files.loadOneCloudCoinFromJsonFile(fnames[i]));
+			embedTemplateCC(files.loadOneCloudCoinFromJsonFile(fnames[i]), N);
 			trash(fnames[i]);
 		}
 		else {
@@ -96,16 +155,20 @@ function downloadImage()
     //e.stopPropogation();
 }
 
-function downloadAll()
+function downloadAll(N=false)
 {
     let fnames = [];
+	let tag;
 	for(var j = 0; j< localStorage.length; j++){
     if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){    
 	if(document.getElementById("cb" + localStorage.key(j)).checked)
  			fnames.push(localStorage.key(j));
 		}
 	}
-    let tag = document.getElementById("alltag").value;
+	if(N)
+    {tag = document.getElementById("alltagN").value;}
+	else
+	{tag = document.getElementById("alltag").value;}
     files.downloadAllCloudCoinToJsonFile(fnames, tag);
     for(let i = 0; i < fnames.length; i++){
         trash(fnames[i]);
@@ -164,7 +227,7 @@ function uploadButtonAppear(){
 }
 
 function uploadFile(){
-	//document.getElementById("uploadProgress").style.width = "25%";
+	document.getElementById("uploadProgress").style.width = "2%";
 	let elFile = document.getElementById("myFile");
 	let totalSize = 0;
     for(let i = 0; i < elFile.files.length; i++){
@@ -301,7 +364,27 @@ function trash(id)
         document.getElementById(id).remove();
 		document.getElementById("s"+id).remove();
         files.overWrite("", "", id);
-        
+         if ((id < 2097153))
+            {
+                exportDialMinus(1);
+            }
+            else if ((id < 4194305))
+            {
+                exportDialMinus(5);
+            }
+            else if ((id < 6291457))
+            {
+                exportDialMinus(25);
+            }
+            else if ((id < 14680065))
+            {
+                exportDialMinus(100);
+            }
+            else if ((id < 16777217))
+            {
+                exportDialMinus(250);
+            }
+            
 		
         localStorage.removeItem(id);
         updateTotal(files);
@@ -322,10 +405,14 @@ function trashFolder(folder)
 
 function embedCC(cc)
 {
-    //alert(files.bankFolder);
+    let inputTag;
+	if(N)
+	{inputTag = document.getElementById("alltagN").value}
+	else
+	{inputTag = document.getElementById("alltag").value}
 	let tag = cc.getDenomination() + ".cloudcoin.1." + cc.sn + ".";
-	if(document.getElementById("alltag").value !== ""){
-	tag += document.getElementById("alltag").value;
+	if(inputTag !== ""){
+	tag += inputTag;
 	} else {
 		tag += "image";
 	}
@@ -343,7 +430,10 @@ function embedTemplateCC(cc)
     //let oldImg = document.getElementById("jpeg-in").files[0];
 	let oldImg = new Image();
 	let tag = cc.getDenomination() + ".cloudcoin.1." + cc.sn + ".";
-	tag += document.getElementById("alltag").value;
+	if(N)
+	{tag += document.getElementById("alltagN").value;}
+	else
+	{tag += document.getElementById("alltag").value;}
 	tag+= ".jpg";
 	//oldImg.crossorigin = "use-credentials";
 	var c = document.createElement("canvas");
