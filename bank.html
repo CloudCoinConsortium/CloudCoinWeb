@@ -82,9 +82,9 @@
     
     <table >
   <tr>
-    <th>Raida</th>
-    <th>Status</th>
-    <th>Millisec</th>
+    <th id="echoRaida">Raida</th>
+    <th id="echoStatus">Status</th>
+    <th id="echoMillisec">Millisec</th>
   </tr>
   <tr>
     <td>0</td>
@@ -224,7 +224,7 @@
     
       <img src="img/bank/logo@3x.png" style="background-color:blue">
       <br>
-      <span style="margin-left:auto; margin-right:auto; width:500px;color:white; background-color:blue">
+      <span id="topInfo" style="margin-left:auto; margin-right:auto; width:500px;color:white; background-color:blue">
         Used to Authenticate, Store and Payout CloudCoins.
      This software is provided as is with all faults, defects and errors and without warranty of any kind. Free from the CloudCoin Consortium.
      </span>
@@ -233,19 +233,23 @@
   
 <div class="grid-x grid-margin-x large-4 small-10 cell" style="margin-right:1px; margin-left:1px">
 
-<button class="large-auto cell button lgfont" data-open="importModal" onclick="importMode()"><img src="img/bank/import_icon.svg"><br>Import</button>
-<button class="large-auto cell button lgfont" data-open="bankModal" onclick="document.getElementById('fixStatusContainer').style.display = 'none'"><img src="img/bank/bank_icon.svg"><br>Safe</button>
-<button class="large-auto cell button lgfont" data-open="newExportModal"><img src="img/bank/export_icon.svg" ><br>Export</button>
+<button class="large-auto cell button lgfont" data-open="importModal" onclick="importMode()">
+  <img src="img/bank/import_icon.svg"><br><span id="butImport">Import</span></button>
+<button class="large-auto cell button lgfont" data-open="bankModal" onclick="document.getElementById('fixStatusContainer').style.display = 'none'">
+  <img src="img/bank/bank_icon.svg"><br><span id="butBank">Safe</span></button>
+<button class="large-auto cell button lgfont" data-open="newExportModal">
+  <img src="img/bank/export_icon.svg" ><br><span id="butExport">Export</span></button>
 
 
 </div>
  
 <div class="large-4 small-1 cell" style="margin-left:auto; margin-right:auto; width:250px;color:white">
-    <span style="margin-left:auto; margin-right:auto; width:250px;color:white; background-color:blue">Your coins will be stored in your browsing data. Make sure you do not delete browsing data before exporting coins.</span>
-
+    <span id="botInfo" style="margin-left:auto; margin-right:auto; width:250px;color:white; background-color:blue">Your coins will be stored in your browsing data. Make sure you do not delete browsing data before exporting coins.</span>
+    <p id ="edition">
     CloudCoin Web Edition
     <br>
     Version 7.18.2017
+    </p>
 </div>
 </div>
 
@@ -285,43 +289,43 @@
   <table >
 	<tbody>
 		<tr>
-			<th>Denomination</th>
-			<th>Good</th>
-			<th>Fracked</th>
-			<th>Total</th>
+			<th id="bankDem">Denomination</th>
+			<th id="bankGood">Good</th>
+			<th id="bankFracked">Fracked</th>
+			<th id="bankTotal">Total</th>
 		</tr>
 		<tr>
-			<td>Ones</td>
+			<td id="bankOnes">Ones</td>
 			<td id="b_g1"> </td>
 			<td id="b_f1"> </td>
 			<td id="b_t1"> </td>
 		</tr>
 		<tr>
-			<td>Fives</td>
+			<td id="bankFives">Fives</td>
 			<td id="b_g5"> </td>
 			<td id="b_f5"> </td>
 			<td id="b_t5"> </td>
 		</tr>
 		<tr>
-			<td>Quarters</td>
+			<td id="bankQuarters">Quarters</td>
 			<td id="b_g25"> </td>
 			<td id="b_f25"> </td>
 			<td id="b_t25"> </td>
 		</tr>
 		<tr>
-			<td>Hundreds</td>
+			<td id="bankHundreds">Hundreds</td>
 			<td id="b_g100"> </td>
 			<td id="b_f100"> </td>
 			<td id="b_t100"> </td>
 		</tr>
 		<tr>
-			<td>250s</td>
+			<td id="bank250s">250s</td>
 			<td id="b_g250"> </td>
 			<td id="b_f250"> </td>
 			<td id="b_t250"> </td>
 		</tr>
 		<tr>
-			<td><b>SUM</b></td>
+			<td><b id="bankSum">SUM</b></td>
 			<td><b id="b_gs"></b></td>
 			<td><b id="b_fs"></b></td>
 			<td><b id="b_ts"></b></td>
@@ -330,8 +334,8 @@
 </table>
 <div id="fixStatusContainer"></div>
  <button class="button" onclick="fix.fixAll(updates)" id="fixButton">Fix Fracked</button>
- <button class="button" data-open="mindToModal" onclick="emptyprogress('toMindMessage')">Bank to Mind</button>
- <button class="button" data-open="mindFromModal" onclick="emptyprogress('mindProgress');document.getElementById('fromMindStatus').innerHTML='';">
+ <button id="butB2M" class="button" data-open="mindToModal" onclick="emptyprogress('toMindMessage')">Bank to Mind</button>
+ <button id="butM2B" class="button" data-open="mindFromModal" onclick="emptyprogress('mindProgress');document.getElementById('fromMindStatus').innerHTML='';">
    Mind to Bank</button>
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
@@ -340,22 +344,22 @@
 
 <div class="reveal" id="exportModal" data-reveal>
    
-   <h2>Export Coins   <button class="small button" data-open="newExportModal">Back</button></h2>
+   <h2><span id="exportHead">Export Coins</span>   <button id="butBack" class="small button" data-open="newExportModal">Back</button></h2>
    
-   <input type="checkbox" id="cbAll" onchange="checkAll()">  check all
+   <input type="checkbox" id="cbAll" onchange="checkAll()">  <span id="checkAll">check all</span>
    <div class="grid-x">
      <div class="large-6 cell">
-   <h3>Bank  </h3>
+   <h3 id="exportBank">Bank  </h3>
         <table>
           <tbody id="coinlistbank">
-          <tr><th></th><th>Denomination</th><th>SN</th></tr>
+          <tr><th></th><th id="ebDem">Denomination</th><th id="ebSn">SN</th></tr>
           </tbody>
         </table>
      </div><div class="large-6 cell">
-        <h3>Fracked</h3>
+        <h3 id="exportFracked">Fracked</h3>
         <table>
           <tbody id="coinlistfracked">
-          <tr><th></th><th>Denomination</th><th>SN</th></tr>
+          <tr><th></th><th id="efDem">Denomination</th><th id="efSn">SN</th></tr>
           </tbody>
         </table>
         </div>
@@ -364,9 +368,9 @@
         <h3  style="visibility: hidden;">image to put cloudcoin in:<input type="file" id="jpeg-in"></h3>
         <!--<div  id="jpeg-out" class="thumbnail"></div>-->
         <input type="text" id ="alltag" placeholder="Name your stack of cloudcoins file">
-        <button class="small button" onclick="downloadAll()">Download as Stack</button>
-   <button class="small button dlJpeg" onclick="downloadImage()">Download as Image</button>
-    <button class="small button"  style="visibility: hidden;" data-open="brokenModal">Hidden Coins</button>
+        <button id="butDl" class="small button" onclick="downloadAll()">Download as Stack</button>
+   <button id="butDi" class="small button dlJpeg" onclick="downloadImage()">Download as Image</button>
+    
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -374,7 +378,7 @@
 
 <div class="reveal" id="newExportModal" data-reveal>
    
-   <h2>Export Coins</h2>
+   <h2 id="exportHeadN">Export Coins</h2>
    <div id="eDial" class="grid-x grid-margin-x" style="text-align: center">
     <div class="auto cell">1s
 <select onscroll="scrollSelect('1')" id="dial1" size="3" onchange="dialSet('1')">
@@ -409,13 +413,13 @@
     </div> 
 
     </div>
-    <button class="small button" data-open="exportModal">Export Specific Coins</button>
+    <button id="butLegacyExport" class="small button" data-open="exportModal">Export Specific Coins</button>
    
         <div >
         
         <input type="text" id ="alltagN" placeholder="Name your stack of cloudcoins file">
-        <button class="small button" onclick="downloadAll(true)">Download as Stack</button>
-   <button class="small button dlJpeg" onclick="downloadImage(true)">Download as Image</button>
+        <button id="butdlN" class="small button" onclick="downloadAll(true)">Download as Stack</button>
+   <button id="butdiN" class="small button dlJpeg" onclick="downloadImage(true)">Download as Image</button>
     <button class="small button"  style="visibility: hidden;" data-open="brokenModal">Hidden Coins</button>
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
@@ -423,18 +427,18 @@
 </div>
 
 <div class="reveal" id="mindFromModal" data-reveal>
-  <h3>Take Out of Mind Inventory  </h3>
+  <h3 id="m2bHead">Take Out of Mind Inventory  </h3>
   <ul id="coinlistmind">
         </ul>
-<p>Use the exact username, password, and email that you used to put the coins
+<p id="m2bWarn">Use the exact username, password, and email that you used to put the coins
   in your mind. Note that they are all case sensitive.
 </p>
-        username:<input type="text" id="user" autocomplete="off">
-		password:<input type="text" id="pass" autocomplete="off">
-		email:<input type="email" id="email" autocomplete="off">
+        <span id="m2bUser">username:</span><input type="text" id="user" autocomplete="off">
+		<span id="m2bPass">password:</span><input type="text" id="pass" autocomplete="off">
+		<span id="m2bEmail">email:</span><input type="email" id="email" autocomplete="off">
 		
-<button class="small button" onclick="mindStorage(moveFromMind)">Move from Mind</button>
-  <button class="small button" onclick="emailRecover()">Recover Coins from Email</button>
+<button id="butM2Bexe" class="small button" onclick="mindStorage(moveFromMind)">Move from Mind</button>
+  <button id="butEmailRecover" class="small button" onclick="emailRecover()">Recover Coins from Email</button>
   <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
   <div class="progress-meter" id="mindProgress"></div>
 </div>
@@ -445,42 +449,42 @@
 </div>
 
 <div class="reveal" id="mindToModal" data-reveal>
-  <h3>Move into Mind Inventory  </h3>
+  <h3 id="b2mHead">Move into Mind Inventory  </h3>
   <!--<iframe name="mtmi" style="display:none;"></iframe>-->
-  <input type="checkbox" id="mcbAll" onchange="checkAll(true)">  check all
+  <input type="checkbox" id="mcbAll" onchange="checkAll(true)">  <span id="checkAllM">check all</span>
    
   
    <div class="grid-x">
    <div class="large-6 cell">
-   <h3>Bank  </h3>
+   <h3 id="b2mBank">Bank  </h3>
         <table>
           <tbody id="mcoinlistbank">
-          <tr><th></th><th>Denomination</th><th>SN</th></tr>
+          <tr><th></th><th id="b2mbDem">Denomination</th><th id="b2mbSn">SN</th></tr>
           </tbody>
         </table>
      </div>
      <div class="large-6 cell">
-        <h3>Fracked</h3>
+        <h3 id="b2mFracked">Fracked</h3>
         <table>
           <tbody id="mcoinlistfracked">
-          <tr><th></th><th>Denomination</th><th>SN</th></tr>
+          <tr><th></th><th id="b2mfDem">Denomination</th><th id="b2mfSn">SN</th></tr>
           </tbody>
         </table>
         </div>
 </div>
         <div >
 
-        Username(Case Sensitive):<input type="text" id="user2" autocomplete="off">
-		Password:<input type="text" id="pass2" autocomplete="off">
-		Email(Case Sensitive): (Will be used to send serial number in case of software crash)
+        <span id="b2mUser">Username(Case Sensitive):</span><input type="text" id="user2" autocomplete="off">
+		<span id="b2mPass">Password:</span><input type="text" id="pass2" autocomplete="off">
+		<span id="b2mEmail">Email(Case Sensitive): (Will be used to send serial number in case of software crash)</span>
     <input type="email" name="email" id="email2" autocomplete="off">
-		<p>Remember your username and password. Do not give it to anyone else.
+		<p id ="b2mWarn">Remember your username and password. Do not give it to anyone else.
        When you want to spend your coins, move them from your mind to your
         bank and then export. Remember that your username, password, and email
         are all case sensitive. So when you go to remove your CloudCoins from
         your mind you will need to remember the case and enter it in exactly correct.</p>
 
-<button class="small button" onclick="mindStorage(moveToMind)">Move Checked Coins to Mind</button>
+<button id="butB2Mexe" class="small button" onclick="mindStorage(moveToMind)">Move Checked Coins to Mind</button>
   <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
   <div class="progress-meter" id="toMindMessage"></div>
   </div>
