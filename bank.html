@@ -52,6 +52,14 @@
         background-color:#333333;
     }
    
+   select
+    {
+        height:90px;
+        font-size:20px;
+        text-align: center;
+        box-shadow: 0px 30px 50px -30px #777 inset, 0px -30px 50px -30px #777 inset;
+        
+    }
 
 
       </style>
@@ -227,7 +235,7 @@
 
 <button class="large-auto cell button lgfont" data-open="importModal" onclick="importMode()"><img src="img/bank/import_icon.svg"><br>Import</button>
 <button class="large-auto cell button lgfont" data-open="bankModal" onclick="document.getElementById('fixStatusContainer').style.display = 'none'"><img src="img/bank/bank_icon.svg"><br>Safe</button>
-<button class="large-auto cell button lgfont" data-open="exportModal"><img src="img/bank/export_icon.svg" ><br>Export</button>
+<button class="large-auto cell button lgfont" data-open="newExportModal"><img src="img/bank/export_icon.svg" ><br>Export</button>
 
 
 </div>
@@ -332,7 +340,7 @@
 
 <div class="reveal" id="exportModal" data-reveal>
    
-   <h2>Export Coins</h2>
+   <h2>Export Coins   <button class="small button" data-open="newExportModal">Back</button></h2>
    
    <input type="checkbox" id="cbAll" onchange="checkAll()">  check all
    <div class="grid-x">
@@ -357,7 +365,57 @@
         <!--<div  id="jpeg-out" class="thumbnail"></div>-->
         <input type="text" id ="alltag" placeholder="Name your stack of cloudcoins file">
         <button class="small button" onclick="downloadAll()">Download as Stack</button>
-   <button id="dlJpeg" class="small button" onclick="downloadImage()">Download as Image</button>
+   <button class="small button dlJpeg" onclick="downloadImage()">Download as Image</button>
+    <button class="small button"  style="visibility: hidden;" data-open="brokenModal">Hidden Coins</button>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="reveal" id="newExportModal" data-reveal>
+   
+   <h2>Export Coins</h2>
+   <div id="eDial" class="grid-x grid-margin-x" style="text-align: center">
+    <div class="auto cell">1s
+<select onscroll="scrollSelect('1')" id="dial1" size="3" onchange="dialSet('1')">
+    <option disabled> </option>
+    <option selected>0</option>
+    <option disabled> </option>
+    </select>
+    </div><div class="auto cell">5s
+    <select onscroll="scrollSelect('5')" id="dial5" size="3" onchange="dialSet('5')">
+        <option disabled> </option>
+    <option selected>0</option>
+    <option disabled> </option>
+    </select>
+    </div><div class="auto cell">25s 
+    <select onscroll="scrollSelect('25')" id="dial25" size="3" onchange="dialSet('25')">
+        <option disabled> </option>
+    <option selected>0</option>
+    <option disabled> </option>
+    </select>
+    </div><div class="auto cell">100s 
+    <select onscroll="scrollSelect('100')" id="dial100" size="3" onchange="dialSet('100')">
+        <option disabled> </option>
+    <option selected value=0>0</option>
+    <option disabled> </option>
+    </select>
+    </div><div class="auto cell">250s 
+    <select onscroll="scrollSelect('250')" id="dial250" size="3" onchange="dialSet('250')">
+        <option disabled> </option>
+    <option selected value=0>0</option>
+    <option disabled> </option>
+    </select>
+    </div> 
+
+    </div>
+    <button class="small button" data-open="exportModal">Export Specific Coins</button>
+   
+        <div >
+        
+        <input type="text" id ="alltagN" placeholder="Name your stack of cloudcoins file">
+        <button class="small button" onclick="downloadAll(true)">Download as Stack</button>
+   <button class="small button dlJpeg" onclick="downloadImage(true)">Download as Image</button>
     <button class="small button"  style="visibility: hidden;" data-open="brokenModal">Hidden Coins</button>
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
@@ -498,7 +556,8 @@
 	sortTable("mcoinlistfracked");
 	if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
 	document.getElementById("ygrid").classList.remove("grid-y", "large-grid-frame");
-  document.getElementById("dlJpeg").setAttribute("disabled", "");
+  document.getElementsByClassName("dlJpeg")[0].setAttribute("disabled", "");
+  document.getElementsByClassName("dlJpeg")[1].setAttribute("disabled", "");
 }
     </script>
     
