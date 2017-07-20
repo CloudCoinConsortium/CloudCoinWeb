@@ -338,13 +338,17 @@
    <div class="grid-x">
      <div class="large-6 cell">
    <h3>Bank  </h3>
-        <table id="coinlistbank">
+        <table>
+          <tbody id="coinlistbank">
           <tr><th></th><th>Denomination</th><th>SN</th></tr>
+          </tbody>
         </table>
      </div><div class="large-6 cell">
         <h3>Fracked</h3>
-        <table id="coinlistfracked">
+        <table>
+          <tbody id="coinlistfracked">
           <tr><th></th><th>Denomination</th><th>SN</th></tr>
+          </tbody>
         </table>
         </div>
 </div>
@@ -353,7 +357,7 @@
         <!--<div  id="jpeg-out" class="thumbnail"></div>-->
         <input type="text" id ="alltag" placeholder="Name your stack of cloudcoins file">
         <button class="small button" onclick="downloadAll()">Download as Stack</button>
-   <button class="small button" onclick="downloadImage()">Download as Image</button>
+   <button id="dlJpeg" class="small button" onclick="downloadImage()">Download as Image</button>
     <button class="small button"  style="visibility: hidden;" data-open="brokenModal">Hidden Coins</button>
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
@@ -391,14 +395,18 @@
    <div class="grid-x">
    <div class="large-6 cell">
    <h3>Bank  </h3>
-        <table id="mcoinlistbank">
+        <table>
+          <tbody id="mcoinlistbank">
           <tr><th></th><th>Denomination</th><th>SN</th></tr>
+          </tbody>
         </table>
      </div>
      <div class="large-6 cell">
         <h3>Fracked</h3>
-        <table id="mcoinlistfracked">
+        <table>
+          <tbody id="mcoinlistfracked">
           <tr><th></th><th>Denomination</th><th>SN</th></tr>
+          </tbody>
         </table>
         </div>
 </div>
@@ -425,14 +433,18 @@
 
 <div class="reveal" id="brokenModal" data-reveal>
   <div>
-        <ul id="coinlistcounterfeit">
+        <table>
+          <tbody id="coinlistcounterfeit"></tbody>
+        </table>
+        <table>
+          <tbody id="coinlistsuspect"></tbody>
         </ul>
-        <ul id="coinlistsuspect">
-        </ul>
-        <ul id="mcoinlistcounterfeit">
-        </ul>
-        <ul id="mcoinlistsuspect">
-        </ul>
+        <table>
+          <tbody id="mcoinlistcounterfeit"></tbody>
+        </table>
+        <table>
+          <tbody id="mcoinlistsuspect"></tbody>
+        </table>
         </div>
     </div>
   <button class="close-button" data-close aria-label="Close reveal" type="button">
@@ -485,7 +497,9 @@
 	sortTable("mcoinlistbank");
 	sortTable("mcoinlistfracked");
 	if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
-	document.getElementById("ygrid").classList.remove("grid-y", "large-grid-frame");}
+	document.getElementById("ygrid").classList.remove("grid-y", "large-grid-frame");
+  document.getElementById("dlJpeg").setAttribute("disabled", "");
+}
     </script>
     
   </body>
