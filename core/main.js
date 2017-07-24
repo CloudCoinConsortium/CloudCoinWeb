@@ -484,12 +484,12 @@ function mindStorage(callback)
 	var usern = "";
 	var passw = "";
 	if(callback.name == "moveFromMind"){
-	 usern = document.getElementById("email").value;
-	 passw = document.getElementById("user").value;
+	 usern = document.getElementById("email").value.toLowerCase();
+	 passw = document.getElementById("user").value.toLowerCase();
 	passw += document.getElementById("pass").value;
 	} else {
-		 usern = document.getElementById("email2").value;
-	     passw = document.getElementById("user2").value;
+		 usern = document.getElementById("email2").value.toLowerCase();
+	     passw = document.getElementById("user2").value.toLowerCase();
 	     passw += document.getElementById("pass2").value;
 	}
 	let phrase1 = "";
