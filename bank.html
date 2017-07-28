@@ -66,17 +66,19 @@
   </head>
   <body>
     <div class="off-canvas-wrapper">
-      <div class="title-bar">
-       <nav class="global-nav">
+      <div class="top-bar">
+       
  
-        <div class="global-nav-title">
-           <button  data-open="offCanvas"  onclick="statusButton()"><span ></span><img src="img/bank/RAIDA-logo-white.svg" width="100"></button>
+        <div class="top-bar-left">
+           <button  data-open="offCanvasRaida"  onclick="statusButton()"><span ></span><img src="img/bank/RAIDA-logo-white.svg" width="100"></button>
+		   </div><div class="top-bar-right" >
+		   <button  data-open="offCanvasFaq" style="color:#ffffff" >FAQ</button>
            </div>
-      </nav> 
+      
       
       
     </div>
-    <div class="off-canvas position-left" id="offCanvas" data-off-canvas style="background-color:black">
+    <div class="off-canvas position-left" id="offCanvasRaida" data-off-canvas style="background-color:black">
     <img src="img/bank/RAIDA-logo-white.svg" width="300" style="padding:5px;">
   
     
@@ -213,6 +215,47 @@
   </tr>
 </table>
     </div>
+	
+	
+	<div class="off-canvas position-right" id="offCanvasFaq" data-off-canvas style="background-color:black">
+	<ul class="accordion" data-accordion  data-allow-all-closed="true">
+  <li class="accordion-item " data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">How to File a Lost Coin Report</a>
+
+    <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
+    <div class="accordion-content" data-tab-content>
+      <p>To file a lost coin report, please email the serial numbers and the date you lost the coins to CloudCoin@Protonmial.com subject: Lost coins.</p>
+      
+    </div>
+  </li>
+  <li class="accordion-item " data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">Why is my coin Fracked?</a>
+
+    
+    <div class="accordion-content" data-tab-content>
+      <p>Don't worry Fracked coins are perfectly good coins.
+	  The Raida was designed to handle this.
+	  Just be sure to fix your fracked coin in the safe menu.</p>
+      
+    </div>
+  </li>
+  <li class="accordion-item " data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">Why is the export as image button grey?</a>
+
+    
+    <div class="accordion-content" data-tab-content>
+      <p>Exporting as an image file currently doesn't work on ios devices.
+	  We are working to remedy this.</p>
+      
+    </div>
+  </li>
+</ul>
+	
+	
+	</div>
     
     
       
