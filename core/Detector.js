@@ -113,7 +113,7 @@ class Detector
                     break;
             }//end switch
             files.saveCloudCoinToJsonFile(cc, cc.sn);
-            callbacku(cc, files,((i+1)/fn.length*100), r[1], r[0], r[2]);
+            callbacku(cc, files,((i+1)/fn.length*100), r);
             
             callbackl(coins, i+1, fn, r, callbacku, callbackl);
              });}

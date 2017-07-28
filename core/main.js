@@ -286,26 +286,37 @@ function updateTotal(fileUtil)
 	}
 }
 
-function updates(cc, fileUtil, percent=0, cfnames=0, bnames=0, frnames=0)
+function updates(cc, fileUtil, percent=0, results = null)
 {
     coinlist(cc, fileUtil);
 	scoinlist(cc, fileUtil);
     updateTotal(fileUtil);
 	let msg = "";
 	let fullHtml = "";
-	if(bnames > 0 || frnames> 0)
+	if(results !== null){
+	if(results[0] > 0 || results[2]> 0)
 	{
-		if(bnames > 0)
-			msg+= "Coin(s) to bank:" + bnames + "<br>";
-		if(frnames > 0)
-			msg+= "Coin(s) that are fracked:" + frnames + "<br>";
+		if(results[0] > 0)
+			msg+= "Coin(s) to bank:" + results[0] + "<br>";
+		if(results[2] > 0)
+			msg+= "Coin(s) that are fracked:" +results[2] + "<br>";
 		fullHtml = "<div class='callout success'>"
 		+ msg + "</div>";
 	}
-	if(cfnames > 0)
+	if(results[3] > 0)
+	{
+		fullHtml +="<div class='callout warning'>Coin(s) that got slow responses:"
+		+ results[3];
+		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updates)'";
+		if(percent != 100)
+		fullHtml +=" disabled";
+		fullHtml += ">Re-Detect</div>";
+	}
+	if(results[1] > 0)
 	{
 		fullHtml +="<div class='callout alert'>Coin(s) that are counterfeit:"
-		+ cfnames + "</div>";
+		+ results[1] + "</div>";
+	}
 	}
 	document.getElementById("importStatus").innerHTML = fullHtml;
 	document.getElementById("uploadProgress").style.width = percent +"%";
