@@ -24,6 +24,7 @@
     <script src="core/FixitHelper.js"></script>
     <script src="core/Exporter.js"></script>
     <script src="core/FileSaver.js"></script>
+    <script src="core/changeLanguage.js"></script>
     <style>
     body{
         background-color:blue;
@@ -70,9 +71,26 @@
        
  
         <div class="top-bar-left">
-           <button  data-open="offCanvasRaida"  onclick="statusButton()"><span ></span><img src="img/bank/RAIDA-logo-white.svg" width="100"></button>
+           <a  data-open="offCanvasRaida"  onclick="statusButton()"><span ></span><img src="img/bank/RAIDA-logo-white.svg" width="100"></a>
 		   </div><div class="top-bar-right" >
-		   <button  data-open="offCanvasFaq" style="color:#ffffff" >FAQ</button>
+		   <ul class="dropdown menu" data-dropdown-menu style="color:#ffffff" >
+         <li><a>LANG</a><ul class="menu vertical">
+           <li><a onclick="changeLanguage('values')">English</a></li>
+           <li><a onclick="changeLanguage('values-de')">German</a></li>
+           <li><a onclick="changeLanguage('values-es-r419')">Spanish</a></li>
+           <li><a onclick="changeLanguage('values-sv')">Swedish</a></li>
+           <li><a onclick="changeLanguage('values-cs')">Czech</a></li>
+           <li><a onclick="changeLanguage('values-fr')">French</a></li>
+           <li><a onclick="changeLanguage('values-hu')">Hungarian</a></li>
+           <li><a onclick="changeLanguage('values-it')">Italian</a></li>
+           <li><a onclick="changeLanguage('values-da')">Danish</a></li>
+           <li><a onclick="changeLanguage('values-pt-rPT')">Portuguese</a></li>
+           <li><a onclick="changeLanguage('values-sv')">Slovak</a></li>
+           </ul></li>
+         
+       <li></li>
+       <li><a  data-open="offCanvasFaq" style="color:#ffffff" >FAQ</a></li>
+       </ul>
            </div>
       
       
@@ -297,7 +315,8 @@
 </div>
 
 <div class="reveal tiny" id="importModal" data-reveal >
-  <h3 id="importHead">Upload Coin</h3> 
+  <h3 id="importHead" style="display:none">Upload Coin</h3>
+  <h3 id="importHeadShown">Upload Coin</h3> 
     
  
  <div id="importButtons">
@@ -309,6 +328,7 @@
  <div id="upButtonDiv"></div> 
   
 </div>
+<span id="upButton" style="display:none">Upload</span>
 
 
 <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
@@ -461,8 +481,8 @@
         <div >
         
         <input type="text" id ="alltagN" placeholder="Name your stack of cloudcoins file">
-        <button id="butdlN" class="small button" onclick="downloadAll(true)">Download as Stack</button>
-   <button id="butdiN" class="small button dlJpeg" onclick="downloadImage(true)">Download as Image</button>
+        <button id="butDlN" class="small button" onclick="downloadAll(true)">Download as Stack</button>
+   <button id="butDiN" class="small button dlJpeg" onclick="downloadImage(true)">Download as Image</button>
     <button class="small button"  style="visibility: hidden;" data-open="brokenModal">Hidden Coins</button>
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
