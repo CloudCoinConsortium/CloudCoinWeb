@@ -1,0 +1,78 @@
+<html>
+<head>
+</head>
+<body>
+username:<input type="text" id="user" autocomplete="off">
+password:<input type="text" id="pass" autocomplete="off">
+email:<input type="email" id="email" autocomplete="off">
+<button id="butM2Bexe" class="small button" onclick="mindStorage()">see output</button>
+<br>
+phrase1:
+<div id="output1"></div>
+<br>
+phrase2:
+<div id="output2"></div>
+<br>
+output:
+<div id="outputPan" style="word-wrap:break-word"></div>
+
+<script>
+function mindStorage(){
+var usern = "";
+	var passw = "";
+	
+	 usern = document.getElementById("email").value.toLowerCase();
+	 passw = document.getElementById("user").value.toLowerCase();
+	passw += document.getElementById("pass").value;
+	
+	let phrase1 = "";
+	let phrase2 = "";
+	let combPhrase = "";
+	let fullAn = "";
+	let pan = [];
+	for(let a = 0; a < usern.length; a++)
+		phrase1 += usern.charCodeAt(a).toString(16);
+	for(let b = 0; b < passw.length; b++)
+		phrase2 += passw.charCodeAt(b).toString(16);
+	if(phrase1.length >= phrase2.length){
+		var phrasesize = phrase1.length;
+	}else{
+	var phrasesize = phrase2.length;}
+	//alert(phrase1 + " " + phrase2);
+	if((document.getElementById("user").value == document.getElementById("pass").value))
+	{
+		
+		alert("Username and Password cannot be the same")// +
+		//document.getElementById("user").value + " pass:" + document.getElementById("pass").value
+		//);
+	}else if(phrase1.length + phrase2.length < 24)
+	{
+		alert("Username or Password is too short");
+	}else if(usern[0] == /\s/ || usern[usern.length-1] == /\s/)
+	{
+		alert("Remove whitespace from the front and end of the Email");
+	}else if(passw[0] == /\s/ || passw[passw.length-1] == /\s/){
+		alert("Remove whitespace from the front and end of the Username and Password");
+	}else
+	{
+		for(let i = 0; i < phrasesize; i++){
+			if(i<phrase1.length)
+			combPhrase += phrase1[i];
+			if(i<phrase2.length)
+			combPhrase += phrase2[i];
+		}
+		//console.log(combPhrase);
+		for(let k = 0; k < 800/combPhrase.length;k++)
+			fullAn += combPhrase;
+		fullAn = fullAn.slice(0, 800);
+		for(let l = 0; l < 25; l++)
+			pan.push(fullAn.slice(l*32, (l+1)*32));
+			
+			document.getElementById("output1").innerHTML = phrase1;
+			document.getElementById("output2").innerHTML = phrase2;
+			document.getElementById("outputPan").innerHTML=pan;
+		
+	}
+}
+</script>
+</body>
