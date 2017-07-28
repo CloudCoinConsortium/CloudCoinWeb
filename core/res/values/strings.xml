@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="echoRaida">Raida</string>
+    <string name="echoStatus">Status</string>
+    <string name="echoMillisec">Millisec</string>
+    <string name="topInfo">Used to Authenticate, Store and Payout CloudCoins.
+    This software is provided as is with all faults, defects and errors and without warranty of any kind. Free from the CloudCoin Consortium.</string>
+    <string name="butImport">Import</string>
+    <string name="butBank">Safe</string>
+    <string name="butExport">Export</string>
+    <string name="edition">CloudCoin Web Edition
+    &lt;br&gt;
+    Version 7.18.2017</string>
+    <string name="botInfo">Your coins will be stored in your browsing data. Make sure you do not delete browsing data before exporting coins.</string>
+    <string name="importHead">Upload Coin</string>
+    <string name="upButton">Upload</string>
+    <string name="bankDem">Denomination</string>
+    <string name="bankGood">Good</string>
+    <string name="bankFracked">Fracked</string>
+    <string name="bankTotal">Total</string>
+    <string name="bankOnes">Ones</string>
+    <string name="bankFives">Fives</string>
+    <string name="bankQuarters">Quarters</string>
+    <string name="bankHundreds">Hundreds</string>
+    <string name="bank250s">250s</string>
+    <string name="bankSum">SUM</string>
+    <string name="butB2M">Bank to Mind</string>
+    <string name="butM2B">Mind to Bank</string>
+    <string name="exportHead">Export Coins</string>
+    <string name="butBack">Back</string>
+    <string name="checkAll">check all</string>
+    <string name="exportBank">Bank</string>
+    <string name="ebDem">Denomination</string>
+    <string name="ebSn">SN</string>
+    <string name="exportFracked">Fracked</string>
+    <string name="efDem">Denomination</string>
+    <string name="efSn">SN</string>
+    <string name="butDl">Download as Stack</string>
+    <string name="butDi">Download as Image</string>
+    <string name="exportHeadN">Export Coins</string>
+    <string name="butLegacyExport">Export Specific Coins</string>
+    <string name="butDlN">Download as Stack</string>
+    <string name="butDiN">Download as Image</string>
+    <string name="m2bHead">Take Out of Mind Inventory</string>
+    <string name="m2bWarn">Use the exact username, password, and email that you used to put the coins
+  in your mind. Note that they are all case sensitive.</string>
+    <string name="m2bUser">username:</string>
+    <string name="m2bPass">password:</string>
+    <string name="m2bEmail">email:</string>
+    <string name="butM2Bexe">Move from Mind</string>
+    <string name="butEmailRecover">Recover Coins from Email</string>
+    <string name="b2mHead">Move into Mind Inventory</string>
+    <string name="checkAllM">check all</string>
+    <string name="b2mBank">Bank</string>
+    <string name="b2mbDem">Denomination</string>
+    <string name="b2mbSn">SN</string>
+    <string name="b2mFracked">Fracked</string>
+    <string name="b2mfDem">Denomination</string>
+    <string name="b2mfSn">SN</string>
+    <string name="b2mUser">Username:</string>
+    <string name="b2mPass">Password:</string>
+    <string name="b2mEmail">Email: (Will be used to send serial numbers in case of software crash)</string>
+    <string name="b2mWarn">Remember your username and password. Do not give it to anyone else.
+       When you want to spend your coins, move them from your mind to your
+        bank and then export. Remember that your username, password, and email
+        are all case sensitive. So when you go to remove your CloudCoins from
+        your mind you will need to remember the case and enter it in exactly correct.</string>
+    <string name="butB2Mexe">Move Checked Coins to Mind</string>
+</resources>

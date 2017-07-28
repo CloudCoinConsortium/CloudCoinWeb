@@ -213,7 +213,7 @@ function showFolder(){
 
 function importMode()
 {
-	document.getElementById("importHead").innerHTML ="Upload Coin";
+	document.getElementById("importHeadShown").innerHTML = document.getElementById("importHead").innerHTML;
 	document.getElementById("importButtons").innerHTML = "<input type='file' id='myFile' multiple onchange='uploadButtonAppear()'><div id='upButtonDiv'></div>";
 	document.getElementById("importStatus").innerHTML ="";
 	emptyprogress('uploadProgress');
@@ -221,7 +221,8 @@ function importMode()
 	
 function uploadButtonAppear(){
 	//alert(document.getElementById("myFile").value);
-    document.getElementById("upButtonDiv").innerHTML="<button class='button' id='upButton' onclick='uploadFile()'>Upload</button>";
+    document.getElementById("upButtonDiv").innerHTML="<button class='button' id='upButtonShown' onclick='uploadFile()'></button>";
+	document.getElementById("upButtonShown").innerHTML = document.getElementById("upButton").innerHTML;
 	document.getElementById("uploadProgress").style.width = "0%";
 	document.getElementById("uploadProgress").innerHTML="";
 }
