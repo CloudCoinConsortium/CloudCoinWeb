@@ -415,7 +415,7 @@ function trashFolder(folder)
         trash(fnames[i]);}
 }
 
-function embedCC(cc)
+function embedCC(cc, N=false)
 {
     let inputTag;
 	if(N)
@@ -436,7 +436,7 @@ function embedCC(cc)
 
 }
 
-function embedTemplateCC(cc)
+function embedTemplateCC(cc, N=false)
 {
     //alert(files.bankFolder);
     //let oldImg = document.getElementById("jpeg-in").files[0];
