@@ -254,6 +254,12 @@ function uploadFile(){
 		}, 500 + (totalSize/80));
 }
 
+function bankMode()
+{
+	document.getElementById('fixStatusContainer').style.display = 'none';
+	updateTotal(files);
+}
+
 function updateTotal(fileUtil)
 {
 	let banker = new Banker();
@@ -415,7 +421,7 @@ function trashFolder(folder)
         trash(fnames[i]);}
 }
 
-function embedCC(cc, N=false)
+function embedCC(cc)
 {
     let inputTag;
 	if(N)
@@ -436,7 +442,7 @@ function embedCC(cc, N=false)
 
 }
 
-function embedTemplateCC(cc, N=false)
+function embedTemplateCC(cc)
 {
     //alert(files.bankFolder);
     //let oldImg = document.getElementById("jpeg-in").files[0];
