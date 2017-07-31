@@ -16,6 +16,7 @@ class Detector
         let files = this.fileUtil;
         let fnames = [];
         for(var j = 0; j< localStorage.length; j++){
+            if(isNaN(localStorage.key(j)) ===false)
             fnames.push(localStorage.key(j));
         }
         let coins = [];
@@ -66,7 +67,7 @@ class Detector
         //let frackedNames = [];
         let files = this.fileUtil;
         for(var j = 0; j< localStorage.length; j++){
-            if(this.fileUtil.suspectFolder.includes(localStorage.key(j)))
+            if(this.fileUtil.suspectFolder.includes(localStorage.key(j))&&isNaN(localStorage.key(j)) ===false)
             fnames.push(localStorage.key(j));
         }
         let coins = [];

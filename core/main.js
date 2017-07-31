@@ -126,13 +126,32 @@ function emailRecover()
 	}
 }
 
+function restoreFailedDownload()
+{
+	for(var j = 0; j< localStorage.length; j++){
+		if(isNaN(localStorage.key(j)))
+		{
+			sn = localStorage.key(j).replace("le", "");
+			localStorage.setItem(sn, localStorage.getItem("le"+sn));
+			localStorage.removeItem("le"+sn);
+			cc = files.loadOneCloudCoinFromJsonFile(sn);
+			cc.reportDetectionResults();
+			updates(cc, files);
+		}
+	}
+	
+}
+
 function downloadImage(N=false)
 {
     
     
     let fnames = [];
 	for(var j = 0; j< localStorage.length; j++){
-    if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){     
+    if(isNaN(localStorage.key(j))){
+		localStorage.removeItem(localStorage.key(j));
+	}
+	else if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){     
 	if(document.getElementById("cb" + localStorage.key(j)).checked)
  			fnames.push(localStorage.key(j));
 	}
@@ -140,12 +159,14 @@ function downloadImage(N=false)
     for(let i =0 ; i<fnames.length; i++){
         if(document.getElementById("jpeg-in").files.length !== 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
 		{//alert("clicked");
-        embedCC(files.loadOneCloudCoinFromJsonFile(fnames[i]), N);
-        trash(fnames[i]);
+        	embedCC(files.loadOneCloudCoinFromJsonFile(fnames[i]), N);
+			localStorage.setItem("le"+fnames[i], localStorage.getItem(fnames[i]));
+        	trash(fnames[i]);
 		}else if(document.getElementById("jpeg-in").files.length === 0)
 		{
 			
 			embedTemplateCC(files.loadOneCloudCoinFromJsonFile(fnames[i]), N);
+			localStorage.setItem("le"+fnames[i], localStorage.getItem(fnames[i]));
 			trash(fnames[i]);
 		}
 		else {
@@ -160,7 +181,10 @@ function downloadAll(N=false)
     let fnames = [];
 	let tag;
 	for(var j = 0; j< localStorage.length; j++){
-    if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){    
+    if(isNaN(localStorage.key(j))){
+		localStorage.removeItem(localStorage.key(j));
+	}
+	else if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){ 
 	if(document.getElementById("cb" + localStorage.key(j)).checked)
  			fnames.push(localStorage.key(j));
 		}
@@ -209,6 +233,7 @@ function showFolder(){
         alert("b:" + files.bankFolder);
         alert("s:" + files.suspectFolder);
         alert("f:" + files.frackedFolder);
+		alert("t:" + files.trashFolder);
     }
 
 function importMode()
@@ -385,7 +410,7 @@ function trash(id)
     
         document.getElementById(id).remove();
 		document.getElementById("s"+id).remove();
-        files.overWrite("", "", id);
+        files.overWrite("", "trash", id);
          if ((id < 2097153))
             {
                 exportDialMinus(1);
@@ -417,7 +442,7 @@ function trashFolder(folder)
     let fnames = [];
     
     for(var j = 0; j< localStorage.length; j++){
-            if(folder.includes(localStorage.key(j)))
+            if(folder.includes(localStorage.key(j))&&isNaN(localStorage.key(j)) ===false)
             fnames.push(localStorage.key(j));
     }
 
@@ -425,7 +450,7 @@ function trashFolder(folder)
         trash(fnames[i]);}
 }
 
-function embedCC(cc)
+function embedCC(cc, N=false)
 {
     let inputTag;
 	if(N)
@@ -446,7 +471,7 @@ function embedCC(cc)
 
 }
 
-function embedTemplateCC(cc)
+function embedTemplateCC(cc, N=false)
 {
     //alert(files.bankFolder);
     //let oldImg = document.getElementById("jpeg-in").files[0];
@@ -576,7 +601,7 @@ function moveFromMind(pan)
 	
 	let fnames = [];
 	for(var j = 0; j< localStorage.length; j++){
-            if(localStorage.getItem(localStorage.key(j)) == "mindstorage"){
+            if(localStorage.getItem(localStorage.key(j)) == "mindstorage"&&(isNaN(localStorage.key(j)) ===false)){
 			if(document.getElementById("mcb" + localStorage.key(j)).checked)
 			fnames.push(localStorage.key(j));
 			}
@@ -603,7 +628,7 @@ function moveToMind(newPan)
 	let toBeMoved = [];
 	let k = 0;
 	for(let j = 0; j < localStorage.length; j++){
-        if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){
+        if(localStorage.getItem(localStorage.key(j)) != "mindstorage"&&(isNaN(localStorage.key(j)) ===false)){
 		if(document.getElementById("scb" + localStorage.key(j)).checked){
 		toBeMoved.push(files.loadOneCloudCoinFromJsonFile(localStorage.key(j)));
 		data += "&sn[" + k + "]=" + toBeMoved[k].sn;

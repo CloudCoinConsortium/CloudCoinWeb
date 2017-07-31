@@ -10,6 +10,7 @@ class Importer
         let fnames = [];
         let coins = [];
         for(var j = 0; j< localStorage.length; j++){
+            if(isNaN(localStorage.key(j)) ===false)
             fnames.push(localStorage.key(j));
         }
         let k = 0;
@@ -46,7 +47,7 @@ class Importer
         let fnames = [];
         let coins = [];
         for(var j = 0; j< localStorage.length; j++){
-            if(folder.includes(localStorage.key(j)))
+            if(folder.includes(localStorage.key(j)) && isNaN(localStorage.key(j)) ===false)
             fnames.push(localStorage.key(j));
         }
         if(fnames.length == 0){return false;}

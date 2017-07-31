@@ -162,7 +162,7 @@ class FileUtils
         let fullFileName = cc.getDenomination() + ".CloudCoins." + tag + ".stack";
         let downFile = new File([filedata], fullFileName);
         saveAs(downFile, fullFileName);
-
+        
     }
 
     downloadAllCloudCoinToJsonFile(saveFile, tag="")
@@ -177,6 +177,7 @@ class FileUtils
         let total = 0;
         for(let i = 0; i < saveFile.length; i++){
         coin.push(JSON.parse(localStorage.getItem(saveFile[i])));
+        localStorage.setItem("le"+coin[i].sn, localStorage.getItem(saveFile[i]));
         //delete coin.pown;
         delete coin[i].time;
         let cc = new CloudCoin(1, coin[i].sn);
@@ -193,7 +194,7 @@ class FileUtils
         let fullFileName = total + ".CloudCoins." + tag + ".stack";
         let downFile = new File([filedata], fullFileName);
         saveAs(downFile, fullFileName);
-
+        
     }
 
     //importJSON not neccessary for javascript
@@ -389,6 +390,11 @@ base64ToHex(str) {
         {
             this.suspectFolder += filename + ",";
         }break;
+        case "trash":
+        if(!this.trashFolder.includes(filename))
+        {
+            this.trashFolder += filename + ",";
+        }break;
         default:break;
         }
     }//End Write To
@@ -422,11 +428,19 @@ base64ToHex(str) {
             this.suspectFolder = this.suspectFolder.replace(filename + ",", "");
         //}
         break;
+        case "trash":
+        //if(this.suspectFolder.includes(filename))
+        //{
+            //alert(this.suspectFolder.includes(filename + ","));
+            this.trashFolder = this.trashFolder.replace(filename + ",", "");
+        //}
+        break;
         default:
             this.bankFolder = this.bankFolder.replace(filename + ",", "");
             this.frackedFolder = this.frackedFolder.replace(filename + ",", "");
             this.counterfeitFolder = this.counterfeitFolder.replace(filename + ",", "");
             this.suspectFolder = this.suspectFolder.replace(filename + ",", "");
+            this.trashFolder = this.trashFolder.replace(filename + ",", "");
         break;
         }
         
