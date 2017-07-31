@@ -216,6 +216,7 @@ function importMode()
 	document.getElementById("importHeadShown").innerHTML = document.getElementById("importHead").innerHTML;
 	document.getElementById("importButtons").innerHTML = "<input type='file' id='myFile' multiple onchange='uploadButtonAppear()'><div id='upButtonDiv'></div>";
 	document.getElementById("importStatus").innerHTML ="";
+	document.getElementById("deleteMessage").innerHTML = "";
 	emptyprogress('uploadProgress');
 }
 	
@@ -324,6 +325,8 @@ function updates(cc, fileUtil, percent=0, results = null)
 		fullHtml +="<div class='callout alert'>Coin(s) that are counterfeit:"
 		+ results[1] + "</div>";
 	}
+	
+		
 	}
 	document.getElementById("importStatus").innerHTML = fullHtml;
 	document.getElementById("uploadProgress").style.width = percent +"%";
@@ -331,6 +334,7 @@ function updates(cc, fileUtil, percent=0, results = null)
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
 	
 	document.getElementById("importHead").innerHTML = "Import Complete";
+	document.getElementById("deleteMessage").innerHTML = "Be sure to delete the original file. It is outdated.";
 	}
 	document.getElementById("importButtons").innerHTML= "";
 	mindlist();
