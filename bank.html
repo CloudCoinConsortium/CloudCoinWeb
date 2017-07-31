@@ -14,17 +14,18 @@
     <script src="core/RaidaResponse.js?v=1"></script>
     <script src="core/random.min.js?v=1"></script>
     <script src="core/CloudCoin.js?v=1"></script>
-    <script src="core/FileUtils.js?v=1"></script>
-    <script src="core/main.js?v=3"></script>
+    <script src="core/FileUtils.js?v=2"></script>
+    <script src="core/main.js?v=4"></script>
     <script src="core/RAIDA.js?v=1"></script>
-    <script src="core/Importer.js?v=1"></script>
-    <script src="core/Detector.js?v=1"></script>
+    <script src="core/Importer.js?v=2"></script>
+    <script src="core/Detector.js?v=2"></script>
     <script src="core/Banker.js?v=1"></script>
     <script src="core/Frack_Fixer.js?v=1"></script>
     <script src="core/FixitHelper.js?v=1"></script>
     <script src="core/Exporter.js?v=1"></script>
     <script src="core/FileSaver.js?v=1"></script>
     <script src="core/changeLanguage.js?v=1"></script>
+    <script src="core/log.js?v=0"></script>
     <style>
     body{
         background-color:blue;
@@ -94,7 +95,7 @@
            </ul></li>
          
        <li></li>
-       <li><a  data-open="offCanvasFaq" style="color:#ffffff" >FAQ</a></li>
+       <li><a  data-open="offCanvasFaq" style="color:#ffffff" >FAQ/Help</a></li>
        </ul>
            </div>
       
@@ -244,6 +245,16 @@
 	<ul class="accordion" data-accordion  data-allow-all-closed="true">
   <li class="accordion-item " data-accordion-item>
     <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">My Coin(s) failed to export/I canceled the download and my coins are gone. What should I do?</a>
+
+    <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
+    <div class="accordion-content" data-tab-content>
+      <p>Click this button to restore the coins of you last download.</p>
+      <button class="small button" onclick="restoreFailedDownload()">Restore</button>
+    </div>
+  </li>
+  <li class="accordion-item " data-accordion-item>
+    <!-- Accordion tab title -->
     <a href="#" class="accordion-title">How to File a Lost Coin Report</a>
 
     <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
@@ -266,7 +277,7 @@
   </li>
   <li class="accordion-item " data-accordion-item>
     <!-- Accordion tab title -->
-    <a href="#" class="accordion-title">Why is the export as image button grey?</a>
+    <a href="#" class="accordion-title">Why is the Download as Image button grey?</a>
 
     
     <div class="accordion-content" data-tab-content>
@@ -604,7 +615,7 @@
     
     let raida = new RAIDA(3000);
     let files = new FileUtils();
-    
+    let log = new Log();
     let importer = new Importer();
     let detect = new Detector(files, 3000);
     let coins = importer.importAll(files);
