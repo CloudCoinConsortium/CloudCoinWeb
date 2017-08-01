@@ -6,7 +6,7 @@
     <string name="butImport">Importar</string>
     <string name="butBank">Seguro</string>
     <string name="butExport">Exportar</string>
-    <string name="edition">CloudCoin Edición Web &lt;br&gt; Versión 7.18.2017</string>
+    <string name="edition">CloudCoin Edición Web &lt;br&gt; Versión 8.1.2017</string>
     <string name="botInfo">Tus monedas se almacenarán en tus datos de navegación. Asegúrate de no eliminar los datos de navegación antes exportar las monedas.</string>
     <string name="importHead">Subir moneda</string>
     <string name="upButton">Subir</string>

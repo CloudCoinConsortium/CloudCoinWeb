@@ -6,7 +6,7 @@
     <string name="butImport">Importere</string>
     <string name="butBank">Sikker</string>
     <string name="butExport">Eksport</string>
-    <string name="edition">CloudCoin Web Udgave &lt;br&gt; Udgave 2017/07/18</string>
+    <string name="edition">CloudCoin Web Udgave &lt;br&gt; Udgave 2017/08/01</string>
     <string name="botInfo">Dine mønter vil blive gemt i dine browserdata. Sørg for at du ikke sletter browsing data, før mønterne er eksporteret.</string>
     <string name="importHead">Upload Mønt</string>
     <string name="upButton">Upload</string>

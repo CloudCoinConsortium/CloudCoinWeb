@@ -6,7 +6,7 @@
     <string name="butImport">Importovať</string>
     <string name="butBank">Bezpečný</string>
     <string name="butExport">Exportovať</string>
-    <string name="edition">Webové vydanie aplikácie CloudCoin &lt;br&gt; Verzia 7.18.2017</string>
+    <string name="edition">Webové vydanie aplikácie CloudCoin &lt;br&gt; Verzia 8.1.2017</string>
     <string name="botInfo">Vaše mince budú uložené vo vašich dátach prehliadania. Uistite sa, že ste neodstránili dáta prehliadania pred exportom mincí.</string>
     <string name="importHead">Načítať mincu</string>
     <string name="upButton">Načítať</string>

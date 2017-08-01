@@ -6,7 +6,7 @@
     <string name="butImport">Importer</string>
     <string name="butBank">Sûr</string>
     <string name="butExport">Exporter</string>
-    <string name="edition">Édition Web CloudCoin &lt;br&gt; Version 7.18.2017</string>
+    <string name="edition">Édition Web CloudCoin &lt;br&gt; Version 8.1.2017</string>
     <string name="botInfo">Vos pièces seront stockées dans vos données de navigation. Assurez-vous de ne pas supprimer les données de navigation avant l\'exportation des pièces.</string>
     <string name="importHead">Ajouter une pièce</string>
     <string name="upButton">Ajouter</string>
