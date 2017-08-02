@@ -111,6 +111,7 @@ class DetectionAgent
         var detectResponse = new RaidaResponse();
         let raidaID = this.RAIDANumber;
         detectResponse.fullRequest = this.fullUrl + "detect?nn=" + nn + "&sn=" + sn + "&an=" + an + "&pan=" + pan + "&denomination=" +d + "&b=t"
+        log.updateLine(detectResponse.fullRequest +", ");
         let before = (new Date()).getTime();
         return Promise.race([
         fetch(detectResponse.fullRequest)
@@ -118,7 +119,7 @@ class DetectionAgent
             function(response) {
                 //alert("!");
                 return response.text().then(function(data){
-            //detectResponse.fullResponse = JSON.stringify(data);
+            //detectResponse.fullResponse = data;
             let ts = (new Date()).getTime() - before;
             detectResponse.milliseconds = ts;
 
@@ -184,7 +185,7 @@ class DetectionAgent
         var get_ticketResponse = new RaidaResponse();
         get_ticketResponse.fullRequest = this.fullUrl + "get_ticket?nn=" + nn + "&sn=" + sn + "&an=" + an + "&pan=" + an + "&denomination=" + d;
         let before = (new Date()).getTime();
-
+        log.updateLine(get_ticketResponse.fullRequest +", ");
         return fetch(get_ticketResponse.fullRequest)
         .then(
             function(response) {
@@ -237,7 +238,7 @@ class DetectionAgent
             fixResponse.fullRequest = this.fullUrl+"fix?fromserver1="+triad[0]+"&message1="+m1+"&fromserver2="+triad[1]+"&message2="+m2+"&fromserver3="+triad[2]+"&message3="+m3+"&pan="+pan;
             let ts = (new Date()).getTime() - before;
             fixResponse.milliseconds = ts;
-
+            log.updateLine(fixResponse.fullRequest +", ");
             return fetch(fixResponse.fullRequest)
          .then(
             function(response) {
@@ -253,6 +254,7 @@ class DetectionAgent
                 fixResponse.outcome = "fail";
                 fixResponse.success = false;
             }//end if
+            log.updateLog(data.message);
             return fixResponse.success;
             //callback.apply(obj, [fixResponse]);
         });
@@ -261,6 +263,7 @@ class DetectionAgent
             fixResponse.outcome = "error";
             fixResponse.fullResponse = error;
             fixResponse.success = false;
+            log.updateLog("error");
             return fixResponse.success;
             //callback.apply(obj,[fixResponse]);
         });

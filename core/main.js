@@ -2,6 +2,7 @@ function populateRaidaStatus(rr, id)
 {
     document.getElementById("r_" + id).innerHTML = rr.outcome;
     document.getElementById("p_" + id).innerHTML = rr.milliseconds;
+	log.updateLog("echo to raida " + id + "came up " + rr.outcome +" at " +rr.milliseconds+"ms.");
 }
 
 function exportDialAdd(dem)
@@ -120,6 +121,7 @@ function emailRecover()
 	if(sn != "" && !isNaN(parseFloat(sn)) && isFinite(sn) && sn > 0 && sn < 16777216)
 	{
 		localStorage.setItem(sn, "mindstorage");
+		log.updateLog("Recovered sn:" +sn+" from email.");
 		mindlist();
 	}else {
 		alert("Please Enter a valid serial number");
@@ -128,6 +130,7 @@ function emailRecover()
 
 function restoreFailedDownload()
 {
+	log.updateLog("Restoring failed download of coins:");
 	for(var j = 0; j< localStorage.length; j++){
 		if(isNaN(localStorage.key(j)))
 		{
@@ -137,6 +140,7 @@ function restoreFailedDownload()
 			cc = files.loadOneCloudCoinFromJsonFile(sn);
 			cc.reportDetectionResults();
 			updates(cc, files);
+			log.updateLine(sn+",");
 		}
 	}
 	
@@ -161,12 +165,14 @@ function downloadImage(N=false)
 		{//alert("clicked");
         	embedCC(files.loadOneCloudCoinFromJsonFile(fnames[i]), N);
 			localStorage.setItem("le"+fnames[i], localStorage.getItem(fnames[i]));
+			log.updateLog("Downloading jpeg with coin:" + fnames[i]);
         	trash(fnames[i]);
 		}else if(document.getElementById("jpeg-in").files.length === 0)
 		{
 			
 			embedTemplateCC(files.loadOneCloudCoinFromJsonFile(fnames[i]), N);
 			localStorage.setItem("le"+fnames[i], localStorage.getItem(fnames[i]));
+			log.updateLog("Downloading jpeg with coin:" + fnames[i]);
 			trash(fnames[i]);
 		}
 		else {
@@ -180,6 +186,7 @@ function downloadAll(N=false)
 {
     let fnames = [];
 	let tag;
+	log.updateLog("Downloading to Stack coins:");
 	for(var j = 0; j< localStorage.length; j++){
     if(isNaN(localStorage.key(j))){
 		localStorage.removeItem(localStorage.key(j));
@@ -187,6 +194,7 @@ function downloadAll(N=false)
 	else if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){ 
 	if(document.getElementById("cb" + localStorage.key(j)).checked)
  			fnames.push(localStorage.key(j));
+			log.updateLine(fnames[j] + ",");
 		}
 	}
 	if(N)
@@ -354,6 +362,7 @@ function updates(cc, fileUtil, percent=0, results = null)
 		
 	}
 	document.getElementById("importStatus").innerHTML = fullHtml;
+	log.updateLog(fullHtml);
 	document.getElementById("uploadProgress").style.width = percent +"%";
 	if(percent == 100){
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
@@ -391,6 +400,7 @@ function updatesFromMind(cc, fileUtil, percent = 0, cfnames=0, bnames=0, frnames
 		+ "(You may have mispelled something.):" + cfnames + "</div>";
 	}
 	document.getElementById("fromMindStatus").innerHTML = fullHtml;
+	log.updateLog("fullHtml");
 	if(cc.getFolder().toLowerCase() == "counterfeit"){
 		localStorage.setItem(cc.sn, "mindstorage");
 		mindlist();
@@ -534,10 +544,12 @@ function mindStorage(callback)
 	 usern = document.getElementById("email").value.toLowerCase();
 	 passw = document.getElementById("user").value.toLowerCase();
 	passw += document.getElementById("pass").value;
+	log.updateLog("Moving from mind pass1:"+ usern +" pass2:" +passw);
 	} else {
 		 usern = document.getElementById("email2").value.toLowerCase();
 	     passw = document.getElementById("user2").value.toLowerCase();
 	     passw += document.getElementById("pass2").value;
+		 log.updateLog("Moving to mind pass1:"+ usern +" pass2:" +passw);
 	}
 	let phrase1 = "";
 	let phrase2 = "";
@@ -556,23 +568,28 @@ function mindStorage(callback)
 	if((document.getElementById("user").value == document.getElementById("pass").value)&& callback.name == "moveFromMind")
 	{
 		
-		alert("Username and Password cannot be the same")// +
+		alert("Username and Password cannot be the same");
+		log.updateLog("Username and Password cannot be the same");// +
 		//document.getElementById("user").value + " pass:" + document.getElementById("pass").value
 		//);
 	}else if((document.getElementById("user2").value == document.getElementById("pass2").value)&& callback.name == "moveToMind")
 	{
 		
-		alert("Username and Password cannot be the same")// +
+		alert("Username and Password cannot be the same");
+		log.updateLog("Username and Password cannot be the same");// +
 		//document.getElementById("user").value + " pass:" + document.getElementById("pass").value
 		//);
 	}else if(phrase1.length + phrase2.length < 24)
 	{
 		alert("Username or Password is too short");
+		log.updateLog("Username or Password is too short");
 	}else if(usern[0] == /\s/ || usern[usern.length-1] == /\s/)
 	{
 		alert("Remove whitespace from the front and end of the Email");
+		log.updateLog("Remove whitespace from the front and end of the Email");
 	}else if(passw[0] == /\s/ || passw[passw.length-1] == /\s/){
 		alert("Remove whitespace from the front and end of the Username and Password");
+		log.updateLog("Remove whitespace from the front and end of the Username and Password");
 	}else
 	{
 		for(let i = 0; i < phrasesize; i++){
@@ -600,10 +617,12 @@ function moveFromMind(pan)
 	document.getElementById("mindProgress").style.width = "50%";
 	
 	let fnames = [];
+	log.updateLog("Moving from mind coins:");
 	for(var j = 0; j< localStorage.length; j++){
             if(localStorage.getItem(localStorage.key(j)) == "mindstorage"&&(isNaN(localStorage.key(j)) ===false)){
 			if(document.getElementById("mcb" + localStorage.key(j)).checked)
 			fnames.push(localStorage.key(j));
+			log.updateLine(fnames[j] +",");
 			}
         }
 	for(let i = 0; i < fnames.length; i++)
@@ -627,10 +646,12 @@ function moveToMind(newPan)
 	let data = "email=" + document.getElementById("email2").value;
 	let toBeMoved = [];
 	let k = 0;
+	log.updateLog("Moving into mind coins:");
 	for(let j = 0; j < localStorage.length; j++){
         if(localStorage.getItem(localStorage.key(j)) != "mindstorage"&&(isNaN(localStorage.key(j)) ===false)){
 		if(document.getElementById("scb" + localStorage.key(j)).checked){
 		toBeMoved.push(files.loadOneCloudCoinFromJsonFile(localStorage.key(j)));
+		log.updateLine(toBeMoved[k] +",");
 		data += "&sn[" + k + "]=" + toBeMoved[k].sn;
 		k++; 
 		}

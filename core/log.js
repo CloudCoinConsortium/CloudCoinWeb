@@ -14,6 +14,11 @@ class Log
         this.logContents += msg;
     }
 
+    updateLine(msg)
+    {
+        this.logContents += msg;
+    }
+
     downloadLog()
     {
         let dl = new Blob([this.logContents]);

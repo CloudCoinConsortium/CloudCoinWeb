@@ -65,6 +65,8 @@ class RAIDA
     {
         let returnCoin = cc;
         let promises = [];
+        log.updateLog("Detecting coin:" +cc.sn);
+        log.updateLog("Requests: ");
         
         //alert(cc.ans[0]);
         for(let i = 0; i < 25; i++)
@@ -72,6 +74,7 @@ class RAIDA
             
             promises.push(this.detectOne(i, cc.nn, cc.sn, cc.ans[i], cc.pans[i], cc.getDenomination()));
         }
+        log.updateLog("Responses: ");
         return Promise.all(promises).then(function(data){
             for(let j = 0; j < 25; j++)
             {
@@ -99,10 +102,11 @@ class RAIDA
     get_Tickets(triad, ans, nn, sn, denomination)
     {
         let promises = [];
+        log.updateLog("Getting tickets: ");
         promises.push(this.get_Ticket(triad[0], nn, sn, ans[0], denomination));
         promises.push(this.get_Ticket(triad[1], nn, sn, ans[1], denomination));
         promises.push(this.get_Ticket(triad[2], nn, sn, ans[2], denomination));
-
+        log.updateLog("Responses: ");
         //Promise.all(promises).then(function(){})
         //get data from the detection agents
         return promises;
@@ -122,7 +126,7 @@ class RAIDA
         //alert(resp.outcome);
         if(!resp.success) {this.RAIDAStatus.failsDetect[id] = true;}
         this.responseArray[id] = resp;
-        
+        log.updateLine(id+": " + resp.outcome+", ");
     }
     
     setResponseTicket(resp, id)
@@ -138,6 +142,7 @@ class RAIDA
             this.RAIDAStatus.ticketHistory[id] = this.RAIDAStatus.TicketHistoryEn.Failed;
         }
         this.responseArray[id] = resp;
+        log.updateLine(id+": " + resp.outcome+", ");
         
     }
 

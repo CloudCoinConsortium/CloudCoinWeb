@@ -18,6 +18,7 @@ class Frack_Fixer
         if(stat.failsFix[raida_ID] || stat.failsEcho[raida_ID])
         {
             console.log("RAIDA Fails Echo or Fix. Try again when RAIDA online.");
+            log.updateLog("RAIDA Fails Echo or Fix. Try again when RAIDA online.");
             return Promise.resolve("RAIDA Fails Echo or Fix. Try again when RAIDA online.");
         }
         else
@@ -34,6 +35,7 @@ class Frack_Fixer
             {
             /*5.T YES, so REQUEST FIX*/
                 let da = new DetectionAgent(raida_ID, 5000);
+                log.updateLog("Attempting fix:");
                 return da.fix(trustedTriad, stat.tickets[trustedTriad[0]],
                 stat.tickets[trustedTriad[1]], stat.tickets[trustedTriad[2]],
                  cc.ans[raida_ID]).then(function(outcome){
@@ -41,19 +43,23 @@ class Frack_Fixer
                 if(outcome)
                 {
                     console.log(cc.sn + " RAIDA " + raida_ID + " unfracked successfully");
+                    log.updateLog(cc.sn + " RAIDA " + raida_ID + " unfracked successfully");
                     return cc.sn + " RAIDA " + raida_ID + " unfracked successfully";
                 } else {
                     console.log( cc.sn + " RAIDA " + raida_ID + ": Failed to accept tickets on corner " + corner );
+                    log.updateLog( cc.sn + " RAIDA " + raida_ID + ": Failed to accept tickets on corner " + corner );
                     return cc.sn + " RAIDA " + raida_ID + ": Failed to accept tickets on corner " + corner;
                 }//end did the fix work?
                  });
             } else {
                 console.log( cc.sn + " RAIDA " + raida_ID + ": Trusted servers failed to provide tickets for corner " + corner);
+                log.updateLog( cc.sn + " RAIDA " + raida_ID + ": Trusted servers failed to provide tickets for corner " + corner);
                 return cc.sn + " RAIDA " + raida_ID + ": Trusted servers failed to provide tickets for corner " + corner;
             } //end are tickets good
         });
         }// end are trusted raida ready
         else{console.log( cc.sn + " RAIDA " + raida_ID + ": One or more of the trusted triad will not echo and detect. So not trying.");
+        log.updateLog( cc.sn + " RAIDA " + raida_ID + ": One or more of the trusted triad will not echo and detect. So not trying.");
         return Promise.resolve(cc.sn + " RAIDA " + raida_ID + ": One or more of the trusted triad will not echo and detect. So not trying.");
         }    
     }//end fix one guid
@@ -86,6 +92,7 @@ class Frack_Fixer
             "<div class='success progress' role='progressbar' tabindex='0' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'><div class='progress-meter' id='"+
             frackedFileNames[i] +"fix'><p class='progress-meter-text'>"+frackedFileNames[i]+"</p></div></div>"
             console.log("Unfracking " + (i+1) + " of " + frackedFileNames.length);
+            log.updateLog("Unfracking " + (i+1) + " of " + frackedFileNames.length);
             frackedCC = files.loadOneCloudCoinFromJsonFile(frackedFileNames[i]);
             //alert(frackedCC.sn);
             //frackedCC.consoleReport();
@@ -102,18 +109,21 @@ class Frack_Fixer
                     files.overWrite("fracked", "bank", frackedFileNames[i]);
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
                     console.log( frackedFileNames[i] + ": CloudCoin was moved to Bank");
+                    log.updateLog( frackedFileNames[i] + ": CloudCoin was moved to Bank");
                     break;
                 case "counterfeit":
                     //this.totalValueToCounterfeit++;
                     files.overWrite("fracked", "counterfeit", frackedFileNames[i]);
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
                     console.log( frackedFileNames[i] + ": CloudCoin was moved to Counterfeit");
+                    log.updateLog( frackedFileNames[i] + ": CloudCoin was moved to Counterfeit");
                     break;
                 default:
                     //this.totalValueToFractured++;
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
                     //this.fileUtil.overWrite(this.fileUtil.frackedFolder);
                     console.log( frackedFileNames[i] + ": CloudCoin was moved back in to Folder: " + fixedCC.getFolder());
+                    log.updateLog( frackedFileNames[i] + ": CloudCoin was moved back in to Folder: " + fixedCC.getFolder());
                     break;
             }//end switch
             callback(fixedCC, files);
@@ -154,6 +164,7 @@ class Frack_Fixer
             if(brokeCoin.getPastStatus(id).toLowerCase() != "pass") //Will treat all non-passes as fails. 
             {
                 console.log(brokeCoin.sn + " RAIDA " + id +  ": Attempting to fix.");
+                log.updateLog(brokeCoin.sn + " RAIDA " + id +  ": Attempting to fix.");
                 fixer = new FixitHelper(id, brokeCoin.ans);
                 return obj.cornerLoop(id, brokeCoin, corner, fixer, obj.cornerLoop, obj)
                 //.then(function(fixed){if(fixed){fixedIds.push(id)}}));
@@ -169,6 +180,7 @@ class Frack_Fixer
         brokeCoin.setPastStatus("pass", id);
         let ts = (new Date()).getTime() - before;
         console.log( brokeCoin.sn +  ": Time spent fixing in milliseconds " + ts);
+        log.updateLog( brokeCoin.sn +  ": Time spent fixing in milliseconds " + ts);
         brokeCoin.calculateHP();
         brokeCoin.reportDetectionResults();
         //alert(fixCoin.getFolder());
@@ -193,6 +205,7 @@ class Frack_Fixer
 cornerLoop(id, brokeCoin, corner, fixer, callback, obj)
 {
  console.log(brokeCoin.sn + " RAIDA " + id +  ": Using corner " + corner);
+ log.updateLog(brokeCoin.sn + " RAIDA " + id +  ": Using corner " + corner);
  document.getElementById(brokeCoin.sn + "fix").style.width = id*4 + "%";
                 return obj.fixOneGuidCorner(id, brokeCoin, corner, fixer.currentTriad)
                 .then(function(fix_result){
