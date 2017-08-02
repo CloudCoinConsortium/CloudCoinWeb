@@ -4,10 +4,10 @@
     <string name="echoMillisec">ミリ秒</string>
     <string name="topInfo">CloudCoin の認証、保管、支払いに使用できます。このソフトウェアには欠陥やエラーがあるものとして提供されており、どのような保証もありません。 CloudCoinコンソーシアムとの関連はありません。</string>
     <string name="butImport">インポート</string>
-    <string name="butBank">安全</string>
+    <string name="butBank">金庫</string>
     <string name="butExport">エクスポート</string>
     <string name="edition">CloudCoin Web エディション&lt;br&gt;バージョン 8.1.2017</string>
-    <string name="botInfo">コインはブラウジング データに保存されますので、コインをエクスポートする前にデータを削除しないように注意ください。</string>
+    <string name="botInfo">コインはブラウジング データに保存されますので、コインをエクスポートする前にデータを削除しないようにご注意ください。</string>
     <string name="importHead">コインをアップロード</string>
     <string name="upButton">アップロード</string>
     <string name="bankDem">通貨単位</string>
