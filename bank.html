@@ -14,8 +14,8 @@
     <script src="core/RaidaResponse.js?v=1"></script>
     <script src="core/random.min.js?v=1"></script>
     <script src="core/CloudCoin.js?v=1"></script>
-    <script src="core/FileUtils.js?v=2"></script>
-    <script src="core/main.js?v=7"></script>
+    <script src="core/FileUtils.js?v=3"></script>
+    <script src="core/main.js?v=8"></script>
     <script src="core/RAIDA.js?v=3"></script>
     <script src="core/Importer.js?v=2"></script>
     <script src="core/Detector.js?v=2"></script>
@@ -434,6 +434,9 @@
   <div class="progress-meter" id="uploadProgress"></div>
 </div>
 <div id="importStatus"></div>
+<div id="duplicateHolder" class="callout warning" style="display:none">
+  This app has the current version of coin(s): <span id="duplicateNumbers"></span>
+</div>
 <div id="deleteMessage"></div>
   <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
