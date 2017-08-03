@@ -360,7 +360,7 @@ function updates(cc, fileUtil, percent=0, results = null)
 		+ results[1] + "</div>";
 	}
 		document.getElementById("detailsTable").innerHTML += " "+
-		cc.sn+" "+cc.getFolder()+" "+cc.pown+" ";
+		cc.sn+" "+cc.getFolder()+" "+cc.pown+" /n";
 		
 	}
 	document.getElementById("importStatus").innerHTML = fullHtml;
@@ -455,6 +455,19 @@ function trash(id)
         updateTotal(files);
 }
 
+function trashBad(id)
+{
+    
+        document.getElementById(id).remove();
+		document.getElementById("s"+id).remove();
+        files.overWrite("", "trash", id);
+         
+            
+		
+        localStorage.removeItem(id);
+        updateTotal(files);
+}
+
 function trashFolder(folder)
 {
     let fnames = [];
@@ -465,7 +478,7 @@ function trashFolder(folder)
     }
 
     for(let i = 0; i < fnames.length; i++){
-        trash(fnames[i]);}
+        trashBad(fnames[i]);}
 }
 
 function embedCC(cc, N=false)
