@@ -98,7 +98,8 @@ class FileUtils
         if(currentCoin != null){
             if(upCoin.sn == currentCoin.sn && loadFile.lastModified < currentCoin.time)
             {
-                alert("This app has the current version of coin: " + upCoin.sn);
+                document.getElementById("duplicateHolder").style.display = "block";
+                document.getElementById("duplicateNumbers").innerHTML += upCoin.sn + ",";
             }else{
                 files.writeTo("suspect", cc.sn);
                 callback(upCoin, upCoin.sn);}
@@ -126,7 +127,8 @@ class FileUtils
         if(currentCoin != null){
             if(upCoin.sn == currentCoin.sn && loadFile.lastModified < currentCoin.time)
             {
-                alert("This app has the current version of coin: " + upCoin.sn);
+                document.getElementById("duplicateHolder").style.display = "block";
+                document.getElementById("duplicateNumbers").innerHTML += upCoin.sn + ",";
             }else{
                 files.writeTo("suspect", upCoin.sn);
                 callback(upCoin, upCoin.sn);

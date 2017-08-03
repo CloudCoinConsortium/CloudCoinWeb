@@ -250,6 +250,8 @@ function importMode()
 	document.getElementById("importButtons").innerHTML = "<input type='file' id='myFile' multiple onchange='uploadButtonAppear()'><div id='upButtonDiv'></div>";
 	document.getElementById("importStatus").innerHTML ="";
 	document.getElementById("deleteMessage").innerHTML = "";
+	document.getElementById("duplicateHolder").style.display = "none";
+	document.getElementById("duplicateNumbers").innerHTML = "";
 	emptyprogress('uploadProgress');
 }
 	
