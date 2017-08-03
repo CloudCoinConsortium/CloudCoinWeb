@@ -65,7 +65,8 @@ class RAIDA
     {
         let returnCoin = cc;
         let promises = [];
-        log.updateLog("Detecting coin:" +cc.sn);
+        let start = new Date();
+        log.updateLog("Detecting coin:" +cc.sn +" "+start.toString());
         log.updateLog("Requests: ");
         
         //alert(cc.ans[0]);

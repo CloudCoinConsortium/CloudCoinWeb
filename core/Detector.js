@@ -46,7 +46,7 @@ class Detector
                     break;
             }//end switch
             files.saveCloudCoinToJsonFile(cc, cc.sn);
-            callback(cc, files, "");    
+            callback(cc, files);    
         });
     }
 

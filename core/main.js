@@ -290,6 +290,7 @@ function uploadFile(){
 
 function bankMode()
 {
+	
 	document.getElementById('fixStatusContainer').style.display = 'none';
 	updateTotal(files);
 }
@@ -358,24 +359,31 @@ function updates(cc, fileUtil, percent=0, results = null)
 		fullHtml +="<div class='callout alert'>Coin(s) that are counterfeit:"
 		+ results[1] + "</div>";
 	}
-	
+		document.getElementById("detailsTable").innerHTML += " "+
+		cc.sn+" "+cc.getFolder()+" "+cc.pown+" ";
 		
 	}
 	document.getElementById("importStatus").innerHTML = fullHtml;
 	log.updateLog(fullHtml);
 	document.getElementById("uploadProgress").style.width = percent +"%";
+	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>"+percent+"%</p>";
 	if(percent == 100){
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
 	
-	document.getElementById("importHead").innerHTML = "Import Complete";
-	document.getElementById("deleteMessage").innerHTML = "Be sure to delete the original file. It is outdated.";
-	}
+	document.getElementById("importHeadShown").innerHTML = "Import Complete";
+	document.getElementById("deleteMessage").innerHTML = "Be sure to delete the original file. It is outdated."
+	+ "<button class='small button' onclick="+"document.getElementById('importDetails').style.display='block'"+">Details</button>";	
+}
 	document.getElementById("importButtons").innerHTML= "";
 	mindlist();
 	sortTable("coinlistbank");
 	sortTable("coinlistfracked");
 	sortTable("mcoinlistbank");
 	sortTable("mcoinlistfracked");
+	if(files.counterfeitFolder != "")
+	{
+		trashFolder(files.counterfeitFolder);
+	}
 }
 
 function updatesFromMind(cc, fileUtil, percent = 0, cfnames=0, bnames=0, frnames=0)
