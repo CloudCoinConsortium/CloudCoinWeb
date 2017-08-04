@@ -395,6 +395,7 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 	document.getElementById("mindProgress").innerHTML="<p class='progress-meter-text'>done</p>";
 	let msg = "";
 	let fullHtml = "";
+	if(results !== null){
 	if(results[0] > 0 || results[2]> 0)
 	{
 		if(results[0] > 0)
