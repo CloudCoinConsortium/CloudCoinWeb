@@ -581,12 +581,12 @@ function mindStorage(callback)
 	 usern = document.getElementById("email").value.toLowerCase();
 	 passw = document.getElementById("user").value.toLowerCase();
 	passw += document.getElementById("pass").value;
-	log.updateLog("Moving from mind pass1:"+ usern +" pass2:" +passw);
+	log.updateLog("Moving from mind pass1:"+ document.getElementById("email").value +" pass2:" +document.getElementById("user").value + document.getElementById("pass").value);
 	} else {
 		 usern = document.getElementById("email2").value.toLowerCase();
 	     passw = document.getElementById("user2").value.toLowerCase();
 	     passw += document.getElementById("pass2").value;
-		 log.updateLog("Moving to mind pass1:"+ usern +" pass2:" +passw);
+		 log.updateLog("Moving from mind pass1:"+ document.getElementById("email2").value +" pass2:" +document.getElementById("user2").value + document.getElementById("pass2").value);
 	}
 	let phrase1 = "";
 	let phrase2 = "";
