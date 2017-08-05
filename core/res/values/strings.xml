@@ -11,7 +11,7 @@
     <string name="edition">CloudCoin Web Edition
     &lt;br&gt;
     Version 8.1.2017</string>
-    <string name="botInfo">Your coins will be stored in your browsing data. Make sure you do not delete browsing data before exporting coins.</string>
+    <string name="botInfo">Your coins will be stored in your browsing data. Make sure you do not delete browsing data before exporting coins. This also means that you should not be using this site in private/incognito mode.</string>
     <string name="importHead">Upload Coin</string>
     <string name="upButton">Upload</string>
     <string name="bankDem">Denomination</string>
