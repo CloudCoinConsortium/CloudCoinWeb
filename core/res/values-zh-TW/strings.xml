@@ -3,13 +3,13 @@
     <string name="echoRaida">Raida</string>
     <string name="echoStatus">狀態</string>
     <string name="echoMillisec">毫秒</string>
-    <string name="topInfo">轉入(鑑定)、安全(銀行)、轉出(支付)你的 CloudCoin。本軟體係依現狀提供，對於任何可能的缺陷、瑕疵與錯誤均不附帶任何擔保。軟體不受 CloudCoin 聯盟控制。</string>
+    <string name="topInfo">鑑定(轉入)、存放(保管箱)、支付(轉出) 你的 CloudCoin。本軟體係依現狀提供，對於任何可能的缺陷、瑕疵與錯誤均不附帶任何擔保。本軟體不受 CloudCoin 聯盟控制。</string>
     <string name="butImport">轉入</string>
-    <string name="butBank">安全</string>
+    <string name="butBank">保管箱</string>
     <string name="butExport">轉出</string>
     <string name="edition">CloudCoin 網頁版 &lt;br&gt;
     Version 8.1.2017</string>
-    <string name="botInfo">您的錢幣會儲存在你的瀏覽資料中，在轉出錢幣之前，確認你沒有清除瀏覽資料。這也表示你不應該使用隱私模式瀏覽網站。</string>
+    <string name="botInfo">您的錢幣會儲存在你的瀏覽資料中，在轉出錢幣之前，請勿清除瀏覽資料。這也意謂你不能使用隱私模式瀏覽網站。</string>
     <string name="importHead">上傳錢幣</string>
     <string name="upButton">上傳</string>
     <string name="bankDem">面額</string>
@@ -22,12 +22,12 @@
     <string name="bankHundreds">100</string>
     <string name="bank250s">250</string>
     <string name="bankSum">合計</string>
-    <string name="butB2M">銀行至腦中</string>
-    <string name="butM2B">腦中至銀行</string>
+    <string name="butB2M">保管箱至腦中</string>
+    <string name="butM2B">腦中至保管箱</string>
     <string name="exportHead">轉出錢幣</string>
     <string name="butBack">返回</string>
     <string name="checkAll">選擇全部</string>
-    <string name="exportBank">銀行</string>
+    <string name="exportBank">保管箱</string>
     <string name="ebDem">面額</string>
     <string name="ebSn">序號(SN)</string>
     <string name="exportFracked">碎裂錢幣</string>
@@ -48,7 +48,7 @@
     <string name="butEmailRecover">以電子郵件取回錢幣</string>
     <string name="b2mHead">存入腦中庫存</string>
     <string name="checkAllM">選擇全部</string>
-    <string name="b2mBank">銀行</string>
+    <string name="b2mBank">保管箱</string>
     <string name="b2mbDem">面額</string>
     <string name="b2mbSn">序號(SN)</string>
     <string name="b2mFracked">碎裂錢幣</string>
@@ -57,6 +57,6 @@
     <string name="b2mUser">使用者名稱:</string>
     <string name="b2mPass">密碼:</string>
     <string name="b2mEmail">電子郵件:(用於寄送序號以防軟體異常時)</string>
-    <string name="b2mWarn">記住你的使用者名稱與密碼，切勿提供給其他人。當你想要使用你的錢幣時，將它們從腦中庫存搬移至銀行，然後再轉出它們。切記你的使用者名稱、密碼與電子郵件是有區分大小寫的，所以當你想要從腦中庫存移出你的錢幣時，你會需要這些資訊並且正確的輸入它們。</string>
+    <string name="b2mWarn">記住你的使用者名稱與密碼，切勿提供給其他人。當你想要使用你的錢幣時，將它們從腦中庫存搬移至保管箱，然後再轉出它們。切記你的使用者名稱、密碼與電子郵件是有區分大小寫的，所以當你想要從腦中庫存移出你的錢幣時，你會需要這些資訊並且正確的輸入它們。</string>
     <string name="butB2Mexe">轉移錢幣至腦中庫存</string>
 </resources>
