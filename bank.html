@@ -1,7 +1,6 @@
 <!doctype html>
 <html class="no-js" lang="en" dir="ltr">
-
-<head>
+  <head>
     <meta charset="utf-8">
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -28,716 +27,710 @@
     <script src="core/changeLanguage.js?v=1"></script>
     <script src="core/log.js?v=1"></script>
     <style>
-        body {
-            background-color: blue;
-            background-image: url(img/bank/back_icons.svg);
-        }
+    body{
+        background-color:blue;
+         background-image:url(img/bank/back_icons.svg);
+         
+          
+    }
+    button.lgfont
+    {
+        margin:20px;
+      background-color:white;
+      font-size: 3rem;
+      border-radius: 3rem;
+      color:blue;
+      padding:20px;
+     margin-left:20px;
+    }
+    
+    
+    td {
+        text-align:right;
+        margin:0px;
+        padding:1px;
+        line-height:0;
+        color:white;
+        background-color:#333333;
+    }
+   
+   select
+    {
+        height:90px;
+        font-size:20px;
+        text-align: center;
+        box-shadow: 0px 30px 50px -30px #777 inset, 0px -30px 50px -30px #777 inset;
         
-        button.lgfont {
-            margin: 20px;
-            background-color: white;
-            font-size: 3rem;
-            border-radius: 3rem;
-            color: blue;
-            padding: 20px;
-            margin-left: 20px;
-        }
-        
-        td {
-            text-align: right;
-            margin: 0px;
-            padding: 1px;
-            line-height: 0;
-            color: white;
-            background-color: #333333;
-        }
-        
-        select {
-            height: 90px;
-            font-size: 20px;
-            text-align: center;
-            box-shadow: 0px 30px 50px -30px #777 inset, 0px -30px 50px -30px #777 inset;
-        }
-    </style>
-</head>
+    }
 
-<body>
+
+      </style>
+  </head>
+  <body>
     <div class="off-canvas-wrapper">
-        <div class="top-bar">
+      <div class="top-bar">
+       
+ 
+        <div class="top-bar-left">
+           <a  data-open="offCanvasRaida"  onclick="statusButton()"><span ></span><img src="img/bank/RAIDA-logo-white.svg" width="100"></a>
+		   </div><div class="top-bar-right" >
+		   <ul class="dropdown menu" data-dropdown-menu style="color:#ffffff" >
+         <li><a>LANG</a><ul class="menu vertical">
+           <li><a onclick="changeLanguage('values')">English</a></li>
+           <li><a onclick="changeLanguage('values-de')">German</a></li>
+           <li><a onclick="changeLanguage('values-es-r419')">Spanish</a></li>
+           <li><a onclick="changeLanguage('values-sv')">Swedish</a></li>
+           <li><a onclick="changeLanguage('values-cs')">Czech</a></li>
+           <li><a onclick="changeLanguage('values-fr')">French</a></li>
+           <li><a onclick="changeLanguage('values-hu')">Hungarian</a></li>
+           <li><a onclick="changeLanguage('values-it')">Italian</a></li>
+           <li><a onclick="changeLanguage('values-da')">Danish</a></li>
+           <li><a onclick="changeLanguage('values-pt-rPT')">Portuguese</a></li>
+           <li><a onclick="changeLanguage('values-sv')">Slovak</a></li>
+           <li><a onclick="changeLanguage('values-ja')">Japanese</a></li>
+           <li><a onclick="changeLanguage('values-ru')">Russian</a></li>
+           <li><a onclick="changeLanguage('values-ro')">Romanian</a></li>
+           <li><a onclick="changeLanguage('values-pl')">Polish</a></li>
+           <li><a onclick="changeLanguage('values-zh-rCN')">Chinese</a></li>
+           </ul></li>
+         
+       <li></li>
+       <li><a  data-open="offCanvasFaq" style="color:#ffffff" >FAQ/Help</a></li>
+       </ul>
+           </div>
+      
+      
+      
+    </div>
+    <div class="off-canvas position-left" id="offCanvasRaida" data-off-canvas style="background-color:black">
+    <img src="img/bank/RAIDA-logo-white.svg" width="300" style="padding:5px;">
+  
+    
+    <table >
+  <tr>
+    <th id="echoRaida">Raida</th>
+    <th id="echoStatus">Status</th>
+    <th id="echoMillisec">Millisec</th>
+  </tr>
+  <tr>
+    <td>0</td>
+    <td id="r_0"></td>
+    <td id="p_0"></td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td id="r_1"></td>
+    <td id="p_1"></td>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td id="r_2"></td>
+    <td id="p_2"></td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td id="r_3"></td>
+    <td id="p_3"></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td id="r_4"></td>
+    <td id="p_4"></td>
+  </tr>
+  <tr>
+    <td>5</td>
+    <td id="r_5"></td>
+    <td id="p_5"></td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td id="r_6"></td>
+    <td id="p_6"></td>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td id="r_7"></td>
+    <td id="p_7"></td>
+  </tr>
+  <tr>
+    <td>8</td>
+    <td id="r_8"></td>
+    <td id="p_8"></td>
+  </tr>
+  <tr>
+    <td>9</td>
+    <td id="r_9"></td>
+    <td id="p_9"></td>
+  </tr>
+  <tr>
+    <td>10</td>
+    <td id="r_10"></td>
+    <td id="p_10"></td>
+  </tr>
+  <tr>
+    <td>11</td>
+    <td id="r_11"></td>
+    <td id="p_11"></td>
+  </tr>
+  <tr>
+    <td>12</td>
+    <td id="r_12"></td>
+    <td id="p_12"></td>
+  </tr>
+  <tr>
+    <td>13</td>
+    <td id="r_13"></td>
+    <td id="p_13"></td>
+  </tr>
+  <tr>
+    <td>14</td>
+    <td id="r_14"></td>
+    <td id="p_14"></td>
+  </tr>
+  <tr>
+    <td>15</td>
+    <td id="r_15"></td>
+    <td id="p_15"></td>
+  </tr>
+  <tr>
+    <td>16</td>
+    <td id="r_16"></td>
+    <td id="p_16"></td>
+  </tr>
+  <tr>
+    <td>17</td>
+    <td id="r_17"></td>
+    <td id="p_17"></td>
+  </tr>
+  <tr>
+    <td>18</td>
+    <td id="r_18"></td>
+    <td id="p_18"></td>
+  </tr>
+  <tr>
+    <td>19</td>
+    <td id="r_19"></td>
+    <td id="p_19"></td>
+  </tr>
+  <tr>
+    <td>20</td>
+    <td id="r_20"></td>
+    <td id="p_20"></td>
+  </tr>
+  <tr>
+    <td>21</td>
+    <td id="r_21"></td>
+    <td id="p_21"></td>
+  </tr>
+  <tr>
+    <td>22</td>
+    <td id="r_22"></td>
+    <td id="p_22"></td>
+  </tr>
+  <tr>
+    <td>23</td>
+    <td id="r_23"></td>
+    <td id="p_23"></td>
+  </tr>
+  <tr>
+    <td>24</td>
+    <td id="r_24"></td>
+    <td id="p_24"></td>
+  </tr>
+</table>
+    </div>
+	
+	
+	<div class="off-canvas position-right" id="offCanvasFaq" data-off-canvas style="background-color:black">
+	<ul class="accordion" data-accordion  data-allow-all-closed="true">
+  <li class="accordion-item " data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">My Coin(s) failed to export/I canceled the download and my coins are gone. What should I do?</a>
 
+    <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
+    <div class="accordion-content" data-tab-content>
+      <p>Click this button to restore the coins of you last download.</p>
+      <button class="small button" onclick="restoreFailedDownload()">Restore</button>
+    </div>
+  </li>
+  <li class="accordion-item " data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">How to File a Lost Coin Report</a>
 
-            <div class="top-bar-left">
-                <a data-open="offCanvasRaida" onclick="statusButton()"><span ></span><img src="img/bank/RAIDA-logo-white.svg" width="100"></a>
-            </div>
-            <div class="top-bar-right">
-                <ul class="dropdown menu" data-dropdown-menu style="color:#ffffff">
-                    <li><a>LANG</a>
-                        <ul class="menu vertical">
-                            <li><a onclick="changeLanguage('values')">English</a></li>
-                            <li><a onclick="changeLanguage('values-de')">German</a></li>
-                            <li><a onclick="changeLanguage('values-es-r419')">Spanish</a></li>
-                            <li><a onclick="changeLanguage('values-sv')">Swedish</a></li>
-                            <li><a onclick="changeLanguage('values-cs')">Czech</a></li>
-                            <li><a onclick="changeLanguage('values-fr')">French</a></li>
-                            <li><a onclick="changeLanguage('values-hu')">Hungarian</a></li>
-                            <li><a onclick="changeLanguage('values-it')">Italian</a></li>
-                            <li><a onclick="changeLanguage('values-da')">Danish</a></li>
-                            <li><a onclick="changeLanguage('values-pt-rPT')">Portuguese</a></li>
-                            <li><a onclick="changeLanguage('values-sv')">Slovak</a></li>
-                            <li><a onclick="changeLanguage('values-ja')">Japanese</a></li>
-                            <li><a onclick="changeLanguage('values-ru')">Russian</a></li>
-                            <li><a onclick="changeLanguage('values-ro')">Romanian</a></li>
-                            <li><a onclick="changeLanguage('values-pl')">Polish</a></li>
-                            <li><a onclick="changeLanguage('values-zh-TW')">Traditional Chinese</a></li>
-                            <li><a onclick="changeLanguage('values-zh-CN')">Simplified Chinese</a></li>
-                        </ul>
-                    </li>
+    <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
+    <div class="accordion-content" data-tab-content>
+      <p>To file a lost coin report, please email the serial numbers and the date you lost the coins to CloudCoin@Protonmial.com subject: Lost coins.</p>
+      
+    </div>
+  </li>
+  <li class="accordion-item " data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">Why is my coin Fracked?</a>
 
-                    <li></li>
-                    <li><a data-open="offCanvasFaq" style="color:#ffffff">FAQ/Help</a></li>
-                </ul>
-            </div>
+    
+    <div class="accordion-content" data-tab-content>
+      <p>Don't worry having Fracked coins is perfectly fine.
+    One of the RAIDA nodes may have been down during detection.
+	  The Raida was designed to handle this.
+	  Just be sure to fix your fracked coin in the safe menu.</p>
+      
+    </div>
+  </li>
+  <li class="accordion-item " data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">Why is the Download as Image button grey?</a>
 
+    
+    <div class="accordion-content" data-tab-content>
+      <p>Exporting as an image file currently doesn't work on ios devices.
+	  We are working to remedy this.</p>
+      
+    </div>
+  </li>
+  <li class="accordion-item " data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">What is the purpose of Bank to Mind/Mind to Bank?</a>
 
+    
+    <div class="accordion-content" data-tab-content>
+      <p>CloudCoins are the first currency that can be stored in your mind.
+        Use mind storage to safeguard your coins, so if someone steals the device you are storing your coins in
+        you can use the email we send to recover your coins on another device. You can also use mind storage to transfer coins with a whisper.
+      </p>
+      
+    </div>
+  </li>
+  <li class="accordion-item " data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">How to save coins with password.</a>
 
-        </div>
-        <div class="off-canvas position-left" id="offCanvasRaida" data-off-canvas style="background-color:black">
-            <img src="img/bank/RAIDA-logo-white.svg" width="300" style="padding:5px;">
+    
+    <div class="accordion-content" data-tab-content>
+      <p>Click Safe, then Bank to Mind. Choose which coins you are saving by clicking on the checkboxes.
+        Either remember the Serial Numbers(SN) or write them down. You will also get an email with the serial numbers.
+        Then enter a username, password, and email, click Move Checked Coins to Mind, and the green bar will tell you when the process is finished.
+      </p>
+      
+    </div>
+  </li>
+  <li class="accordion-item " data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">Why do we have to delete the stack/jpeg file after uploading and importing it.</a>
 
+    
+    <div class="accordion-content" data-tab-content>
+      <p>Importing coins also authenticates them, and when coins are authenticated their numbers are changed so that the coin will belong to you and not whoever you got it from.
+        The web bank application can't change the original file you uploaded so it's numbers stay outdated. If you try to upload that file it will come up as counterfeit.
+      </p>
+      
+    </div>
+  </li>
+  <li class="accordion-item " data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">How do I export coins on an iPhone?</a>
 
-            <table>
-                <tr>
-                    <th id="echoRaida">Raida</th>
-                    <th id="echoStatus">Status</th>
-                    <th id="echoMillisec">Millisec</th>
-                </tr>
-                <tr>
-                    <td>0</td>
-                    <td id="r_0"></td>
-                    <td id="p_0"></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td id="r_1"></td>
-                    <td id="p_1"></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td id="r_2"></td>
-                    <td id="p_2"></td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td id="r_3"></td>
-                    <td id="p_3"></td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td id="r_4"></td>
-                    <td id="p_4"></td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td id="r_5"></td>
-                    <td id="p_5"></td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td id="r_6"></td>
-                    <td id="p_6"></td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td id="r_7"></td>
-                    <td id="p_7"></td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td id="r_8"></td>
-                    <td id="p_8"></td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td id="r_9"></td>
-                    <td id="p_9"></td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td id="r_10"></td>
-                    <td id="p_10"></td>
-                </tr>
-                <tr>
-                    <td>11</td>
-                    <td id="r_11"></td>
-                    <td id="p_11"></td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td id="r_12"></td>
-                    <td id="p_12"></td>
-                </tr>
-                <tr>
-                    <td>13</td>
-                    <td id="r_13"></td>
-                    <td id="p_13"></td>
-                </tr>
-                <tr>
-                    <td>14</td>
-                    <td id="r_14"></td>
-                    <td id="p_14"></td>
-                </tr>
-                <tr>
-                    <td>15</td>
-                    <td id="r_15"></td>
-                    <td id="p_15"></td>
-                </tr>
-                <tr>
-                    <td>16</td>
-                    <td id="r_16"></td>
-                    <td id="p_16"></td>
-                </tr>
-                <tr>
-                    <td>17</td>
-                    <td id="r_17"></td>
-                    <td id="p_17"></td>
-                </tr>
-                <tr>
-                    <td>18</td>
-                    <td id="r_18"></td>
-                    <td id="p_18"></td>
-                </tr>
-                <tr>
-                    <td>19</td>
-                    <td id="r_19"></td>
-                    <td id="p_19"></td>
-                </tr>
-                <tr>
-                    <td>20</td>
-                    <td id="r_20"></td>
-                    <td id="p_20"></td>
-                </tr>
-                <tr>
-                    <td>21</td>
-                    <td id="r_21"></td>
-                    <td id="p_21"></td>
-                </tr>
-                <tr>
-                    <td>22</td>
-                    <td id="r_22"></td>
-                    <td id="p_22"></td>
-                </tr>
-                <tr>
-                    <td>23</td>
-                    <td id="r_23"></td>
-                    <td id="p_23"></td>
-                </tr>
-                <tr>
-                    <td>24</td>
-                    <td id="r_24"></td>
-                    <td id="p_24"></td>
-                </tr>
-            </table>
-        </div>
-
-
-        <div class="off-canvas position-right" id="offCanvasFaq" data-off-canvas style="background-color:black">
-            <ul class="accordion" data-accordion data-allow-all-closed="true">
-                <li class="accordion-item " data-accordion-item>
-                    <!-- Accordion tab title -->
-                    <a href="#" class="accordion-title">My Coin(s) failed to export/I canceled the download and my coins are gone. What should I do?</a>
-
-                    <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
-                    <div class="accordion-content" data-tab-content>
-                        <p>Click this button to restore the coins of you last download.</p>
-                        <button class="small button" onclick="restoreFailedDownload()">Restore</button>
-                    </div>
-                </li>
-                <li class="accordion-item " data-accordion-item>
-                    <!-- Accordion tab title -->
-                    <a href="#" class="accordion-title">How to File a Lost Coin Report</a>
-
-                    <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
-                    <div class="accordion-content" data-tab-content>
-                        <p>To file a lost coin report, please email the serial numbers and the date you lost the coins to CloudCoin@Protonmial.com subject: Lost coins.</p>
-
-                    </div>
-                </li>
-                <li class="accordion-item " data-accordion-item>
-                    <!-- Accordion tab title -->
-                    <a href="#" class="accordion-title">Why is my coin Fracked?</a>
-
-
-                    <div class="accordion-content" data-tab-content>
-                        <p>Don't worry having Fracked coins is perfectly fine. One of the RAIDA nodes may have been down during detection. The Raida was designed to handle this. Just be sure to fix your fracked coin in the safe menu.</p>
-
-                    </div>
-                </li>
-                <li class="accordion-item " data-accordion-item>
-                    <!-- Accordion tab title -->
-                    <a href="#" class="accordion-title">Why is the Download as Image button grey?</a>
-
-
-                    <div class="accordion-content" data-tab-content>
-                        <p>Exporting as an image file currently doesn't work on ios devices. We are working to remedy this.</p>
-
-                    </div>
-                </li>
-                <li class="accordion-item " data-accordion-item>
-                    <!-- Accordion tab title -->
-                    <a href="#" class="accordion-title">What is the purpose of Bank to Mind/Mind to Bank?</a>
-
-
-                    <div class="accordion-content" data-tab-content>
-                        <p>CloudCoins are the first currency that can be stored in your mind. Use mind storage to safeguard your coins, so if someone steals the device you are storing your coins in you can use the email we send to recover your coins on another
-                            device. You can also use mind storage to transfer coins with a whisper.
-                        </p>
-
-                    </div>
-                </li>
-                <li class="accordion-item " data-accordion-item>
-                    <!-- Accordion tab title -->
-                    <a href="#" class="accordion-title">How to save coins with password.</a>
-
-
-                    <div class="accordion-content" data-tab-content>
-                        <p>Click Safe, then Bank to Mind. Choose which coins you are saving by clicking on the checkboxes. Either remember the Serial Numbers(SN) or write them down. You will also get an email with the serial numbers. Then enter a username,
-                            password, and email, click Move Checked Coins to Mind, and the green bar will tell you when the process is finished.
-                        </p>
-
-                    </div>
-                </li>
-                <li class="accordion-item " data-accordion-item>
-                    <!-- Accordion tab title -->
-                    <a href="#" class="accordion-title">Why do we have to delete the stack/jpeg file after uploading and importing it.</a>
-
-
-                    <div class="accordion-content" data-tab-content>
-                        <p>Importing coins also authenticates them, and when coins are authenticated their numbers are changed so that the coin will belong to you and not whoever you got it from. The web bank application can't change the original file you
-                            uploaded so it's numbers stay outdated. If you try to upload that file it will come up as counterfeit.
-                        </p>
-
-                    </div>
-                </li>
-                <li class="accordion-item " data-accordion-item>
-                    <!-- Accordion tab title -->
-                    <a href="#" class="accordion-title">How do I export coins on an iPhone?</a>
-
-
-                    <div class="accordion-content" data-tab-content>
-                        <p>Due to iPhones not having a proper file system, exporting coins is a little complicated. When you click Download as Stack a new tab should appear with an "unknown" file you can save. Save that file to either iCloud, Dropbox, or
-                            your prefered cloud storage application. It won't have a proper filename so make sure to give it one yourself. If you are using iCloud it won't let you change the filename unless there is a file with that name already, so save
-                            it once as "unknown" and then save it again so you can give it a filename.
-                            <b>Make sure the filename ends with .stack so it has the proper file extention.</b>
-                        </p>
-
-                    </div>
-                </li>
-
-
-
-
-
-
-
-                <li class="accordion-item " data-accordion-item>
-                    <!-- Accordion tab title -->
-                    <a href="#" class="accordion-title">Download Log</a>
-
-
-                    <div class="accordion-content" data-tab-content>
-                        <button class="small button" onclick="log.downloadLog()">Download</button>
-
-                    </div>
-                </li>
-            </ul>
-
-
-        </div>
+    
+    <div class="accordion-content" data-tab-content>
+      <p>Due to iPhones not having a proper file system, exporting coins is a little complicated.
+        When you click Download as Stack a new tab should appear with an "unknown" file you can save.
+        Save that file to either iCloud, Dropbox, or your prefered cloud storage application.
+        It won't have a proper filename so make sure to give it one yourself. If you are using iCloud it won't let you change the filename unless there is a file with that name already,
+        so save it once as "unknown" and then save it again so you can give it a filename.
+        <b>Make sure the filename ends with .stack so it has the proper file extention.</b>
+      </p>
+      
+    </div>
+  </li>
 
 
 
 
-        <div class="off-canvas-content" data-off-canvas-content>
-            <div id="ygrid" class="grid-y large-grid-frame">
-                <div class="large-4 small-1 cell" style="margin-left:auto; margin-right:auto; width:500px">
 
 
-                    <img src="img/bank/logo@3x.png" style="background-color:blue">
-                    <br>
-                    <span id="topInfo" style="margin-left:auto; margin-right:auto; width:500px;color:white; background-color:blue">
+
+  <li class="accordion-item " data-accordion-item>
+    <!-- Accordion tab title -->
+    <a href="#" class="accordion-title">Download Log</a>
+
+    
+    <div class="accordion-content" data-tab-content>
+      <button class="small button" onclick="log.downloadLog()">Download</button>
+      
+    </div>
+  </li>
+</ul>
+	
+	
+	</div>
+    
+    
+      
+    
+<div class="off-canvas-content" data-off-canvas-content>
+<div id="ygrid" class="grid-y large-grid-frame" >
+  <div class="large-4 small-1 cell" style="margin-left:auto; margin-right:auto; width:500px" >
+     
+    
+      <img src="img/bank/logo@3x.png" style="background-color:blue">
+      <br>
+      <span id="topInfo" style="margin-left:auto; margin-right:auto; width:500px;color:white; background-color:blue">
         Used to Authenticate, Store and Payout CloudCoins.
      This software is provided as is with all faults, defects and errors and without warranty of any kind. Free from the CloudCoin Consortium.
      </span>
+       
+  </div>
+  
+<div class="grid-x grid-margin-x large-4 small-10 cell" style="margin-right:1px; margin-left:1px">
 
-                </div>
-
-                <div class="grid-x grid-margin-x large-4 small-10 cell" style="margin-right:1px; margin-left:1px">
-
-                    <button class="large-auto cell button lgfont" data-open="importModal" onclick="importMode()">
+<button class="large-auto cell button lgfont" data-open="importModal" onclick="importMode()">
   <img src="img/bank/import_icon.svg"><br><span id="butImport">Import</span></button>
-                    <button class="large-auto cell button lgfont" data-open="bankModal" onclick="bankMode()">
+<button class="large-auto cell button lgfont" data-open="bankModal" onclick="bankMode()">
   <img src="img/bank/bank_icon.svg"><br><span id="butBank">Safe</span></button>
-                    <button class="large-auto cell button lgfont" data-open="newExportModal">
+<button class="large-auto cell button lgfont" data-open="newExportModal">
   <img src="img/bank/export_icon.svg" ><br><span id="butExport">Export</span></button>
 
 
-                </div>
+</div>
+ 
+<div class="large-4 small-1 cell" style="margin-left:auto; margin-right:auto; width:250px;color:white">
+    <span id="botInfo" style="margin-left:auto; margin-right:auto; width:250px;color:white; background-color:blue">Your coins will be stored in your browsing data. Make sure you do not delete browsing data before exporting coins.</span>
+    This also means that you should not be using this site in private/incognito mode.
+    <p id ="edition">
+    CloudCoin Web Edition
+    <br>
+    Version 8.1.2017
+    </p>
+</div>
+</div>
 
-                <div class="large-4 small-1 cell" style="margin-left:auto; margin-right:auto; width:250px;color:white">
-                    <span id="botInfo" style="margin-left:auto; margin-right:auto; width:250px;color:white; background-color:blue">Your coins will be stored in your browsing data. Make sure you do not delete browsing data before exporting coins. This also means that you should not be using this site in private/incognito mode.</span>
-                    <p id="edition">
-                        CloudCoin Web Edition
-                        <br> Version 8.1.2017
-                    </p>
-                </div>
-            </div>
-
-            <div class="reveal tiny" id="importModal" data-reveal>
-                <h3 id="importHead" style="display:none">Upload Coin</h3>
-                <h3 id="importHeadShown">Upload Coin</h3>
-
-
-                <div id="importButtons">
-
-                    <input type="file" id="myFile" multiple onchange="uploadButtonAppear()"> -->
-                    <!--<label for="myFile" class="button">Upload File</label>
+<div class="reveal tiny" id="importModal" data-reveal >
+  <h3 id="importHead" style="display:none">Upload Coin</h3>
+  <h3 id="importHeadShown">Upload Coin</h3> 
+    
+ 
+ <div id="importButtons">
+      
+	<input type="file" id="myFile" multiple onchange="uploadButtonAppear()"> -->
+     <!--<label for="myFile" class="button">Upload File</label>
     <input type="file" id="myFile" multiple onchange="uploadButtonAppear()" class="show-for-sr">-->
-
-                    <div id="upButtonDiv"></div>
-
-                </div>
-                <span id="upButton" style="display:none">Upload</span>
-                <div class="callout" data-closable style="display:none; overflow:scroll; height:80px" id="importDetails">
-
-
-                    <span id="detailsTable">
+	
+ <div id="upButtonDiv"></div> 
+  
+</div>
+<span id="upButton" style="display:none">Upload</span>
+<div class="callout" data-closable style="display:none; overflow:scroll; height:80px" id="importDetails">
+  
+  
+<span id="detailsTable" >
 </span>
-
-                    <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+    
+  <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
     <span aria-hidden="true">&times;</span>
     </button>
+  
+</div>
 
-                </div>
 
-
-                <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-meter" id="uploadProgress"></div>
-                </div>
-                <div id="importStatus"></div>
-                <div id="duplicateHolder" class="callout warning" style="display:none">
-                    This app has the current version of coin(s): <span id="duplicateNumbers"></span>
-                </div>
-                <div id="deleteMessage"></div>
-                <button class="close-button" data-close aria-label="Close modal" type="button">
+<div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-meter" id="uploadProgress"></div>
+</div>
+<div id="importStatus"></div>
+<div id="duplicateHolder" class="callout warning" style="display:none">
+  This app has the current version of coin(s): <span id="duplicateNumbers"></span>
+</div>
+<div id="deleteMessage"></div>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
+  
+  
+
+  
+</div>
 
 
+  
 
 
-            </div>
-
-
-
-
-
-            <div class="reveal" id="bankModal" data-reveal>
-                <table>
-                    <tbody>
-                        <tr>
-                            <th id="bankDem">Denomination</th>
-                            <th id="bankGood">Good</th>
-                            <th id="bankFracked">Fracked</th>
-                            <th id="bankTotal">Total</th>
-                        </tr>
-                        <tr>
-                            <td id="bankOnes">Ones</td>
-                            <td id="b_g1"> </td>
-                            <td id="b_f1"> </td>
-                            <td id="b_t1"> </td>
-                        </tr>
-                        <tr>
-                            <td id="bankFives">Fives</td>
-                            <td id="b_g5"> </td>
-                            <td id="b_f5"> </td>
-                            <td id="b_t5"> </td>
-                        </tr>
-                        <tr>
-                            <td id="bankQuarters">Quarters</td>
-                            <td id="b_g25"> </td>
-                            <td id="b_f25"> </td>
-                            <td id="b_t25"> </td>
-                        </tr>
-                        <tr>
-                            <td id="bankHundreds">Hundreds</td>
-                            <td id="b_g100"> </td>
-                            <td id="b_f100"> </td>
-                            <td id="b_t100"> </td>
-                        </tr>
-                        <tr>
-                            <td id="bank250s">250s</td>
-                            <td id="b_g250"> </td>
-                            <td id="b_f250"> </td>
-                            <td id="b_t250"> </td>
-                        </tr>
-                        <tr>
-                            <td><b id="bankSum">SUM</b></td>
-                            <td><b id="b_gs"></b></td>
-                            <td><b id="b_fs"></b></td>
-                            <td><b id="b_ts"></b></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <div id="fixStatusContainer"></div>
-                <button class="button" onclick="fix.fixAll(updates)" id="fixButton">Fix Fracked</button>
-                <button id="butB2M" class="button" data-open="mindToModal" onclick="emptyprogress('toMindMessage')">Bank to Mind</button>
-                <button id="butM2B" class="button" data-open="mindFromModal" onclick="emptyprogress('mindProgress');document.getElementById('fromMindStatus').innerHTML='';">
+<div class="reveal" id="bankModal" data-reveal>
+  <table >
+	<tbody>
+		<tr>
+			<th id="bankDem">Denomination</th>
+			<th id="bankGood">Good</th>
+			<th id="bankFracked">Fracked</th>
+			<th id="bankTotal">Total</th>
+		</tr>
+		<tr>
+			<td id="bankOnes">Ones</td>
+			<td id="b_g1"> </td>
+			<td id="b_f1"> </td>
+			<td id="b_t1"> </td>
+		</tr>
+		<tr>
+			<td id="bankFives">Fives</td>
+			<td id="b_g5"> </td>
+			<td id="b_f5"> </td>
+			<td id="b_t5"> </td>
+		</tr>
+		<tr>
+			<td id="bankQuarters">Quarters</td>
+			<td id="b_g25"> </td>
+			<td id="b_f25"> </td>
+			<td id="b_t25"> </td>
+		</tr>
+		<tr>
+			<td id="bankHundreds">Hundreds</td>
+			<td id="b_g100"> </td>
+			<td id="b_f100"> </td>
+			<td id="b_t100"> </td>
+		</tr>
+		<tr>
+			<td id="bank250s">250s</td>
+			<td id="b_g250"> </td>
+			<td id="b_f250"> </td>
+			<td id="b_t250"> </td>
+		</tr>
+		<tr>
+			<td><b id="bankSum">SUM</b></td>
+			<td><b id="b_gs"></b></td>
+			<td><b id="b_fs"></b></td>
+			<td><b id="b_ts"></b></td>
+		</tr>
+	</tbody>
+</table>
+<div id="fixStatusContainer"></div>
+ <button class="button" onclick="fix.fixAll(updates)" id="fixButton">Fix Fracked</button>
+ <button id="butB2M" class="button" data-open="mindToModal" onclick="emptyprogress('toMindMessage')">Bank to Mind</button>
+ <button id="butM2B" class="button" data-open="mindFromModal" onclick="emptyprogress('mindProgress');document.getElementById('fromMindStatus').innerHTML='';">
    Mind to Bank</button>
-                <button class="close-button" data-close aria-label="Close modal" type="button">
+  <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
-            </div>
+</div>
 
-            <div class="reveal" id="exportModal" data-reveal>
-
-                <h2><span id="exportHead">Export Coins</span> <button id="butBack" class="small button" data-open="newExportModal">Back</button></h2>
-
-                <input type="checkbox" id="cbAll" onchange="checkAll()"> <span id="checkAll">check all</span>
-                <div class="grid-x">
-                    <div class="large-6 cell">
-                        <h3 id="exportBank">Bank </h3>
-                        <table>
-                            <tbody id="coinlistbank">
-                                <tr>
-                                    <th></th>
-                                    <th id="ebDem">Denomination</th>
-                                    <th id="ebSn">SN</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="large-6 cell">
-                        <h3 id="exportFracked">Fracked</h3>
-                        <table>
-                            <tbody id="coinlistfracked">
-                                <tr>
-                                    <th></th>
-                                    <th id="efDem">Denomination</th>
-                                    <th id="efSn">SN</th>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div>
-                    <h3 style="visibility: hidden;">image to put cloudcoin in:<input type="file" id="jpeg-in"></h3>
-                    <!--<div  id="jpeg-out" class="thumbnail"></div>-->
-                    <input type="text" id="alltag" placeholder="Name your stack of cloudcoins file">
-                    <button id="butDl" class="small button" onclick="downloadAll()">Download as Stack</button>
-                    <button id="butDi" class="small button dlJpeg" onclick="downloadImage()">Download as Image</button>
-
-                    <button class="close-button" data-close aria-label="Close modal" type="button">
-    <span aria-hidden="true">&times;</span>
-  </button>
-                </div>
-
-                <div class="reveal" id="newExportModal" data-reveal>
-
-                    <h2 id="exportHeadN">Export Coins</h2>
-                    <div id="eDial" class="grid-x grid-margin-x" style="text-align: center">
-                        <div class="auto cell">1s
-                            <select onscroll="scrollSelect('1')" id="dial1" size="3" onchange="dialSet('1')">
-    <option disabled> </option>
-    <option selected>0</option>
-    <option disabled> </option>
-    </select>
-                        </div>
-                        <div class="auto cell">5s
-                            <select onscroll="scrollSelect('5')" id="dial5" size="3" onchange="dialSet('5')">
-        <option disabled> </option>
-    <option selected>0</option>
-    <option disabled> </option>
-    </select>
-                        </div>
-                        <div class="auto cell">25s
-                            <select onscroll="scrollSelect('25')" id="dial25" size="3" onchange="dialSet('25')">
-        <option disabled> </option>
-    <option selected>0</option>
-    <option disabled> </option>
-    </select>
-                        </div>
-                        <div class="auto cell">100s
-                            <select onscroll="scrollSelect('100')" id="dial100" size="3" onchange="dialSet('100')">
-        <option disabled> </option>
-    <option selected value=0>0</option>
-    <option disabled> </option>
-    </select>
-                        </div>
-                        <div class="auto cell">250s
-                            <select onscroll="scrollSelect('250')" id="dial250" size="3" onchange="dialSet('250')">
-        <option disabled> </option>
-    <option selected value=0>0</option>
-    <option disabled> </option>
-    </select>
-                        </div>
-
-                    </div>
-                    <button id="butLegacyExport" class="small button" data-open="exportModal">Export Specific Coins</button>
-
-                    <div>
-
-                        <input type="text" id="alltagN" placeholder="Name your stack of cloudcoins file">
-                        <button id="butDlN" class="small button" onclick="downloadAll(true)">Download as Stack</button>
-                        <button id="butDiN" class="small button dlJpeg" onclick="downloadImage(true)">Download as Image</button>
-                        <button class="small button" style="visibility: hidden;" data-open="brokenModal">Hidden Coins</button>
-                        <button class="close-button" data-close aria-label="Close modal" type="button">
-    <span aria-hidden="true">&times;</span>
-  </button>
-                    </div>
-
-                    <div class="reveal" id="mindFromModal" data-reveal>
-                        <h3 id="m2bHead">Take Out of Mind Inventory </h3>
-                        <ul id="coinlistmind">
-                        </ul>
-                        <p id="m2bWarn">Use the exact username, password, and email that you used to put the coins in your mind. Note that they are all case sensitive.
-                        </p>
-                        <span id="m2bUser">username:</span><input type="text" id="user" autocomplete="off">
-                        <span id="m2bPass">password:</span><input type="text" id="pass" autocomplete="off">
-                        <span id="m2bEmail">email:</span><input type="email" id="email" autocomplete="off">
-
-                        <button id="butM2Bexe" class="small button" onclick="mindStorage(moveFromMind)">Move from Mind</button>
-                        <button id="butEmailRecover" class="small button" onclick="emailRecover()">Recover Coins from Email</button>
-                        <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                            <div class="progress-meter" id="mindProgress"></div>
-                        </div>
-                        <div id="fromMindStatus"></div>
-                        <button class="close-button" data-close aria-label="Close reveal" type="button">
-    <span aria-hidden="true">&times;</span>
-  </button>
-                    </div>
-
-                    <div class="reveal" id="mindToModal" data-reveal>
-                        <h3 id="b2mHead">Move into Mind Inventory </h3>
-                        <!--<iframe name="mtmi" style="display:none;"></iframe>-->
-                        <input type="checkbox" id="mcbAll" onchange="checkAll(true)"> <span id="checkAllM">check all</span>
-
-
-                        <div class="grid-x">
-                            <div class="large-6 cell">
-                                <h3 id="b2mBank">Bank </h3>
-                                <table>
-                                    <tbody id="mcoinlistbank">
-                                        <tr>
-                                            <th></th>
-                                            <th id="b2mbDem">Denomination</th>
-                                            <th id="b2mbSn">SN</th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="large-6 cell">
-                                <h3 id="b2mFracked">Fracked</h3>
-                                <table>
-                                    <tbody id="mcoinlistfracked">
-                                        <tr>
-                                            <th></th>
-                                            <th id="b2mfDem">Denomination</th>
-                                            <th id="b2mfSn">SN</th>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div>
-
-                            <span id="b2mUser">Username(Case Sensitive):</span><input type="text" id="user2" autocomplete="off">
-                            <span id="b2mPass">Password:</span><input type="text" id="pass2" autocomplete="off">
-                            <span id="b2mEmail">Email(Case Sensitive): (Will be used to send serial number in case of software crash)</span>
-                            <input type="email" name="email" id="email2" autocomplete="off">
-                            <p id="b2mWarn">Remember your username and password. Do not give it to anyone else. When you want to spend your coins, move them from your mind to your bank and then export. Remember that your username, password, and email are all case sensitive.
-                                So when you go to remove your CloudCoins from your mind you will need to remember the case and enter it in exactly correct.</p>
-
-                            <button id="butB2Mexe" class="small button" onclick="mindStorage(moveToMind)">Move Checked Coins to Mind</button>
-                            <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
-                                <div class="progress-meter" id="toMindMessage"></div>
-                            </div>
-                            <button class="close-button" data-close aria-label="Close reveal" type="button">
-    <span aria-hidden="true">&times;</span>
-  </button>
-                        </div>
-
-                        <div class="reveal" id="brokenModal" data-reveal>
-                            <div>
-                                <table>
-                                    <tbody id="coinlistcounterfeit"></tbody>
-                                </table>
-                                <table>
-                                    <tbody id="coinlistsuspect"></tbody>
-                                    </ul>
-                                    <table>
-                                        <tbody id="mcoinlistcounterfeit"></tbody>
-                                    </table>
-                                    <table>
-                                        <tbody id="mcoinlistsuspect"></tbody>
-                                    </table>
-                            </div>
-                        </div>
-                        <button class="close-button" data-close aria-label="Close reveal" type="button">
-    <span aria-hidden="true">&times;</span>
-  </button>
-                    </div>
-
-
-                </div>
-            </div>
+<div class="reveal" id="exportModal" data-reveal>
+   
+   <h2><span id="exportHead">Export Coins</span>   <button id="butBack" class="small button" data-open="newExportModal">Back</button></h2>
+   
+   <input type="checkbox" id="cbAll" onchange="checkAll()">  <span id="checkAll">check all</span>
+   <div class="grid-x">
+     <div class="large-6 cell">
+   <h3 id="exportBank">Bank  </h3>
+        <table>
+          <tbody id="coinlistbank">
+          <tr><th></th><th id="ebDem">Denomination</th><th id="ebSn">SN</th></tr>
+          </tbody>
+        </table>
+     </div><div class="large-6 cell">
+        <h3 id="exportFracked">Fracked</h3>
+        <table>
+          <tbody id="coinlistfracked">
+          <tr><th></th><th id="efDem">Denomination</th><th id="efSn">SN</th></tr>
+          </tbody>
+        </table>
         </div>
-        <a class="exit-off-canvas"></a>
+</div>
+        
+        <h3  style="display:none;">image to put cloudcoin in:<input type="file" id="jpeg-in"></h3>
+        <!--<div  id="jpeg-out" class="thumbnail"></div>-->
+        <input type="text" id ="alltag" placeholder="Name your stack of cloudcoins file">
+        <button id="butDl" class="small button" onclick="downloadAll()">Download as Stack</button>
+   <button id="butDi" class="small button dlJpeg" onclick="downloadImage()">Download as Image</button>
+    
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="reveal" id="newExportModal" data-reveal>
+   
+   <h2 id="exportHeadN">Export Coins</h2>
+   <div id="eDial" class="grid-x grid-margin-x" style="text-align: center">
+    <div class="auto cell">1s
+<select onscroll="scrollSelect('1')" id="dial1" size="3" onchange="dialSet('1')">
+    <option disabled> </option>
+    <option selected>0</option>
+    <option disabled> </option>
+    </select>
+    </div><div class="auto cell">5s
+    <select onscroll="scrollSelect('5')" id="dial5" size="3" onchange="dialSet('5')">
+        <option disabled> </option>
+    <option selected>0</option>
+    <option disabled> </option>
+    </select>
+    </div><div class="auto cell">25s 
+    <select onscroll="scrollSelect('25')" id="dial25" size="3" onchange="dialSet('25')">
+        <option disabled> </option>
+    <option selected>0</option>
+    <option disabled> </option>
+    </select>
+    </div><div class="auto cell">100s 
+    <select onscroll="scrollSelect('100')" id="dial100" size="3" onchange="dialSet('100')">
+        <option disabled> </option>
+    <option selected value=0>0</option>
+    <option disabled> </option>
+    </select>
+    </div><div class="auto cell">250s 
+    <select onscroll="scrollSelect('250')" id="dial250" size="3" onchange="dialSet('250')">
+        <option disabled> </option>
+    <option selected value=0>0</option>
+    <option disabled> </option>
+    </select>
+    </div> 
+
+    </div>
+    <button id="butLegacyExport" class="small button" data-open="exportModal">Export Specific Coins</button>
+   
+        <div >
+        
+        <input type="text" id ="alltagN" placeholder="Name your stack of cloudcoins file">
+        <button id="butDlN" class="small button" onclick="downloadAll(true)">Download as Stack</button>
+   <button id="butDiN" class="small button dlJpeg" onclick="downloadImage(true)">Download as Image</button>
+    <button class="small button"  style="visibility: hidden;" data-open="brokenModal">Hidden Coins</button>
+  <button class="close-button" data-close aria-label="Close modal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="reveal" id="mindFromModal" data-reveal>
+  <h3 id="m2bHead">Take Out of Mind Inventory  </h3>
+  <ul id="coinlistmind">
+        </ul>
+<p id="m2bWarn">Use the exact username, password, and email that you used to put the coins
+  in your mind. Note that they are all case sensitive.
+</p>
+        <span id="m2bUser">username:</span><input type="text" id="user" autocomplete="off">
+		<span id="m2bPass">password:</span><input type="text" id="pass" autocomplete="off">
+		<span id="m2bEmail">email:</span><input type="email" id="email" autocomplete="off">
+		
+<button id="butM2Bexe" class="small button" onclick="mindStorage(moveFromMind)">Move from Mind</button>
+  <button id="butEmailRecover" class="small button" onclick="emailRecover()">Recover Coins from Email</button>
+  <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-meter" id="mindProgress"></div>
+</div>
+<div id="fromMindStatus"></div>
+  <button class="close-button" data-close aria-label="Close reveal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="reveal" id="mindToModal" data-reveal>
+  <h3 id="b2mHead">Move into Mind Inventory  </h3>
+  <!--<iframe name="mtmi" style="display:none;"></iframe>-->
+  <input type="checkbox" id="mcbAll" onchange="checkAll(true)">  <span id="checkAllM">check all</span>
+   
+  
+   <div class="grid-x">
+   <div class="large-6 cell">
+   <h3 id="b2mBank">Bank  </h3>
+        <table>
+          <tbody id="mcoinlistbank">
+          <tr><th></th><th id="b2mbDem">Denomination</th><th id="b2mbSn">SN</th></tr>
+          </tbody>
+        </table>
+     </div>
+     <div class="large-6 cell">
+        <h3 id="b2mFracked">Fracked</h3>
+        <table>
+          <tbody id="mcoinlistfracked">
+          <tr><th></th><th id="b2mfDem">Denomination</th><th id="b2mfSn">SN</th></tr>
+          </tbody>
+        </table>
+        </div>
+</div>
+        <div >
+
+        <span id="b2mUser">Username(Case Sensitive):</span><input type="text" id="user2" autocomplete="off">
+		<span id="b2mPass">Password:</span><input type="text" id="pass2" autocomplete="off">
+		<span id="b2mEmail">Email(Case Sensitive): (Will be used to send serial number in case of software crash)</span>
+    <input type="email" name="email" id="email2" autocomplete="off">
+		<p id ="b2mWarn">Remember your username and password. Do not give it to anyone else.
+       When you want to spend your coins, move them from your mind to your
+        bank and then export. Remember that your username, password, and email
+        are all case sensitive. So when you go to remove your CloudCoins from
+        your mind you will need to remember the case and enter it in exactly correct.</p>
+
+<button id="butB2Mexe" class="small button" onclick="mindStorage(moveToMind)">Move Checked Coins to Mind</button>
+  <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-meter" id="toMindMessage"></div>
+  </div>
+  <button class="close-button" data-close aria-label="Close reveal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="reveal" id="brokenModal" data-reveal>
+  <div>
+        <table>
+          <tbody id="coinlistcounterfeit"></tbody>
+        </table>
+        <table>
+          <tbody id="coinlistsuspect"></tbody>
+        </table>
+        <table>
+          <tbody id="mcoinlistcounterfeit"></tbody>
+        </table>
+        <table>
+          <tbody id="mcoinlistsuspect"></tbody>
+        </table>
+        </div>
+    </div>
+  <button class="close-button" data-close aria-label="Close reveal" type="button">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+
+</div>
+</div></div>
+<a class="exit-off-canvas"></a>
+      
+
+
+
+    <script src="js6/vendor/jquery.js"></script>
+    <script src="js6/vendor/what-input.js"></script>
+    <script src="js6/vendor/foundation.js"></script>
+    <script src="js6/app.js"></script>
 
 
 
 
-        <script src="js6/vendor/jquery.js"></script>
-        <script src="js6/vendor/what-input.js"></script>
-        <script src="js6/vendor/foundation.js"></script>
-        <script src="js6/app.js"></script>
 
-
-
-
-
-        <script>
-            let raida = new RAIDA(3000);
-            let files = new FileUtils();
-            let log = new Log();
-            let importer = new Importer();
-            let detect = new Detector(files, 3000);
-            let coins = importer.importAll(files);
-            let fix = new Frack_Fixer(files, 60000);
-            //alert(coins);
-
-
-
-
-
-
-            mindlist();
-            for (let j = 0; j < coins.length; j++) {
-
-                coinlist(coins[j], files);
-                scoinlist(coins[j], files);
-            }
-            updateTotal(files);
-            sortTable("coinlistbank");
-            sortTable("coinlistfracked");
-            sortTable("mcoinlistbank");
-            sortTable("mcoinlistfracked");
-            if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
-                document.getElementById("ygrid").classList.remove("grid-y", "large-grid-frame");
-                document.getElementsByClassName("dlJpeg")[0].setAttribute("disabled", "");
-                document.getElementsByClassName("dlJpeg")[1].setAttribute("disabled", "");
-            }
-        </script>
-
-</body>
-
+    <script>
+    
+    let raida = new RAIDA(3000);
+    let files = new FileUtils();
+    let log = new Log();
+    let importer = new Importer();
+    let detect = new Detector(files, 3000);
+    let coins = importer.importAll(files);
+    let fix = new Frack_Fixer(files, 60000);
+    //alert(coins);
+    
+    
+    
+    
+    
+    
+    mindlist();
+    for(let j = 0; j < coins.length; j++){
+        
+    coinlist(coins[j], files);
+    scoinlist(coins[j],files);
+  }
+    updateTotal(files);
+    sortTable("coinlistbank");
+	sortTable("coinlistfracked");
+	sortTable("mcoinlistbank");
+	sortTable("mcoinlistfracked");
+	if((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+	document.getElementById("ygrid").classList.remove("grid-y", "large-grid-frame");
+  document.getElementsByClassName("dlJpeg")[0].setAttribute("disabled", "");
+  document.getElementsByClassName("dlJpeg")[1].setAttribute("disabled", "");
+}
+    </script>
+    
+  </body>
 </html>
