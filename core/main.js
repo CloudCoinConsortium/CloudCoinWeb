@@ -171,6 +171,7 @@ function downloadImage(N=false)
 		{
 			
 			embedTemplateCC(files.loadOneCloudCoinFromJsonFile(fnames[i]), N);
+			
 			localStorage.setItem("le"+fnames[i], localStorage.getItem(fnames[i]));
 			log.updateLog("Downloading jpeg with coin:" + fnames[i]);
 			trash(fnames[i]);
@@ -530,8 +531,8 @@ function embedTemplateCC(cc, N=false)
 	{tag += document.getElementById("alltag").value;}
 	tag+= ".jpg";
 	//oldImg.crossorigin = "use-credentials";
-	var c = document.createElement("canvas");
-var ctx = c.getContext("2d");
+	let c = document.createElement("canvas");
+let ctx = c.getContext("2d");
 
 oldImg.onload = function() {
   c.width = this.naturalWidth;     // update canvas size to match image
@@ -541,28 +542,33 @@ oldImg.onload = function() {
  ctx.fillStyle = 'white';
  ctx.fillText(cc.sn + " of 16777216 on N: 1" , 40, 58);
   c.toBlob(function(blob) {        // get content as JPEG blob
+	
 	files.embedOneCloudCoinToJpeg(blob, cc, function(img){
 		saveAs(img, tag);
 	});
+	
   }, "image/jpeg", 0.75);
+  c = null;
 };
  switch(cc.getDenomination()){
 	case 1:
-	oldImg.src = "core/jpeg1.jpg";
+	oldImg.src = "jpeg1.jpg";
 	break;
 	case 5:
-	oldImg.src = "core/jpeg5.jpg";
+	oldImg.src = "jpeg5.jpg";
 	break;
 	case 25:
-	oldImg.src = "core/jpeg25.jpg";
+	oldImg.src = "jpeg25.jpg";
 	break;
 	case 100:
-	oldImg.src = "core/jpeg1002.jpg"
+	oldImg.src = "jpeg1002.jpg"
 	break;
 	case 250:
-	oldImg.src = "core/jpeg250.jpg"
+	oldImg.src = "jpeg250.jpg"
 	break;
  }
+ 
+ 
  
 }
 function emptyprogress(bar)
