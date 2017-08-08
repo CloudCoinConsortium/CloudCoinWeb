@@ -362,7 +362,7 @@ function updates(cc, fileUtil, percent=0, results = null)
 		+ results[1] + "</div>";
 	}
 		document.getElementById("detailsTable").innerHTML += " "+
-		cc.sn+" "+cc.getFolder()+" "+cc.pown+" /n";
+		cc.sn+" "+cc.getFolder()+" "+cc.pown+" \n";
 		
 	}
 	document.getElementById("importStatus").innerHTML = fullHtml;
@@ -420,7 +420,7 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 		+ results[1] + "</div>";
 	}
 		document.getElementById("detailsTable").innerHTML += " "+
-		cc.sn+" "+cc.getFolder()+" "+cc.pown+" /n";
+		cc.sn+" "+cc.getFolder()+" "+cc.pown+" \n";
 		
 	}
 	document.getElementById("fromMindStatus").innerHTML = fullHtml;

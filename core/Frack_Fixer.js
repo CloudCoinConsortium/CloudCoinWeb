@@ -207,6 +207,7 @@ cornerLoop(id, brokeCoin, corner, fixer, callback, obj)
  console.log(brokeCoin.sn + " RAIDA " + id +  ": Using corner " + corner);
  log.updateLog(brokeCoin.sn + " RAIDA " + id +  ": Using corner " + corner);
  document.getElementById(brokeCoin.sn + "fix").style.width = id*4 + "%";
+ document.getElementById(brokeCoin.sn + "fix").innerHTML = "<p class='progress-meter-text'>Fixing Raida"+id+"</p>";
                 return obj.fixOneGuidCorner(id, brokeCoin, corner, fixer.currentTriad)
                 .then(function(fix_result){
                     if(fix_result.includes("success"))
