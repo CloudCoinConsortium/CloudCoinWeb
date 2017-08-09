@@ -552,19 +552,19 @@ oldImg.onload = function() {
 };
  switch(cc.getDenomination()){
 	case 1:
-	oldImg.src = "jpeg1.jpg";
+	oldImg.src = "core/jpeg1.jpg";
 	break;
 	case 5:
-	oldImg.src = "jpeg5.jpg";
+	oldImg.src = "core/jpeg5.jpg";
 	break;
 	case 25:
-	oldImg.src = "jpeg25.jpg";
+	oldImg.src = "core/jpeg25.jpg";
 	break;
 	case 100:
-	oldImg.src = "jpeg1002.jpg"
+	oldImg.src = "core/jpeg1002.jpg"
 	break;
 	case 250:
-	oldImg.src = "jpeg250.jpg"
+	oldImg.src = "core/jpeg250.jpg"
 	break;
  }
  
