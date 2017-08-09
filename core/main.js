@@ -254,16 +254,16 @@ let c250 = document.createElement("canvas");
 };
  
 	
-	Img1.src = "jpeg1.jpg";
+	Img1.src = "core/jpeg1.jpg";
 	
 	
-	Img5.src = "jpeg5.jpg";
+	Img5.src = "core/jpeg5.jpg";
 	
-	Img25.src = "jpeg25.jpg";
+	Img25.src = "core/jpeg25.jpg";
 	
-	Img100.src = "jpeg1002.jpg";
+	Img100.src = "core/jpeg1002.jpg";
 	
-	Img250.src = "jpeg250.jpg";
+	Img250.src = "core/jpeg250.jpg";
 	return [c1,ctx1,c5,ctx5,c25,ctx25,c100,ctx100,c250,ctx250/*,img1d,img5d,img25d,img100d,img250d*/];
 }
 
