@@ -605,7 +605,24 @@ function embedCC(cc, N=false)
 
 function embedTemplateCC(cc, N=false, canvases)
 {
-    //alert(files.bankFolder);
+    if (!HTMLCanvasElement.prototype.toBlob) {
+ Object.defineProperty(HTMLCanvasElement.prototype, 'toBlob', {
+  value: function (callback, type, quality) {
+
+    var binStr = atob( this.toDataURL(type, quality).split(',')[1] ),
+        len = binStr.length,
+        arr = new Uint8Array(len);
+
+    for (var i = 0; i < len; i++ ) {
+     arr[i] = binStr.charCodeAt(i);
+    }
+
+    callback( new Blob( [arr], {type: type || 'image/png'} ) );
+  }
+ });
+}
+	
+	//alert(files.bankFolder);
     //let oldImg = document.getElementById("jpeg-in").files[0];
 	let tag;
 	
