@@ -151,6 +151,7 @@ function downloadImage(N=false)
     
     
     let fnames = [];
+	let toDl = [];
 	for(var j = 0; j< localStorage.length; j++){
     if(isNaN(localStorage.key(j))){
 		localStorage.removeItem(localStorage.key(j));
@@ -160,27 +161,110 @@ function downloadImage(N=false)
  			fnames.push(localStorage.key(j));
 	}
 }
+
+
+ 
+
+	
+ 
     for(let i =0 ; i<fnames.length; i++){
-        if(document.getElementById("jpeg-in").files.length !== 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
-		{//alert("clicked");
-        	embedCC(files.loadOneCloudCoinFromJsonFile(fnames[i]), N);
-			localStorage.setItem("le"+fnames[i], localStorage.getItem(fnames[i]));
-			log.updateLog("Downloading jpeg with coin:" + fnames[i]);
-        	trash(fnames[i]);
-		}else if(document.getElementById("jpeg-in").files.length === 0)
-		{
-			
-			embedTemplateCC(files.loadOneCloudCoinFromJsonFile(fnames[i]), N);
-			
+        
+			toDl.push(files.loadOneCloudCoinFromJsonFile(fnames[i]));
 			localStorage.setItem("le"+fnames[i], localStorage.getItem(fnames[i]));
 			log.updateLog("Downloading jpeg with coin:" + fnames[i]);
 			trash(fnames[i]);
 		}
-		else {
-			alert("thats not a jpeg");
-		}
-	}
+		
+		if(document.getElementById("jpeg-in").files.length !== 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
+		    {
+				//embedCC(toDl, N);
+				alert("Something went wrong, recover your download in the FAQ");
+			}
+		else if(document.getElementById("jpeg-in").files.length === 0)
+		    {embedTemplateCC(toDl, N, canvases);}
+			else {
+			alert("thats not a jpeg");}
+	
+	
     //e.stopPropogation();
+}
+
+function createCanvas()
+{
+	let c1 = document.createElement("canvas");
+let c5 = document.createElement("canvas");
+let c25 = document.createElement("canvas");
+let c100 = document.createElement("canvas");
+let c250 = document.createElement("canvas");
+	let Img1 = new Image();
+	let Img5 = new Image();
+	let Img25 = new Image();
+	let Img100 = new Image();
+	let Img250 = new Image();
+	let img1d;
+	let img5d;
+	let img25d;
+	let img100d;
+	let img250d;
+	let ctx1 = c1.getContext("2d");
+	let ctx5 = c5.getContext("2d");
+	let ctx25 = c25.getContext("2d");
+	let ctx100 = c100.getContext("2d");
+	let ctx250 = c250.getContext("2d");
+
+	Img1.onload = function(){
+		c1.width = this.naturalWidth;     // update canvas size to match image
+  c1.height = this.naturalHeight;
+  ctx1.drawImage(this, 0, 0);
+  ctx1.font = "20px Arial";
+ 
+ //img1d = ctx1.getImageData(0,0,c1.width,c1.height);
+};
+	Img5.onload = function(){
+		c5.width = this.naturalWidth;     // update canvas size to match image
+  c5.height = this.naturalHeight;
+  ctx5.drawImage(this, 0, 0);
+  ctx5.font = "20px Arial";
+ 
+ //img5d = ctx5.getImageData(0,0,c5.width,c5.height);
+};
+	Img25.onload = function(){
+		c25.width = this.naturalWidth;     // update canvas size to match image
+  c25.height = this.naturalHeight;
+  ctx25.drawImage(this, 0, 0);
+  ctx25.font = "20px Arial";
+ 
+ //img25d = ctx25.getImageData(0,0,c25.width,c25.height);
+};
+	Img100.onload = function(){
+		c100.width = this.naturalWidth;     // update canvas size to match image
+  c100.height = this.naturalHeight;
+  ctx100.drawImage(this, 0, 0);
+  ctx100.font = "20px Arial";
+ 
+ //img100d = ctx100.getImageData(0,0,c100.width,c100.height);
+};
+	Img250.onload = function(){
+		c250.width = this.naturalWidth;     // update canvas size to match image
+  c250.height = this.naturalHeight;
+  ctx250.drawImage(this, 0, 0);
+  ctx250.font = "20px Arial";
+ 
+ //img250d = ctx250.getImageData(0,0,c250.width,c250.height);
+};
+ 
+	
+	Img1.src = "jpeg1.jpg";
+	
+	
+	Img5.src = "jpeg5.jpg";
+	
+	Img25.src = "jpeg25.jpg";
+	
+	Img100.src = "jpeg1002.jpg";
+	
+	Img250.src = "jpeg250.jpg";
+	return [c1,ctx1,c5,ctx5,c25,ctx25,c100,ctx100,c250,ctx250/*,img1d,img5d,img25d,img100d,img250d*/];
 }
 
 function downloadAll(N=false)
@@ -519,57 +603,67 @@ function embedCC(cc, N=false)
 
 }
 
-function embedTemplateCC(cc, N=false)
+function embedTemplateCC(cc, N=false, canvases)
 {
     //alert(files.bankFolder);
     //let oldImg = document.getElementById("jpeg-in").files[0];
-	let oldImg = new Image();
-	let tag = cc.getDenomination() + ".cloudcoin.1." + cc.sn + ".";
+	let tag;
+	
+	
+for(let i = 0; i<cc.length;i++)
+{
+	let c;
+	let ctx;
+	//let oldImg;
+	
+	//oldImg.crossorigin = "use-credentials";
+	switch(cc[i].getDenomination())
+	{
+	case 1:
+	c = canvases[0];
+	ctx = canvases[1];
+	//oldImg = canvases[10];
+	break;
+	case 5:
+	c= canvases[2];
+	ctx = canvases[3];
+	//oldImg = canvases[11];
+	break;
+	case 25:
+	c = canvases[4];
+	ctx = canvases[5];
+	//oldImg = canvases[12];
+	break;
+	case 100:
+	c = canvases[6];
+	ctx = canvases[7];
+	//oldImg = canvases[13];
+	break;
+	case 250:
+	c = canvases[8];
+	ctx = canvases[9];
+	//oldImg = canvases[14];
+	break;
+ }
+ 	ctx.fillStyle = 'white';
+	ctx.fillText(cc[i].sn + " of 16777216 on N: 1" , 40, 58);
+  c.toBlob(function(blob) {        // get content as JPEG blob
+	
+	files.embedOneCloudCoinToJpeg(blob, cc[i], function(img){
+		tag = cc[i].getDenomination() + ".cloudcoin.1." + cc[i].sn + ".";
 	if(N)
 	{tag += document.getElementById("alltagN").value;}
 	else
 	{tag += document.getElementById("alltag").value;}
 	tag+= ".jpg";
-	//oldImg.crossorigin = "use-credentials";
-	let c = document.createElement("canvas");
-let ctx = c.getContext("2d");
-
-oldImg.onload = function() {
-  c.width = this.naturalWidth;     // update canvas size to match image
-  c.height = this.naturalHeight;
-  ctx.drawImage(this, 0, 0);       // draw in image
-  ctx.font = "20px Arial";
- ctx.fillStyle = 'white';
- ctx.fillText(cc.sn + " of 16777216 on N: 1" , 40, 58);
-  c.toBlob(function(blob) {        // get content as JPEG blob
-	
-	files.embedOneCloudCoinToJpeg(blob, cc, function(img){
 		saveAs(img, tag);
+		
 	});
 	
   }, "image/jpeg", 0.75);
-  c = null;
-};
- switch(cc.getDenomination()){
-	case 1:
-	oldImg.src = "core/jpeg1.jpg";
-	break;
-	case 5:
-	oldImg.src = "core/jpeg5.jpg";
-	break;
-	case 25:
-	oldImg.src = "core/jpeg25.jpg";
-	break;
-	case 100:
-	oldImg.src = "core/jpeg1002.jpg"
-	break;
-	case 250:
-	oldImg.src = "core/jpeg250.jpg"
-	break;
- }
- 
- 
- 
+  ctx.fillStyle = "#C7C5ED";
+  ctx.fillText(cc[i].sn + " of 16777216 on N: 1" , 40, 58);
+}
 }
 function emptyprogress(bar)
 {
