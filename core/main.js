@@ -159,12 +159,12 @@ function restoreFailedDownload()
 function downloadImage(N=false)
 {
     
-    
+    let lenames = [];
     let fnames = [];
 	let toDl = [];
 	for(var j = 0; j< localStorage.length; j++){
     if(isNaN(localStorage.key(j))){
-		localStorage.removeItem(localStorage.key(j));
+		lenames.push(localStorage.key(j));
 	}
 	else if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){     
 	if(document.getElementById("cb" + localStorage.key(j)).checked)
@@ -172,7 +172,11 @@ function downloadImage(N=false)
 	}
 }
 
-
+	if(fnames.length > 0){
+	for(let k = 0; k< lenames.length; k++)
+	{
+		localStorage.removeItem(lenames[k]);
+	}}
  
 
 	
@@ -186,10 +190,7 @@ function downloadImage(N=false)
 		}
 		
 		if(document.getElementById("jpeg-in").files.length !== 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
-		    {
-				//embedCC(toDl, N);
-				alert("Something went wrong, recover your download in the FAQ");
-			}
+		    {embedCC(toDl, N);}
 		else if(document.getElementById("jpeg-in").files.length === 0)
 		    {embedTemplateCC(toDl, N, canvases);}
 			else {
@@ -280,26 +281,35 @@ let c250 = document.createElement("canvas");
 function downloadAll(N=false)
 {
     let fnames = [];
+	let lenames = [];
+	
 	let tag;
 	log.updateLog("Downloading to Stack coins:");
 	for(var j = 0; j< localStorage.length; j++){
     if(isNaN(localStorage.key(j))){
-		localStorage.removeItem(localStorage.key(j));
+		lenames.push(localStorage.key(j));
 	}
-	else if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){ 
+	else if(localStorage.getItem(localStorage.key(j)) !== "mindstorage"){ 
 	if(document.getElementById("cb" + localStorage.key(j)).checked)
- 			fnames.push(localStorage.key(j));
-			log.updateLine(fnames[j] + ",");
+			 fnames.push(localStorage.key(j));
 		}
 	}
+	
+	if(fnames.length > 0){
+	for(let k = 0; k< lenames.length; k++)
+	{
+		localStorage.removeItem(lenames[k]);
+	}}
 	if(N)
     {tag = document.getElementById("alltagN").value;}
 	else
 	{tag = document.getElementById("alltag").value;}
     files.downloadAllCloudCoinToJsonFile(fnames, tag);
     for(let i = 0; i < fnames.length; i++){
+		log.updateLine(fnames[i] + ",");
         trash(fnames[i]);
 	}
+	
 }
 
 function checkAll(mind = false)
