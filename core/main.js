@@ -154,7 +154,7 @@ function restoreFailedDownload()
 	}
 	
 }
-}
+
 
 function downloadImage(N=false)
 {
