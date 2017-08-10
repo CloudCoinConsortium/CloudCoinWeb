@@ -117,12 +117,18 @@ function mindlist()
 
 function emailRecover()
 {
+	
 	let sn = prompt("What is the serial number of the coin you want to recover?");
-	if(sn != "" && !isNaN(parseFloat(sn)) && isFinite(sn) && sn > 0 && sn < 16777216)
+	if(sn !== "" && !isNaN(parseFloat(sn)) && isFinite(sn) && sn > 0 && sn < 16777216)
 	{
-		localStorage.setItem(sn, "mindstorage");
+		if(!localStorage.getItem(sn)){
+			localStorage.setItem(sn, "mindstorage");
 		log.updateLog("Recovered sn:" +sn+" from email.");
 		mindlist();
+			
+		}else{
+			alert("Coin of SN:"+sn+" is already in this app.");
+		}
 	}else {
 		alert("Please Enter a valid serial number");
 	}
@@ -135,15 +141,19 @@ function restoreFailedDownload()
 		if(isNaN(localStorage.key(j)))
 		{
 			sn = localStorage.key(j).replace("le", "");
+			if(!localStorage.getItem(sn)){
 			localStorage.setItem(sn, localStorage.getItem("le"+sn));
-			localStorage.removeItem("le"+sn);
+			
 			cc = files.loadOneCloudCoinFromJsonFile(sn);
 			cc.reportDetectionResults();
 			updates(cc, files);
 			log.updateLine(sn+",");
+			}
+			localStorage.removeItem("le"+sn);
 		}
 	}
 	
+}
 }
 
 function downloadImage(N=false)
