@@ -16,7 +16,7 @@
     <script src="core/random.min.js?v=1"></script>
     <script src="core/CloudCoin.js?v=1"></script>
     <script src="core/FileUtils.js?v=3"></script>
-    <script src="core/main.js?v=16"></script>
+    <script src="core/main.js?v=17"></script>
     <script src="core/RAIDA.js?v=3"></script>
     <script src="core/Importer.js?v=2"></script>
     <script src="core/Detector.js?v=2"></script>
@@ -727,7 +727,8 @@
             sortTable("mcoinlistfracked");
             if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
                 document.getElementById("ygrid").classList.remove("grid-y", "large-grid-frame");
-                
+                document.getElementsByClassName("dlJpeg")[0].setAttribute("disabled", "");
+ -              document.getElementsByClassName("dlJpeg")[1].setAttribute("disabled", "");
             }
         </script>
 
