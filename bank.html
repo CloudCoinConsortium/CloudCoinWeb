@@ -62,7 +62,7 @@
 </head>
 
 <body>
-    <div class="off-canvas-wrapper">
+    <div class="off-canvas-wrapper"  style="opacity:0.5">
         <div class="top-bar">
 
 
@@ -359,16 +359,21 @@
 
         <div class="off-canvas-content" data-off-canvas-content>
             <div id="ygrid" class="grid-y large-grid-frame">
-                <div class="large-4 small-1 cell" style="margin-left:auto; margin-right:auto; width:500px">
+                <div class="grid-x large-4 small-1 cell" style="margin-left:auto; margin-right:auto;">
 
-
-                    <img src="img/bank/logo@3x.png" style="background-color:blue">
+                    <div class="large auto cell"></div>
+                    <div class="large-4 cell">
+                    <img src="../img/bank/logo@3x.png" style="background-color:blue">
                     <br>
-                    <span id="topInfo" style="margin-left:auto; margin-right:auto; width:500px;color:white; background-color:blue">
+                    <span id="topInfo" style="margin-left:auto; margin-right:auto;  color:white; background-color:blue">
         Used to Authenticate, Store and Payout CloudCoins.
-     This software is provided as is with all faults, defects and errors and without warranty of any kind. Free from the CloudCoin Consortium.
+     This software is provided as is with all faults, defects and errors and without warranty of any kind. Free from the CloudCoin Consortium. DEBUG EDITION
      </span>
-
+     <div id="loading" style="text-align:center;" >
+        <p style="font-size:72px;">LOADING</p>
+        <p>This could take a while if you have a lot of coins.</p>
+    </div>
+    </div><div class="large auto cell"></div>
                 </div>
 
                 <div class="grid-x grid-margin-x large-4 small-10 cell" style="margin-right:1px; margin-left:1px">
@@ -407,13 +412,14 @@
 
                </div>
                 <span id="upButton" style="display:none">Upload</span>
-                <div class="switch">
+                <div class="grid-x">
+                <div class="switch large-3 cell">
   <input class="switch-input" id="scanSwitch" type="checkbox" name="scanSwitch" onchange="scanSwitchMessage()" checked>
   <label class="switch-paddle" for="scanSwitch">
     <span class="show-for-sr">Scan or Save</span>
   </label>
-</div><div id="scanSwitchMessage">Take ownership of the coin(s), and place it in the safe.</div>
-
+</div><div class="large-9 cell" id="scanSwitchMessage">Take ownership of the coin(s), and place it in the safe.</div>
+                </div>
                 <div class="callout" data-closable style="display:none; overflow:scroll; height:80px" id="importDetails">
 
 
@@ -732,6 +738,8 @@
             sortTable("coinlistfracked");
             sortTable("mcoinlistbank");
             sortTable("mcoinlistfracked");
+            document.getElementsByClassName("off-canvas-wrapper")[0].style.opacity = 1.0;
+            document.getElementById("loading").innerHTML="";
             if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
                 document.getElementById("ygrid").classList.remove("grid-y", "large-grid-frame");
                 document.getElementsByClassName("dlJpeg")[0].setAttribute("disabled", "");
