@@ -2,7 +2,7 @@ class FileUtils
 {
 
     constructor(rootFolder = "", importFolder = "", importedFolder = "", trashFolder = "",
-     suspectFolder = "", frackedFolder = "", bankFolder = "", templateFolder = "",
+     suspectFolder = "", frackedFolder = "", bankFolder = "", tempFolder = "",
       counterfeitFolder = "", directoryFolder = "", exportFolder = "")
     {
         this.rootFolder = rootFolder;
@@ -12,7 +12,7 @@ class FileUtils
         this.suspectFolder = suspectFolder;
         this.frackedFolder = frackedFolder;
         this.bankFolder = bankFolder;
-        this.templateFolder = templateFolder;
+        this.tempFolder = tempFolder;
         this.counterfeitFolder = counterfeitFolder;
         this.directoryFolder = directoryFolder;
         this.exportFolder = exportFolder;
@@ -95,16 +95,20 @@ class FileUtils
             
 		let upCoin = new CloudCoin(cc.nn, cc.sn, cc.an, cc.ed, cc.aoid, cc.pown);
         let currentCoin = JSON.parse(localStorage.getItem(upCoin.sn));
-        if(currentCoin != null){
+        if(currentCoin !== null){
             if(upCoin.sn == currentCoin.sn && loadFile.lastModified < currentCoin.time)
             {
                 document.getElementById("duplicateHolder").style.display = "block";
                 document.getElementById("duplicateNumbers").innerHTML += upCoin.sn + ",";
             }else{
-                files.writeTo("suspect", cc.sn);
+                if(document.getElementById("scanSwitch").checked)
+                {files.writeTo("suspect", cc.sn);}
+                else{files.writeTo("temp", cc.sn);}
                 callback(upCoin, upCoin.sn);}
         }else{
-            files.writeTo("suspect", cc.sn);
+            if(document.getElementById("scanSwitch").checked)
+                {files.writeTo("suspect", cc.sn);}
+                else{files.writeTo("temp", cc.sn);}
             callback(upCoin, upCoin.sn);}
         }}
 		reader.readAsText(loadFile);
@@ -130,11 +134,15 @@ class FileUtils
                 document.getElementById("duplicateHolder").style.display = "block";
                 document.getElementById("duplicateNumbers").innerHTML += upCoin.sn + ",";
             }else{
-                files.writeTo("suspect", upCoin.sn);
+                if(document.getElementById("scanSwitch").checked)
+                {files.writeTo("suspect", upCoin.sn);}
+                else{files.writeTo("temp", upCoin.sn);}
                 callback(upCoin, upCoin.sn);
         }
     }else{
-        files.writeTo("suspect", upCoin.sn);
+        if(document.getElementById("scanSwitch").checked)
+                {files.writeTo("suspect", upCoin.sn);}
+                else{files.writeTo("temp", upCoin.sn);}
         callback(upCoin, upCoin.sn);}
         }
 		reader.readAsDataURL(loadFile);
@@ -397,6 +405,11 @@ base64ToHex(str) {
         {
             this.trashFolder += filename + ",";
         }break;
+        case "temp":
+        if(!this.tempFolder.includes(filename))
+        {
+            this.tempFolder += filename + ",";
+        }break;
         default:break;
         }
     }//End Write To
@@ -437,12 +450,20 @@ base64ToHex(str) {
             this.trashFolder = this.trashFolder.replace(filename + ",", "");
         //}
         break;
+        case "temp":
+        //if(this.suspectFolder.includes(filename))
+        //{
+            //alert(this.suspectFolder.includes(filename + ","));
+            this.tempFolder = this.tempFolder.replace(filename + ",", "");
+        //}
+        break;
         default:
             this.bankFolder = this.bankFolder.replace(filename + ",", "");
             this.frackedFolder = this.frackedFolder.replace(filename + ",", "");
             this.counterfeitFolder = this.counterfeitFolder.replace(filename + ",", "");
             this.suspectFolder = this.suspectFolder.replace(filename + ",", "");
             this.trashFolder = this.trashFolder.replace(filename + ",", "");
+            this.tempFolder = this.tempFolder.replace(filename + ",", "");
         break;
         }
         

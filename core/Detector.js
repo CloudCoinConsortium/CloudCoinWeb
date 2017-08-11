@@ -119,5 +119,66 @@ class Detector
             callbackl(coins, i+1, fn, r, callbacku, callbackl);
              });}
     }
+
+detectAllTemp(callback)
+    {
+        let results = [0, 0, 0, 0];
+        
+        let fnames = [];
+        //let counterfeitNames = [];
+        //let bankNames =[];
+        //let frackedNames = [];
+        let files = this.fileUtil;
+        for(var j = 0; j< localStorage.length; j++){
+            if(this.fileUtil.tempFolder.includes(localStorage.key(j))&&isNaN(localStorage.key(j)) ===false)
+            fnames.push(localStorage.key(j));
+        }
+        let coins = [];
+        let i = 0;
+        this.loopt(coins, i, fnames, results, callback, this.loopt);
+           
+        
+        //results[0] = totalValueToBank;
+            //results[1] = totalValueToCounterfeit;
+            //results[2] = totalValueToFractured;
+            //results[3] = totalValueToKeptInSuspect;
+            return results;
+    }
+
+    loopt(coins, i, fn, r, callbacku, callbackl)
+    {
+         if(i<fn.length){
+         
+                coins.push(raida.detectCoin(files.loadMindCloudCoinFromJsonFile(fn[i])));
+            
+            coins[i].then(function(cc){
+            switch (cc.getFolder().toLowerCase())
+            {
+                case "bank":
+                    r[0]++;
+                    files.overWrite("temp", "", fn[i]);
+                    //bankNames.push(fn[i]);
+                    break;
+                case "fracked":
+                    r[2]++;
+                    files.overWrite("temp", "", fn[i]);
+                    //frackedNames.push(fn[i]);
+                    break;
+                case "counterfeit":
+                    r[1]++;
+                    files.overWrite("temp", "", fn[i]);
+                    //counterfeitNames.push(fn[i]);
+                    break;
+                case "suspect":
+                    r[3]++;
+                    
+                    break;
+            }//end switch
+            files.saveCloudCoinToJsonFile(cc, cc.sn);
+            callbacku(cc, ((i+1)/fn.length*100), r);
+            
+            callbackl(coins, i+1, fn, r, callbacku, callbackl);
+             });}
+    }
 }
 

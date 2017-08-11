@@ -61,6 +61,16 @@ function scrollSelect(dem)
 	
 }
 
+function scanSwitchMessage()
+{
+	if(document.getElementById("scanSwitch").checked)
+	{
+		document.getElementById("scanSwitchMessage").innerHTML = "Take ownership of the coin(s), and place it in the safe.";
+	}else{
+		document.getElementById("scanSwitchMessage").innerHTML = "Just check if the coin(s) is real, don't place it in the safe.";
+	}
+}
+
 function coinlist(cc, fileUtil)
 {
     let id = cc.sn;
@@ -358,6 +368,7 @@ function importMode()
 	document.getElementById("deleteMessage").innerHTML = "";
 	document.getElementById("duplicateHolder").style.display = "none";
 	document.getElementById("duplicateNumbers").innerHTML = "";
+	document.getElementsByClassName("switch-paddle")[0].style.visibility = "initial";
 	emptyprogress('uploadProgress');
 }
 	
@@ -370,6 +381,7 @@ function uploadButtonAppear(){
 }
 
 function uploadFile(){
+	document.getElementsByClassName("switch-paddle")[0].style.visibility = "hidden";
 	document.getElementById("uploadProgress").style.width = "2%";
 	let elFile = document.getElementById("myFile");
 	let totalSize = 0;
@@ -384,7 +396,7 @@ function uploadFile(){
 		//document.getElementById("uploadProgress").style.width = "50%";
     } else{alert("Valid File Type Please");}
 }
-
+if(document.getElementById("scanSwitch").checked){
 	setTimeout(function(){
 		//document.getElementById("uploadProgress").style.width = "75%";
 		detect.detectAllSuspect(updates);
@@ -393,7 +405,18 @@ function uploadFile(){
     //let coins = importer.importAll(fileUtil);
 		//coins.forEach(coinlist);
 		//updateTotal(fileUtil);
-		}, 500 + (totalSize/80));
+	}, 500 + (totalSize/80));
+}else{
+	setTimeout(function(){
+		//document.getElementById("uploadProgress").style.width = "75%";
+		detect.detectAllTemp(updatesTemp);
+        
+        //let importer = new Importer();
+    //let coins = importer.importAll(fileUtil);
+		//coins.forEach(coinlist);
+		//updateTotal(fileUtil);
+	}, 500 + (totalSize/80));
+}
 }
 
 function bankMode()
@@ -492,6 +515,56 @@ function updates(cc, fileUtil, percent=0, results = null)
 	{
 		trashFolder(files.counterfeitFolder);
 	}
+}
+
+function updatesTemp(cc, percent=0, results = null)
+{
+    
+	let msg = "";
+	let fullHtml = "";
+	if(results !== null){
+	if(results[0] > 0 || results[2]> 0)
+	{
+		if(results[0] > 0)
+			msg+= "Coin(s) that are good:" + results[0] + "<br>";
+		if(results[2] > 0)
+			msg+= "Coin(s) that are fracked:" +results[2] + "<br>";
+		fullHtml = "<div class='callout success'>"
+		+ msg + "</div>";
+	}
+	if(results[3] > 0)
+	{
+		fullHtml +="<div class='callout warning'>Coin(s) that got slow responses:"
+		+ results[3];
+		fullHtml += "<button class='small button' onclick='detect.detectAllTemp(updatesTemp)'";
+		if(percent != 100)
+		fullHtml +=" disabled";
+		fullHtml += ">Re-Detect</div>";
+	}
+	if(results[1] > 0)
+	{
+		fullHtml +="<div class='callout alert'>Coin(s) that are counterfeit:"
+		+ results[1] + "</div>";
+	}
+		document.getElementById("detailsTable").innerHTML += " "+
+		cc.sn+" "+cc.getFolder()+" "+cc.pown+" \n";
+		
+	}
+	document.getElementById("importStatus").innerHTML = fullHtml;
+	log.updateLog(fullHtml);
+	document.getElementById("uploadProgress").style.width = percent +"%";
+	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>"+percent+"%</p>";
+	if(percent == 100){
+	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
+	
+	document.getElementById("importHeadShown").innerHTML = "Import Complete";
+	document.getElementById("deleteMessage").innerHTML = ""
+	+ "<button class='small button' onclick="+"document.getElementById('importDetails').style.display='block'"+">Details</button>";	
+}
+	document.getElementById("importButtons").innerHTML= "";
+	localStorage.removeItem(cc.sn);
+	
+	
 }
 
 function updatesFromMind(cc, fileUtil, percent = 0, results=null)
