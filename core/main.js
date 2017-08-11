@@ -27,6 +27,7 @@ function exportDialMinus(dem)
 	}
 	htmltext +="<option disabled> </option>";
 	document.getElementById("dial"+dem).innerHTML = htmltext;
+	document.getElementById("dial"+dem).scrollTop = 0;
 }
 
 function dialSet(dem)
