@@ -15,11 +15,11 @@
     <script src="core/RaidaResponse.js?v=1"></script>
     <script src="core/random.min.js?v=1"></script>
     <script src="core/CloudCoin.js?v=1"></script>
-    <script src="core/FileUtils.js?v=3"></script>
+    <script src="core/FileUtils.js?v=4"></script>
     <script src="core/main.js?v=19"></script>
     <script src="core/RAIDA.js?v=3"></script>
     <script src="core/Importer.js?v=2"></script>
-    <script src="core/Detector.js?v=2"></script>
+    <script src="core/Detector.js?v=4"></script>
     <script src="core/Banker.js?v=1"></script>
     <script src="core/Frack_Fixer.js?v=3"></script>
     <script src="core/FixitHelper.js?v=1"></script>
@@ -387,7 +387,7 @@
                     <span id="botInfo" style="margin-left:auto; margin-right:auto; width:250px;color:white; background-color:blue">Your coins will be stored in your browsing data. Make sure you do not delete browsing data before exporting coins. This also means that you should not be using this site in private/incognito mode.</span>
                     <p id="edition">
                         CloudCoin Web Edition
-                        <br> Version 8.1.2017
+                        <br> Version 8.11.2017
                     </p>
                 </div>
             </div>
@@ -399,14 +399,21 @@
 
                 <div id="importButtons">
 
-                    <input type="file" id="myFile" multiple onchange="uploadButtonAppear()"> -->
+                    <input type="file" id="myFile" multiple onchange="uploadButtonAppear()">
                     <!--<label for="myFile" class="button">Upload File</label>
     <input type="file" id="myFile" multiple onchange="uploadButtonAppear()" class="show-for-sr">-->
 
                     <div id="upButtonDiv"></div>
 
-                </div>
+               </div>
                 <span id="upButton" style="display:none">Upload</span>
+                <div class="switch">
+  <input class="switch-input" id="scanSwitch" type="checkbox" name="scanSwitch" onchange="scanSwitchMessage()" checked>
+  <label class="switch-paddle" for="scanSwitch">
+    <span class="show-for-sr">Scan or Save</span>
+  </label>
+</div><div id="scanSwitchMessage">Take ownership of the coin(s), and place it in the safe.</div>
+
                 <div class="callout" data-closable style="display:none; overflow:scroll; height:80px" id="importDetails">
 
 
