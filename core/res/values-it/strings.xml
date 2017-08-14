@@ -6,7 +6,7 @@
     <string name="butImport">Importa</string>
     <string name="butBank">Proteggi</string>
     <string name="butExport">Esporta</string>
-    <string name="edition">CloudCoin Web Edition &lt;br&gt; Versione 01.08.2017</string>
+    <string name="edition">CloudCoin Web Edition</string>
     <string name="botInfo">Le vostre monete saranno memorizzate all\'interno dei vostri dati di navigazione. Assicurarsi di non cancellare i dati di navigazione prima di aver esportato le monete.</string>
     <string name="importHead">Carica Moneta</string>
     <string name="upButton">Carica</string>

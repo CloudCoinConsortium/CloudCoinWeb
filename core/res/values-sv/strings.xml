@@ -6,7 +6,7 @@
     <string name="butImport">Importera</string>
     <string name="butBank">Säker</string>
     <string name="butExport">Exportera</string>
-    <string name="edition">CloudCoin, webbversion &lt;br&gt; Version 8.1.2017</string>
+    <string name="edition">CloudCoin, webbversion</string>
     <string name="botInfo">Dina pengar lagras i webbinformationen. Se till att inte radera webbinformation innan du exporterar pengarna.</string>
     <string name="importHead">Ladda upp pengar</string>
     <string name="upButton">Ladda upp</string>

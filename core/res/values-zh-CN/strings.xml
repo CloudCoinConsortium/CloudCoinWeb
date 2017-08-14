@@ -6,7 +6,7 @@
     <string name="butImport">导入</string>
     <string name="butBank">保管箱</string>
     <string name="butExport">导出</string>
-    <string name="edition">CloudCoin 网页版&lt;br&gt; 版本8.1.2017</string>
+    <string name="edition">CloudCoin 网页版</string>
     <string name="botInfo">你的硬币将存储在你的浏览数据中。请确保在导出硬币之前，不要删除浏览数据。这也意谓你不能使用隐私模式浏览网站。</string>
     <string name="importHead">上传硬币</string>
     <string name="upButton">上传</string>

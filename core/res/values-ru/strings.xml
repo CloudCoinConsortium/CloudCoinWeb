@@ -6,7 +6,7 @@
     <string name="butImport">Импорт</string>
     <string name="butBank">Сейф</string>
     <string name="butExport">Экспорт</string>
-    <string name="edition">CloudCoin Web Edition &lt;br&gt; Версия 8.1.2017</string>
+    <string name="edition">CloudCoin Web Edition</string>
     <string name="botInfo">Ваши монеты будут храниться в данных вашего просмотра. Не удаляйте данные просмотра до экспорта монет.</string>
     <string name="importHead">Загрузить монету</string>
     <string name="upButton">Загрузить</string>

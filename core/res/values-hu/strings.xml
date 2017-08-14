@@ -6,7 +6,7 @@
     <string name="butImport">Importálás</string>
     <string name="butBank">Biztonságos</string>
     <string name="butExport">Exportálás</string>
-    <string name="edition">CloudCoin Web Edition &lt;br&gt; Version 8.1.2017</string>
+    <string name="edition">CloudCoin Web Edition</string>
     <string name="botInfo">Érméi a böngészési adatokban lesznek eltárolva. Biztosítsa, hogy nem törli ki a böngészési adatait az érmék exportálását megelőzően.</string>
     <string name="importHead">Érme feltöltése</string>
     <string name="upButton">Feltöltés</string>

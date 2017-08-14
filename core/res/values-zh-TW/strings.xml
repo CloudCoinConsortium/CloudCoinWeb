@@ -7,8 +7,7 @@
     <string name="butImport">轉入</string>
     <string name="butBank">保管箱</string>
     <string name="butExport">轉出</string>
-    <string name="edition">CloudCoin 網頁版 &lt;br&gt;
-    Version 8.1.2017</string>
+    <string name="edition">CloudCoin 網頁版</string>
     <string name="botInfo">您的錢幣會儲存在你的瀏覽資料中，在轉出錢幣之前，請勿清除瀏覽資料。這也意謂你不能使用隱私模式瀏覽網站。</string>
     <string name="importHead">上傳錢幣</string>
     <string name="upButton">上傳</string>
