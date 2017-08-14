@@ -4,7 +4,7 @@
     <string name="echoMillisec">Milisegundos</string>
     <string name="topInfo">Se utiliza para autenticar, almacenar y pagar CloudCoins. Este software se proporciona tal cual con todas las fallas, defectos y errores y sin garantía de ningún tipo. Gratis de CloudCoin Consortium.</string>
     <string name="butImport">Importar</string>
-    <string name="butBank">Seguro</string>
+    <string name="butBank">Caja Fuerte</string>
     <string name="butExport">Exportar</string>
     <string name="edition">CloudCoin Edición Web &lt;br&gt; Versión 8.1.2017</string>
     <string name="botInfo">Tus monedas se almacenarán en tus datos de navegación. Asegúrate de no eliminar los datos de navegación antes exportar las monedas.</string>
