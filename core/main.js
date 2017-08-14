@@ -588,7 +588,7 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 	{
 		fullHtml +="<div class='callout warning'>Coin(s) that got slow responses:"
 		+ results[3];
-		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updates)'";
+		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updatesFromMind)'";
 		if(percent != 100)
 		fullHtml +=" disabled";
 		fullHtml += ">Re-Detect</div>";
