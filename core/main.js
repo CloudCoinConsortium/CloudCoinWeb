@@ -270,7 +270,7 @@ function restoreFailedDownload()
 			//updates(cc, files);
 			log.updateLine(cc.sn+",");
 			}
-			localStorage.removeItem(localStorage.key(j));
+			localStorage.removeItem("le"+fname);
 		}
 	}
 	
@@ -307,7 +307,7 @@ function downloadImage(N=false)
 			toDl.push(files.loadOneCloudCoinFromJsonFile(fnames[i]));
 			localStorage.setItem("le"+fnames[i], localStorage.getItem(fnames[i]));
 			log.updateLog("Downloading jpeg with coin:" + fnames[i].substring(fnames[i].indexOf('.')+1));
-			trash(fnames[i]);
+			trash(fnames[i].substring(fnames[i].indexOf('.')+1));
 		}
 		
 		if(document.getElementById("jpeg-in").files.length !== 0 && (document.getElementById("jpeg-in").value.slice(-4) == "jpeg" || document.getElementById("jpeg-in").value.slice(-4) == "jfif" || document.getElementById("jpeg-in").value.slice(-3) == "jpg"))
