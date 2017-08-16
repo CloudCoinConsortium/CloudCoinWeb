@@ -22,7 +22,7 @@ class RAIDA_Status {
             this.hasTicket[i] = false;
             this.ticketHistory[i] = this.TicketHistoryEn.Untried;
             this.tickets[i] = "";
-
+            this.failsFix[i] = false;
         }//end for
     }//end resetTickets
 
