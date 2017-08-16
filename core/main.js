@@ -447,15 +447,17 @@ function checkAll(mind = false)
 		document.getElementById("scb" + id).checked = true;
 		else
 		document.getElementById("scb" + id).checked = false;
-	}}else{
-	for(let i = 0; i < fnames.length; i++)
-	{
-		id = fnames[i].substring(fnames[i].indexOf('.')+1);
-		if(document.getElementById("cbAll").checked)
-		document.getElementById("cb" + id).checked = true;
-		else
-		document.getElementById("cb" + id).checked = false;
-	}}
+		}
+	}else{
+		for(let i = 0; i < fnames.length; i++)
+		{
+			id = fnames[i].substring(fnames[i].indexOf('.')+1);
+			if(document.getElementById("cbAll").checked)
+			document.getElementById("cb" + id).checked = true;
+			else
+			document.getElementById("cb" + id).checked = false;
+		}
+	}
 }
 
 function uncheckEvery()
@@ -754,7 +756,7 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 		mindlist();
 	}else{
 	raida.detectCoin(cc).then(function(cc){
-		files.saveCloudCoinToJsonFile(cc, cc.getFolder() +"."+cc.sn);
+		files.saveCloudCoinToJsonFile(cc, cc.getFolder().toLowerCase() +"."+cc.sn);
             updates(cc, files);
 	});
 	}
@@ -1062,7 +1064,7 @@ xhttp.onreadystatechange = function(){
 		//files.overWrite(toBeMoved[i].getFolder().toLowerCase(), "suspect", toBeMoved[i].sn)
 		promises.push(raida.detectCoin(toBeMoved[i]));
 		trash(toBeMoved[i].sn);
-		localStorage.setItem(toBeMoved[i].sn, "mindstorage");
+		localStorage.setItem("mind."+toBeMoved[i].sn, "mindstorage");
 	}
 	Promise.all(promises).then(function(){
 		document.getElementById("toMindMessage").style.width = "100%";
