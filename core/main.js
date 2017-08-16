@@ -435,22 +435,37 @@ function downloadAll(N=false)
 	
 }
 
-function checkAll(mind = false)
+function checkAll(mind = 0)
 {
-	let ffnames = importer.importAllFromFolder("fracked");
-    let bfnames = importer.importAllFromFolder("bank");
+	
     let id = 0;
-    let fnames = bfnames.concat(ffnames);
-	if(mind){
+    
+	if(mind == 2){
+		let mnames = importer.importAllFromFolder("mind");
+		for(let i = 0; i < mnames.length; i++)
+		{
+			id = mnames[i].substring(mnames[i].indexOf('.')+1);
+		if(document.getElementById("m2bcbAll").checked)
+		document.getElementById("mcb" + id).checked = true;
+		else
+		document.getElementById("mcb" + id).checked = false;
+		}
+	}else if(mind == 1){
+		let ffnames = importer.importAllFromFolder("fracked");
+    let bfnames = importer.importAllFromFolder("bank");
+	let fnames = bfnames.concat(ffnames);
 		for(let i = 0; i < fnames.length; i++)
 		{
 			id = fnames[i].substring(fnames[i].indexOf('.')+1);
-		if(document.getElementById("mcbAll").checked)
+		if(document.getElementById("b2mcbAll").checked)
 		document.getElementById("scb" + id).checked = true;
 		else
 		document.getElementById("scb" + id).checked = false;
 		}
 	}else{
+		let ffnames = importer.importAllFromFolder("fracked");
+    let bfnames = importer.importAllFromFolder("bank");
+	let fnames = bfnames.concat(ffnames);
 		for(let i = 0; i < fnames.length; i++)
 		{
 			id = fnames[i].substring(fnames[i].indexOf('.')+1);
@@ -1047,7 +1062,7 @@ function moveToMind(newPan)
 	let k = 0;
 	log.updateLog("Moving into mind coins:");
 	for(let j = 0; j < localStorage.length; j++){
-        if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){
+        if(localStorage.getItem(localStorage.key(j)) != "mindstorage" && localStorage.key(j).includes("le")===false){
 			 
 			if(document.getElementById("scb" + localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1)).checked){
 			toBeMoved.push(files.loadOneCloudCoinFromJsonFile(localStorage.key(j)));
