@@ -127,7 +127,7 @@ class Frack_Fixer
                     log.updateLog( frackedFileNames[i] + ": CloudCoin was moved back in to Folder: " + fixedCC.getFolder());
                     break;
             }//end switch
-            callback(fixedCC, files);
+            callback();
             });
         }
         
