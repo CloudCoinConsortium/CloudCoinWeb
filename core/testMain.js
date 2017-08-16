@@ -523,6 +523,7 @@ function checkAll(mind = false)
     let bfnames = importer.importAllFromFolder("bank");
     let id = 0;
     let fnames = bfnames.concat(ffnames);
+	console.log(fnames);
 	if(mind){
 		for(let i = 0; i < fnames.length; i++)
 		{
@@ -531,15 +532,17 @@ function checkAll(mind = false)
 		document.getElementById("scb" + id).checked = true;
 		else
 		document.getElementById("scb" + id).checked = false;
-	}}else{
-	for(let i = 0; i < fnames.length; i++)
-	{
-		id = fnames[i].substring(fnames[i].indexOf('.')+1);
-		if(document.getElementById("cbAll").checked)
-		document.getElementById("cb" + id).checked = true;
-		else
-		document.getElementById("cb" + id).checked = false;
-	}}
+		}
+	}else{
+		for(let i = 0; i < fnames.length; i++)
+		{
+			id = fnames[i].substring(fnames[i].indexOf('.')+1);
+			if(document.getElementById("cbAll").checked)
+			document.getElementById("cb" + id).checked = true;
+			else
+			document.getElementById("cb" + id).checked = false;
+		}
+	}
 }
 
 function uncheckEvery()
@@ -839,7 +842,7 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 		mindlist();
 	}else{
 	raida.detectCoin(cc).then(function(cc){
-		files.saveCloudCoinToJsonFile(cc, cc.getFolder() +"."+cc.sn);
+		files.saveCloudCoinToJsonFile(cc, cc.getFolder().toLowerCase() +"."+cc.sn);
             updates(cc, files);
 	});
 	}
