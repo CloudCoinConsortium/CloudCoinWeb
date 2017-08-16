@@ -5,15 +5,15 @@ class Importer
         //this.fileUtil = fileUtil;
     }
 
-    importAll(fileUtil)
+    importAll()
     {
         let fnames = [];
-        let coins = [];
+        //let coins = [];
         for(var j = 0; j< localStorage.length; j++){
-            if(isNaN(localStorage.key(j)) ===false)
+            if(localStorage.key(j).includes("le") === false)
             fnames.push(localStorage.key(j));
         }
-        let k = 0;
+        /*let k = 0;
             for(let i = 0; i < fnames.length; i++){
                 //console.log(fnames[i]);
 				if(localStorage.getItem(fnames[i]).includes("mindstorage") == false){
@@ -22,14 +22,14 @@ class Importer
                 this.updateFolder(coins[k], fileUtil);
 				k++;
 				}
-            }
-            return coins;
+            }*/
+            return fnames;
         
     }
 
-    importAllFromFolder(fileUtil, folder)
+    importAllFromFolder(folder)
     {
-        switch(folder)
+        /*switch(folder)
         {
             case "bank":
             folder = fileUtil.bankFolder;
@@ -43,26 +43,26 @@ class Importer
             case "suspect":
             folder = fileUtil.suspectFolder;
             break;
-        }
+        }*/
         let fnames = [];
-        let coins = [];
+        //let coins = [];
         for(var j = 0; j< localStorage.length; j++){
-            if(folder.includes(localStorage.key(j)) && isNaN(localStorage.key(j)) ===false)
+            if(localStorage.key(j).includes(folder) && localStorage.key(j).includes("le") === false)
             fnames.push(localStorage.key(j));
         }
         if(fnames.length == 0){return false;}
-        else{
+        else{/*
             for(let i = 0; i < fnames.length; i++){
                 //console.log(fnames[i]);
                 if(localStorage.getItem(fnames[i]).includes("mindstorage") == false){
                 coins.push(fileUtil.loadOneCloudCoinFromJsonFile(fnames[i]));
                 //this.updateFolder(coins[i], fileUtil);
                 }
-            }
-            return coins;
+            }*/
+            return fnames;
         }
     }
-
+/*
     updateFolder(cc, fileUtil)
     {
         cc.reportDetectionResults();
@@ -87,5 +87,5 @@ class Importer
                     break;
             }//end switch
     }
-    
+    */
 }

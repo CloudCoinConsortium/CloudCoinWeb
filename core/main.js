@@ -1,3 +1,15 @@
+
+function loadScreen()
+{
+	document.getElementsByClassName("off-canvas-wrapper")[0].style.opacity = 0.5;
+    document.getElementById("loading").innerHTML="<p style='font-size:72px;'>LOADING</p><p>This could take a while if you have a lot of coins.</p>";
+}
+function loadEnd()
+{
+	document.getElementsByClassName("off-canvas-wrapper")[0].style.opacity = 1.0;
+    document.getElementById("loading").innerHTML="";
+}
+
 function populateRaidaStatus(rr, id)
 {
     document.getElementById("r_" + id).innerHTML = rr.outcome;
@@ -69,47 +81,102 @@ function scanSwitchMessage()
 	}
 }
 
-function coinlist(cc, fileUtil)
+function getDen(sn)
 {
-    let id = cc.sn;
+	let nom = 0;
+        if ((sn < 1))
+            {
+                nom = 0;
+            }
+            else if ((sn < 2097153))
+            {
+                nom = 1;
+            }
+            else if ((sn < 4194305))
+            {
+                nom = 5;
+            }
+            else if ((sn < 6291457))
+            {
+                nom = 25;
+            }
+            else if ((sn < 14680065))
+            {
+                nom = 100;
+            }
+            else if ((sn < 16777217))
+            {
+                nom = 250;
+            }
+            else
+            {
+                nom = 0;
+            }
+
+            return nom;
+}
+
+function coinlist(id)
+{
+    let denom = getDen(id);
+	
     if(document.getElementById(id) !== null){
-        document.getElementById(id).remove();
-        
+        //document.getElementById(id).remove();
+        return null;
 	} else {
-		if(cc.getFolder().toLowerCase() == "bank" || cc.getFolder().toLowerCase() == "fracked")
-		exportDialAdd(cc.getDenomination());
+		
+		exportDialAdd(denom);
+	
+    //let listname = document.getElementById("coinlist" + folder.toLowerCase());
+	let row = document.createElement("tr");
+	row.setAttribute("id", id);
+	let td1 = document.createElement("td");
+	let checkbox = document.createElement("input");
+	checkbox.setAttribute("type", "checkbox");
+	checkbox.setAttribute("id", "cb"+id);
+	checkbox.setAttribute("class", "dem"+denom);
+	let td2 = document.createElement("td");
+	td2.textContent = denom;
+	let td3 = document.createElement("td");
+	td3.textContent = id;
+	td1.appendChild(checkbox);
+	
+	row.appendChild(td1);
+	row.appendChild(td2);
+	row.appendChild(td3);
+	//listname.appendChild(row);
+	return row;
 	}
-    let listname = "coinlist" + cc.getFolder().toLowerCase();
-    let htmltext = "<tr id = '"+id+"'><td><input type='checkbox' id='cb"+id+"' ";
-	if(listname == "coinlistbank" || listname == "coinlistfracked")
-		htmltext += "class='dem"+cc.getDenomination()+"' ";
-	htmltext += "></td><td>"+ cc.getDenomination() + "</td><td>"+id+"</td></tr>";
-    
-    document.getElementById(listname).innerHTML += htmltext;
-	//document.getElementById("m" +listname).innerHTML += htmltext;
-    //let tag = document.getElementById("tag"+ id); 
-    //let el = document.getElementById(listname);
-    //el.addEventListener("click",download);
+	
     
 }
 
-function scoinlist(cc, fileUtil)
+function scoinlist(id)
 {
-    let id = cc.sn;
+    let denom = getDen(id);
     if(document.getElementById("s"+id) !== null){
-        document.getElementById("s"+id).remove();
-        
+        //document.getElementById("s"+id).remove();
+        return null;
+	}else{
+		let row = document.createElement("tr");
+	row.setAttribute("id", "s"+id);
+	let td1 = document.createElement("td");
+	let checkbox = document.createElement("input");
+	checkbox.setAttribute("type", "checkbox");
+	checkbox.setAttribute("id", "scb"+id);
+	checkbox.setAttribute("value", id);
+	checkbox.setAttribute("name", "sn[]");
+	let td2 = document.createElement("td");
+	td2.textContent = denom;
+	let td3 = document.createElement("td");
+	td3.textContent = id;
+	td1.appendChild(checkbox);
+	row.appendChild(td1);
+	row.appendChild(td2);
+	row.appendChild(td3);
+	//listname.appendChild(row);
+	return row;
 	}
-    let listname = "mcoinlist" + cc.getFolder().toLowerCase();
-    let htmltext = "<tr id = 's"+id+"'><td><input type='checkbox' name='sn[]' id='scb"+
-	id+"' value='"+id+"'></td><td>"
-    + cc.getDenomination() + "</td><td>"+id+"</td></tr>";
-    
-    
-	document.getElementById(listname).innerHTML += htmltext;
-    //let tag = document.getElementById("tag"+ id); 
-    //let el = document.getElementById(listname);
-    //el.addEventListener("click",download);
     
 }
 
@@ -124,16 +191,61 @@ function mindlist()
 	
 }
 
+function toMindMode()
+{
+	
+	emptyprogress('toMindMessage');
+	let before = (new Date()).getTime();
+	let loadBank = importer.importAllFromFolder("bank");
+    let loadFracked = importer.importAllFromFolder("fracked");
+	let id;
+	
+	let fragmentBank = document.createDocumentFragment();
+	let fragmentFracked = document.createDocumentFragment();
+	let row;
+	for(let j =0; j<loadBank.length; j++)
+	{
+		id = loadBank[j].substring(loadBank[j].indexOf('.')+1);
+		row = scoinlist(id);
+		if(row !== null)
+		fragmentBank.appendChild(row);
+	}
+	for(let i=0;i<loadFracked.length;i++)
+	{
+		id = loadFracked[i].substring(loadFracked[i].indexOf('.')+1);
+		row = scoinlist(id);
+		if(row !== null)
+		fragmentFracked.appendChild(row);
+	}
+	document.getElementById("mcoinlistbank").appendChild(fragmentBank);
+	document.getElementById("mcoinlistfracked").appendChild(fragmentFracked);
+	sortTable("mcoinlistbank");
+	sortTable("mcoinlistfracked");
+	let ts = (new Date()).getTime() - before;
+	console.log(ts);
+
+
+
+	
+}
+
+function fromMindMode()
+{
+	emptyprogress('mindProgress');
+	document.getElementById('fromMindStatus').innerHTML='';
+	mindlist();
+}
+
 function emailRecover()
 {
 	
 	let sn = prompt("What is the serial number of the coin you want to recover?");
 	if(sn !== "" && !isNaN(parseFloat(sn)) && isFinite(sn) && sn > 0 && sn < 16777216)
 	{
-		if(!localStorage.getItem(sn)){
-			localStorage.setItem(sn, "mindstorage");
+		if(!localStorage.getItem(files.findCoin(sn))){
+			localStorage.setItem("mind."+sn, "mindstorage");
 		log.updateLog("Recovered sn:" +sn+" from email.");
-		mindlist();
+		//mindlist();
 			
 		}else{
 			alert("Coin of SN:"+sn+" is already in this app.");
@@ -147,18 +259,18 @@ function restoreFailedDownload()
 {
 	log.updateLog("Restoring failed download of coins:");
 	for(var j = 0; j< localStorage.length; j++){
-		if(isNaN(localStorage.key(j)))
+		if(localStorage.key(j).includes("le"))
 		{
-			sn = localStorage.key(j).replace("le", "");
-			if(!localStorage.getItem(sn)){
-			localStorage.setItem(sn, localStorage.getItem("le"+sn));
+			fname = localStorage.key(j).replace("le", "");
+			if(!localStorage.getItem(fname)){
+			localStorage.setItem(fname, localStorage.getItem("le"+fname));
 			
-			cc = files.loadOneCloudCoinFromJsonFile(sn);
+			cc = files.loadOneCloudCoinFromJsonFile(fname);
 			cc.reportDetectionResults();
-			updates(cc, files);
-			log.updateLine(sn+",");
+			//updates(cc, files);
+			log.updateLine(cc.sn+",");
 			}
-			localStorage.removeItem("le"+sn);
+			localStorage.removeItem(localStorage.key(j));
 		}
 	}
 	
@@ -172,11 +284,11 @@ function downloadImage(N=false)
     let fnames = [];
 	let toDl = [];
 	for(var j = 0; j< localStorage.length; j++){
-    if(isNaN(localStorage.key(j))){
+    if(localStorage.key(j).includes("le")){
 		lenames.push(localStorage.key(j));
 	}
 	else if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){     
-	if(document.getElementById("cb" + localStorage.key(j)).checked)
+	if(document.getElementById("cb" + localStorage.key(j).substring(localStorage.key(j).indexOf(".")+1)).checked)
  			fnames.push(localStorage.key(j));
 	}
 }
@@ -194,7 +306,7 @@ function downloadImage(N=false)
         
 			toDl.push(files.loadOneCloudCoinFromJsonFile(fnames[i]));
 			localStorage.setItem("le"+fnames[i], localStorage.getItem(fnames[i]));
-			log.updateLog("Downloading jpeg with coin:" + fnames[i]);
+			log.updateLog("Downloading jpeg with coin:" + fnames[i].substring(fnames[i].indexOf('.')+1));
 			trash(fnames[i]);
 		}
 		
@@ -295,11 +407,11 @@ function downloadAll(N=false)
 	let tag;
 	log.updateLog("Downloading to Stack coins:");
 	for(var j = 0; j< localStorage.length; j++){
-    if(isNaN(localStorage.key(j))){
+    if(localStorage.key(j).includes("le")){
 		lenames.push(localStorage.key(j));
 	}
 	else if(localStorage.getItem(localStorage.key(j)) !== "mindstorage"){ 
-	if(document.getElementById("cb" + localStorage.key(j)).checked)
+	if(document.getElementById("cb" + localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1)).checked)
 			 fnames.push(localStorage.key(j));
 		}
 	}
@@ -315,33 +427,34 @@ function downloadAll(N=false)
 	{tag = document.getElementById("alltag").value;}
     files.downloadAllCloudCoinToJsonFile(fnames, tag);
     for(let i = 0; i < fnames.length; i++){
-		log.updateLine(fnames[i] + ",");
-        trash(fnames[i]);
+		log.updateLine(fnames[i].substring(fnames[i].indexOf('.')+1) + ",");
+        trash(fnames[i].substring(fnames[i].indexOf('.')+1));
 	}
 	
 }
 
 function checkAll(mind = false)
 {
-	let ffnames = files.frackedFolder.split(",");
-    let bfnames = files.bankFolder.split(",");
-    ffnames.pop();
-    bfnames.pop();
+	let ffnames = importer.importAllFromFolder("fracked");
+    let bfnames = importer.importAllFromFolder("bank");
+    let id = 0;
     let fnames = bfnames.concat(ffnames);
 	if(mind){
 		for(let i = 0; i < fnames.length; i++)
 		{
+			id = fnames[i].substring(fnames[i].indexOf('.')+1);
 		if(document.getElementById("mcbAll").checked)
-		document.getElementById("scb" + fnames[i]).checked = true;
+		document.getElementById("scb" + id).checked = true;
 		else
-		document.getElementById("scb" + fnames[i]).checked = false;
+		document.getElementById("scb" + id).checked = false;
 	}}else{
 	for(let i = 0; i < fnames.length; i++)
 	{
+		id = fnames[i].substring(fnames[i].indexOf('.')+1);
 		if(document.getElementById("cbAll").checked)
-		document.getElementById("cb" + fnames[i]).checked = true;
+		document.getElementById("cb" + id).checked = true;
 		else
-		document.getElementById("cb" + fnames[i]).checked = false;
+		document.getElementById("cb" + id).checked = false;
 	}}
 }
 
@@ -350,13 +463,13 @@ function uncheckEvery()
 	document.querySelectorAll("input[type=checkbox]").checked = false;
 }
 
-function showFolder(){
+/*function showFolder(){
         alert("cf:" + files.counterfeitFolder);
         alert("b:" + files.bankFolder);
         alert("s:" + files.suspectFolder);
         alert("f:" + files.frackedFolder);
 		alert("t:" + files.trashFolder);
-    }
+    }*/
 
 function importMode()
 {
@@ -457,11 +570,49 @@ function updateTotal(fileUtil)
 	}
 }
 
+function exportMode()
+{
+	
+	let before = (new Date()).getTime();
+	let loadBank = importer.importAllFromFolder("bank");
+    let loadFracked = importer.importAllFromFolder("fracked");
+	let id;
+	
+	let fragmentBank = document.createDocumentFragment();
+	let fragmentFracked = document.createDocumentFragment();
+	let row;
+	for(let j =0; j<loadBank.length; j++)
+	{
+		id = loadBank[j].substring(loadBank[j].indexOf('.')+1);
+		row = coinlist(id);
+		if(row !== null)
+		fragmentBank.appendChild(row);
+	}
+	for(let i=0;i<loadFracked.length;i++)
+	{
+		id = loadFracked[i].substring(loadFracked[i].indexOf('.')+1);
+		row = coinlist(id);
+		if(row !== null)
+		fragmentFracked.appendChild(row);
+	}
+	document.getElementById("coinlistbank").appendChild(fragmentBank);
+	document.getElementById("coinlistfracked").appendChild(fragmentFracked);
+	
+	let ts = (new Date()).getTime() - before;
+	console.log(ts);
+	
+}
+function exportModeOld()
+{
+	sortTable("coinlistbank");
+	sortTable("coinlistfracked");
+}
+
 function updates(cc, fileUtil, percent=0, results = null)
 {
-    coinlist(cc, fileUtil);
-	scoinlist(cc, fileUtil);
-    updateTotal(fileUtil);
+    //coinlist(cc, fileUtil);
+	//scoinlist(cc, fileUtil);
+    //updateTotal(fileUtil);
 	let msg = "";
 	let fullHtml = "";
 	if(results !== null){
@@ -504,14 +655,10 @@ function updates(cc, fileUtil, percent=0, results = null)
 	+ "<button class='small button' onclick="+"document.getElementById('importDetails').style.display='block'"+">Details</button>";	
 }
 	document.getElementById("importButtons").innerHTML= "";
-	mindlist();
-	sortTable("coinlistbank");
-	sortTable("coinlistfracked");
-	sortTable("mcoinlistbank");
-	sortTable("mcoinlistfracked");
-	if(files.counterfeitFolder != "")
+	
+	if(importer.importAllFromFolder("counterfeit").length > 0)
 	{
-		trashFolder(files.counterfeitFolder);
+		trashFolder("counterfeit");
 	}
 }
 
@@ -560,7 +707,7 @@ function updatesTemp(cc, percent=0, results = null)
 	+ "<button class='small button' onclick="+"document.getElementById('importDetails').style.display='block'"+">Details</button>";	
 }
 	document.getElementById("importButtons").innerHTML= "";
-	localStorage.removeItem(cc.sn);
+	localStorage.removeItem("temp."+cc.sn);
 	
 	
 }
@@ -603,11 +750,11 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 	document.getElementById("fromMindStatus").innerHTML = fullHtml;
 	log.updateLog(fullHtml);
 	if(cc.getFolder().toLowerCase() == "counterfeit"){
-		localStorage.setItem(cc.sn, "mindstorage");
+		localStorage.setItem("mind."+cc.sn, "mindstorage");
 		mindlist();
 	}else{
 	raida.detectCoin(cc).then(function(cc){
-		files.saveCloudCoinToJsonFile(cc, cc.sn);
+		files.saveCloudCoinToJsonFile(cc, cc.getFolder() +"."+cc.sn);
             updates(cc, files);
 	});
 	}
@@ -619,9 +766,11 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 function trash(id)
 {
     
-        document.getElementById(id).remove();
+        if(document.getElementById(id))
+		document.getElementById(id).remove();
+		if(document.getElementById("s"+id))
 		document.getElementById("s"+id).remove();
-        files.overWrite("", "trash", id);
+        //files.overWrite("", "trash", id);
          if ((id < 2097153))
             {
                 exportDialMinus(1);
@@ -644,8 +793,8 @@ function trash(id)
             }
             
 		
-        localStorage.removeItem(id);
-        updateTotal(files);
+        localStorage.removeItem(files.findCoin(id));
+        //updateTotal(files);
 }
 
 function trashBad(id)
@@ -653,22 +802,17 @@ function trashBad(id)
     
         document.getElementById(id).remove();
 		document.getElementById("s"+id).remove();
-        files.overWrite("", "trash", id);
+        //files.overWrite("", "trash", id);
          
             
 		
-        localStorage.removeItem(id);
-        updateTotal(files);
+        localStorage.removeItem(files.findCoin(id));
+        //updateTotal(files);
 }
 
 function trashFolder(folder)
 {
-    let fnames = [];
-    
-    for(var j = 0; j< localStorage.length; j++){
-            if(folder.includes(localStorage.key(j))&&isNaN(localStorage.key(j)) ===false)
-            fnames.push(localStorage.key(j));
-    }
+    let fnames = importer.importAllFromFolder(folder);
 
     for(let i = 0; i < fnames.length; i++){
         trashBad(fnames[i]);}
@@ -865,17 +1009,18 @@ function moveFromMind(pan)
 	let fnames = [];
 	log.updateLog("Moving from mind coins:");
 	for(var j = 0; j< localStorage.length; j++){
-            if(localStorage.getItem(localStorage.key(j)) == "mindstorage"&&(isNaN(localStorage.key(j)) ===false)){
-			if(document.getElementById("mcb" + localStorage.key(j)).checked)
-			fnames.push(localStorage.key(j));
-			log.updateLine(fnames[j] +",");
+            if(localStorage.getItem(localStorage.key(j)) == "mindstorage"){
+			id = localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1);
+				if(document.getElementById("mcb" + id).checked)
+				{fnames.push(id);
+				log.updateLine(id +",");}
 			}
         }
 	for(let i = 0; i < fnames.length; i++)
 	{
 		let cc = new CloudCoin(1, fnames[i], pan);
-		files.saveCloudCoinToJsonFile(cc, cc.sn);
-		files.writeTo("suspect", cc.sn);
+		files.saveCloudCoinToJsonFile(cc, "suspect."+cc.sn);
+		//files.writeTo("suspect", cc.sn);
 	}
 	document.getElementById("mindProgress").style.width = "75%";
 	document.getElementById("user").value = "";
@@ -894,13 +1039,14 @@ function moveToMind(newPan)
 	let k = 0;
 	log.updateLog("Moving into mind coins:");
 	for(let j = 0; j < localStorage.length; j++){
-        if(localStorage.getItem(localStorage.key(j)) != "mindstorage"&&(isNaN(localStorage.key(j)) ===false)){
-		if(document.getElementById("scb" + localStorage.key(j)).checked){
-		toBeMoved.push(files.loadOneCloudCoinFromJsonFile(localStorage.key(j)));
-		log.updateLine(toBeMoved[k].sn +",");
-		data += "&sn[" + k + "]=" + toBeMoved[k].sn;
-		k++; 
-		}
+        if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){
+			 
+			if(document.getElementById("scb" + localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1)).checked){
+			toBeMoved.push(files.loadOneCloudCoinFromJsonFile(localStorage.key(j)));
+			log.updateLine(toBeMoved[k].sn +",");
+			data += "&sn[" + k + "]=" + toBeMoved[k].sn;
+			k++; 
+			}
 		}
     }
 xhttp.open("POST", "core/mailMind.php", true);
@@ -924,7 +1070,8 @@ xhttp.onreadystatechange = function(){
 		document.getElementById("user2").value = "";
 		document.getElementById("pass2").value = "";
 		document.getElementById("email2").value = "";
-		mindlist();});
+		//mindlist();
+	});
 }
 if(this.status == 400)
 console.log(this.responseText);
@@ -978,4 +1125,27 @@ function sortTable(toSort) {
       switching = true;
     }
   }
+}
+
+function convertOld()
+{
+	let cc;
+	let sn = [];
+	let data = [];
+	let folder = [];
+	for(let j = 0; j< localStorage.length; j++)
+	{
+		if(isNaN(localStorage.key(j))===false){
+		cc = files.loadOneCloudCoinFromJsonFile(localStorage.key(j));
+		cc.reportDetectionResults();
+		sn.push(cc.sn);
+		folder.push(cc.getFolder().toLowerCase());
+		data.push(localStorage.getItem(localStorage.key(j)));
+		}
+	}
+	for(let i =0; i< data.length; i++)
+	{
+		localStorage.removeItem(sn[i]);
+		localStorage.setItem(folder[i]+"."+sn[i], data[i]);
+	}
 }

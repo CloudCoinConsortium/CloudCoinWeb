@@ -17,8 +17,10 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
     $email = test_input($_POST["email"]);
     $sn = $_POST["sn"];
     for($x = 0; $x < count($sn); $x++){
-        if(is_numeric($sn[$x]))
+        if(is_numeric($sn[$x])){
         $snlist .= $sn[$x] . "\n";
+
+        }
     }
 
 }

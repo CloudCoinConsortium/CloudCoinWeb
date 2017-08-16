@@ -8,7 +8,7 @@ class Banker
 
     countCoins(fileUtil)
     {
-        let bank = this.importer.importAllFromFolder(fileUtil, "bank");
+        let bank = this.importer.importAllFromFolder("bank");
         //if(this.importer.importAllFromFolder(fileUtil, "fracked"))
         //coins = coins.concat(this.importer.importAllFromFolder(fileUtil, "fracked"));
         
@@ -16,29 +16,29 @@ class Banker
         let returnCounts = [0, 0, 0, 0, 0, 0];
         for(let i = 0; i < bank.length; i ++)
         {
-            switch(bank[i].getDenomination())
-            {
-                    case 1:
+            let sn = bank[i].substring(bank[i].indexOf(".")+1)
+            
+                    if(sn < 2097153){
                         returnCounts[0]++;
                         returnCounts[1]++;
-                        break;
-                    case 5:
+                    }
+                    else if(sn < 4194305){
                         returnCounts[0] += 5;
                         returnCounts[2]++;
-                        break;
-                    case 25:
+                    }    
+                    else if(sn < 6291457){
                         returnCounts[0] += 25;
                         returnCounts[3]++;
-                        break;
-                    case 100:
+                    }    
+                    else if(sn < 14680065){
                         returnCounts[0] += 100;
                         returnCounts[4]++;
-                        break;
-                    case 250:
+                    }    
+                    else if(sn < 16777217){
                         returnCounts[0] += 250;
                         returnCounts[5]++;
-                        break;
-                }
+                    }    
+                
         }
             return returnCounts;
         
@@ -46,7 +46,7 @@ class Banker
 
     countFracked(fileUtil)
     {
-        let bank = this.importer.importAllFromFolder(fileUtil, "fracked");
+        let bank = this.importer.importAllFromFolder("fracked");
         //if(this.importer.importAllFromFolder(fileUtil, "fracked"))
         //coins = coins.concat(this.importer.importAllFromFolder(fileUtil, "fracked"));
         
@@ -54,29 +54,29 @@ class Banker
         let returnCounts = [0, 0, 0, 0, 0, 0];
         for(let i = 0; i < bank.length; i ++)
         {
-            switch(bank[i].getDenomination())
-            {
-                    case 1:
+            let sn = bank[i].substring(bank[i].indexOf(".")+1)
+            
+                    if(sn < 2097153){
                         returnCounts[0]++;
                         returnCounts[1]++;
-                        break;
-                    case 5:
+                    }
+                    else if(sn < 4194305){
                         returnCounts[0] += 5;
                         returnCounts[2]++;
-                        break;
-                    case 25:
+                    }    
+                    else if(sn < 6291457){
                         returnCounts[0] += 25;
                         returnCounts[3]++;
-                        break;
-                    case 100:
+                    }    
+                    else if(sn < 14680065){
                         returnCounts[0] += 100;
                         returnCounts[4]++;
-                        break;
-                    case 250:
+                    }    
+                    else if(sn < 16777217){
                         returnCounts[0] += 250;
                         returnCounts[5]++;
-                        break;
-                }
+                    }    
+                
         }
             return returnCounts;
         

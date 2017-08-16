@@ -79,8 +79,8 @@ class Frack_Fixer
         document.getElementById("fixStatusContainer").innerHTML ="";
         document.getElementById("fixStatusContainer").style.display = "initial";
         let results = [0, 0, 0];
-        let frackedFileNames = this.fileUtil.frackedFolder.split(",");
-        frackedFileNames.pop();
+        let frackedFileNames = importer.importAllFromFolder("fracked");
+        let id = 0;
         let files = this.fileUtil;
         //alert(frackedFileNames);
         let frackedCC;
@@ -88,16 +88,17 @@ class Frack_Fixer
 
         for(let i = 0; i < frackedFileNames.length; i++)
         {
+            id = frackedFileNames[i].substring(frackedFileNames[i].indexOf('.')+1);
             document.getElementById("fixStatusContainer").innerHTML +=
             "<div class='success progress' role='progressbar' tabindex='0' aria-valuenow='0' aria-valuemin='0' aria-valuemax='100'><div class='progress-meter' id='"+
-            frackedFileNames[i] +"fix'><p class='progress-meter-text'>"+frackedFileNames[i]+"</p></div></div>"
+            id +"fix'><p class='progress-meter-text'>"+id+"</p></div></div>"
             console.log("Unfracking " + (i+1) + " of " + frackedFileNames.length);
             log.updateLog("Unfracking " + (i+1) + " of " + frackedFileNames.length);
             frackedCC = files.loadOneCloudCoinFromJsonFile(frackedFileNames[i]);
             //alert(frackedCC.sn);
             //frackedCC.consoleReport();
             
-            let p = this.fixCoin(frackedCC);
+            let p = this.fixCoin(frackedCC);//create promise
             
             p.then(function(fixedCC){
             //fixedCC.consoleReport();
@@ -106,14 +107,14 @@ class Frack_Fixer
             {
                 case "bank":
                     //this.totalValueToBank++;
-                    files.overWrite("fracked", "bank", frackedFileNames[i]);
+                    files.overWrite("bank", frackedFileNames[i]);
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
                     console.log( frackedFileNames[i] + ": CloudCoin was moved to Bank");
                     log.updateLog( frackedFileNames[i] + ": CloudCoin was moved to Bank");
                     break;
                 case "counterfeit":
                     //this.totalValueToCounterfeit++;
-                    files.overWrite("fracked", "counterfeit", frackedFileNames[i]);
+                    files.overWrite("counterfeit", frackedFileNames[i]);
                     //this.deleteCoin(this.fileUtil.frackedFolder + frackedFileNames[i]);
                     console.log( frackedFileNames[i] + ": CloudCoin was moved to Counterfeit");
                     log.updateLog( frackedFileNames[i] + ": CloudCoin was moved to Counterfeit");
@@ -185,7 +186,7 @@ class Frack_Fixer
         brokeCoin.reportDetectionResults();
         //alert(fixCoin.getFolder());
         brokeCoin.calcExpirationDate();
-        fileUtil.saveCloudCoinToJsonFile(brokeCoin, brokeCoin.sn);
+        fileUtil.saveCloudCoinToJsonFile(brokeCoin, "fracked."+brokeCoin.sn);
         document.getElementById(brokeCoin.sn + "fix").style.width = "100%";
         document.getElementById(brokeCoin.sn + "fix").innerHTML = "<p class='progress-meter-text'>Done Fixing Fracked</p>";
         

@@ -1,21 +1,8 @@
 class FileUtils 
 {
 
-    constructor(rootFolder = "", importFolder = "", importedFolder = "", trashFolder = "",
-     suspectFolder = "", frackedFolder = "", bankFolder = "", tempFolder = "",
-      counterfeitFolder = "", directoryFolder = "", exportFolder = "")
+    constructor()
     {
-        this.rootFolder = rootFolder;
-        this.importFolder = importFolder;
-        this.importedFolder = importedFolder;
-        this.trashFolder = trashFolder;
-        this.suspectFolder = suspectFolder;
-        this.frackedFolder = frackedFolder;
-        this.bankFolder = bankFolder;
-        this.tempFolder = tempFolder;
-        this.counterfeitFolder = counterfeitFolder;
-        this.directoryFolder = directoryFolder;
-        this.exportFolder = exportFolder;
         
         
     }
@@ -94,7 +81,7 @@ class FileUtils
 			let cc = data.cloudcoin[i];
             
 		let upCoin = new CloudCoin(cc.nn, cc.sn, cc.an, cc.ed, cc.aoid, cc.pown);
-        let currentCoin = JSON.parse(localStorage.getItem(upCoin.sn));
+        let currentCoin = JSON.parse(localStorage.getItem(files.findCoin(upCoin.sn)));
         if(currentCoin !== null){
             if(upCoin.sn == currentCoin.sn && loadFile.lastModified < currentCoin.time)
             {
@@ -102,14 +89,14 @@ class FileUtils
                 document.getElementById("duplicateNumbers").innerHTML += upCoin.sn + ",";
             }else{
                 if(document.getElementById("scanSwitch").checked)
-                {files.writeTo("suspect", cc.sn);}
-                else{files.writeTo("temp", cc.sn);}
-                callback(upCoin, upCoin.sn);}
+                {callback(upCoin, "suspect."+upCoin.sn);}
+                else{callback(upCoin, "temp."+upCoin.sn);}
+                }
         }else{
             if(document.getElementById("scanSwitch").checked)
-                {files.writeTo("suspect", cc.sn);}
-                else{files.writeTo("temp", cc.sn);}
-            callback(upCoin, upCoin.sn);}
+                {callback(upCoin, "suspect."+upCoin.sn);}
+                else{callback(upCoin, "temp."+upCoin.sn);}
+            }
         }}
 		reader.readAsText(loadFile);
 		
@@ -127,23 +114,22 @@ class FileUtils
         
 		let upCoin = files.hexToCloudCoin(data);
         
-        let currentCoin = JSON.parse(localStorage.getItem(upCoin.sn));
-        if(currentCoin != null){
+        let currentCoin = JSON.parse(localStorage.getItem(files.findCoin(upCoin.sn)));
+        if(currentCoin !== null){
             if(upCoin.sn == currentCoin.sn && loadFile.lastModified < currentCoin.time)
             {
                 document.getElementById("duplicateHolder").style.display = "block";
                 document.getElementById("duplicateNumbers").innerHTML += upCoin.sn + ",";
             }else{
                 if(document.getElementById("scanSwitch").checked)
-                {files.writeTo("suspect", upCoin.sn);}
-                else{files.writeTo("temp", upCoin.sn);}
-                callback(upCoin, upCoin.sn);
-        }
-    }else{
-        if(document.getElementById("scanSwitch").checked)
-                {files.writeTo("suspect", upCoin.sn);}
-                else{files.writeTo("temp", upCoin.sn);}
-        callback(upCoin, upCoin.sn);}
+                {callback(upCoin, "suspect."+upCoin.sn);}
+                else{callback(upCoin, "temp."+upCoin.sn);}
+                }
+        }else{
+            if(document.getElementById("scanSwitch").checked)
+                {callback(upCoin, "suspect."+upCoin.sn);}
+                else{callback(upCoin, "temp."+upCoin.sn);}
+            }
         }
 		reader.readAsDataURL(loadFile);
 		
@@ -187,7 +173,7 @@ class FileUtils
         let total = 0;
         for(let i = 0; i < saveFile.length; i++){
         coin.push(JSON.parse(localStorage.getItem(saveFile[i])));
-        localStorage.setItem("le"+coin[i].sn, localStorage.getItem(saveFile[i]));
+        localStorage.setItem("le"+saveFile[i], localStorage.getItem(saveFile[i]));
         //delete coin.pown;
         delete coin[i].time;
         let cc = new CloudCoin(1, coin[i].sn);
@@ -375,7 +361,7 @@ base64ToHex(str) {
   //return hex;
 }
 
-    writeTo(folder, filename)
+  /*  writeTo(folder, filename)
     {
         //alert("called");
         switch(folder)
@@ -467,7 +453,32 @@ base64ToHex(str) {
         break;
         }
         
-        this.writeTo(foldernew, filename);
+        //this.writeTo(foldernew, filename);
+    }
+*/
+overWrite(foldernew, filename)
+{
+    let id = filename.substring(filename.indexOf('.')+1);
+    localStorage.setItem(foldernew +"."+ id, localStorage.getItem(filename));
+    localStorage.removeItem(filename);
+}
+
+    findCoin(id)
+    {
+        for(var j = 0; j< localStorage.length; j++){
+            if(localStorage.key(j).includes(id))
+            return localStorage.key(j);
+        }
+        return false;
+    }
+
+    findFolder(id)
+    {
+        for(var j = 0; j< localStorage.length; j++){
+            if(localStorage.key(j).includes(id))
+            return localStorage.key(j).substring(0,localStorage.key(j).indexOf('.'));
+        }
+        return false;
     }
 
 

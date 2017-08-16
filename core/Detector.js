@@ -14,11 +14,7 @@ class Detector
         let totalValueToFractured = 0;
         let totalValueToKeptInSuspect = 0;
         let files = this.fileUtil;
-        let fnames = [];
-        for(var j = 0; j< localStorage.length; j++){
-            if(isNaN(localStorage.key(j)) ===false)
-            fnames.push(localStorage.key(j));
-        }
+        let fnames = importer.importAll();
         let coins = [];
         for(let i = 0; i < fnames.length; i++)
         {
@@ -26,26 +22,27 @@ class Detector
             
             coins[i].then(function(cc){
             //alert(cc.sn);
+            files.saveCloudCoinToJsonFile(cc, "suspect."+cc.sn);
             switch (cc.getFolder().toLowerCase())
             {
                 case "bank":
                     totalValueToBank++;
-                    files.overWrite("suspect", "bank", fnames[i]);
+                    files.overWrite("bank", fnames[i]);
                     break;
                 case "fracked":
                     totalValueToFractured++;
-                    files.overWrite("suspect", "fracked", fnames[i]);
+                    files.overWrite("fracked", fnames[i]);
                     break;
                 case "counterfeit":
                     totalValueToCounterfeit++;
-                    files.overWrite("suspect", "counterfeit", fnames[i]);
+                    files.overWrite("counterfeit", fnames[i]);
                     break;
                 case "suspect":
                     totalValueToKeptInSuspect++;
                     
                     break;
             }//end switch
-            files.saveCloudCoinToJsonFile(cc, cc.sn);
+            
             callback(cc, files);    
         });
     }
@@ -61,15 +58,12 @@ class Detector
     {
         let results = [0, 0, 0, 0];
         
-        let fnames = [];
+        let fnames = importer.importAllFromFolder("suspect");
         //let counterfeitNames = [];
         //let bankNames =[];
         //let frackedNames = [];
         let files = this.fileUtil;
-        for(var j = 0; j< localStorage.length; j++){
-            if(this.fileUtil.suspectFolder.includes(localStorage.key(j))&&isNaN(localStorage.key(j)) ===false)
-            fnames.push(localStorage.key(j));
-        }
+        
         let coins = [];
         let i = 0;
         this.loop(coins, i, fnames, results, callback, this.loop);
@@ -91,21 +85,22 @@ class Detector
             coins.push(raida.detectCoin(files.loadOneCloudCoinFromJsonFile(fn[i])));
             }
             coins[i].then(function(cc){
+            files.saveCloudCoinToJsonFile(cc, "suspect."+cc.sn);
             switch (cc.getFolder().toLowerCase())
             {
                 case "bank":
                     r[0]++;
-                    files.overWrite("suspect", "bank", fn[i]);
+                    files.overWrite("bank", fn[i]);
                     //bankNames.push(fn[i]);
                     break;
                 case "fracked":
                     r[2]++;
-                    files.overWrite("suspect", "fracked", fn[i]);
+                    files.overWrite("fracked", fn[i]);
                     //frackedNames.push(fn[i]);
                     break;
                 case "counterfeit":
                     r[1]++;
-                    files.overWrite("suspect", "counterfeit", fn[i]);
+                    files.overWrite("counterfeit", fn[i]);
                     //counterfeitNames.push(fn[i]);
                     break;
                 case "suspect":
@@ -113,7 +108,7 @@ class Detector
                     
                     break;
             }//end switch
-            files.saveCloudCoinToJsonFile(cc, cc.sn);
+            
             callbacku(cc, files,((i+1)/fn.length*100), r);
             
             callbackl(coins, i+1, fn, r, callbacku, callbackl);
@@ -124,15 +119,12 @@ detectAllTemp(callback)
     {
         let results = [0, 0, 0, 0];
         
-        let fnames = [];
+        let fnames = importer.importAllFromFolder("temp");
         //let counterfeitNames = [];
         //let bankNames =[];
         //let frackedNames = [];
         let files = this.fileUtil;
-        for(var j = 0; j< localStorage.length; j++){
-            if(this.fileUtil.tempFolder.includes(localStorage.key(j))&&isNaN(localStorage.key(j)) ===false)
-            fnames.push(localStorage.key(j));
-        }
+        
         let coins = [];
         let i = 0;
         this.loopt(coins, i, fnames, results, callback, this.loopt);
@@ -152,21 +144,22 @@ detectAllTemp(callback)
                 coins.push(raida.detectCoin(files.loadMindCloudCoinFromJsonFile(fn[i])));
             
             coins[i].then(function(cc){
+            files.saveCloudCoinToJsonFile(cc, "temp."+cc.sn);
             switch (cc.getFolder().toLowerCase())
             {
                 case "bank":
                     r[0]++;
-                    files.overWrite("temp", "", fn[i]);
+                    //files.overWrite("", fn[i]);
                     //bankNames.push(fn[i]);
                     break;
                 case "fracked":
                     r[2]++;
-                    files.overWrite("temp", "", fn[i]);
+                    //files.overWrite("", fn[i]);
                     //frackedNames.push(fn[i]);
                     break;
                 case "counterfeit":
                     r[1]++;
-                    files.overWrite("temp", "", fn[i]);
+                    //files.overWrite("", fn[i]);
                     //counterfeitNames.push(fn[i]);
                     break;
                 case "suspect":
@@ -174,7 +167,7 @@ detectAllTemp(callback)
                     
                     break;
             }//end switch
-            files.saveCloudCoinToJsonFile(cc, cc.sn);
+            
             callbacku(cc, ((i+1)/fn.length*100), r);
             
             callbackl(coins, i+1, fn, r, callbacku, callbackl);
