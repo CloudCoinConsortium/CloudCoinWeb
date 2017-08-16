@@ -842,9 +842,12 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 		localStorage.setItem("mind."+cc.sn, "mindstorage");
 		mindlist();
 	}else{
+	for(let i = 0; i < 25; i++) {       
+            cc.pans[i] = cc.generatePan();
+    }
 	raida.detectCoin(cc).then(function(cc){
 		files.saveCloudCoinToJsonFile(cc, cc.getFolder().toLowerCase() +"."+cc.sn);
-            updates(cc, files);
+            mindlist();
 	});
 	}
 	
@@ -1111,6 +1114,7 @@ function moveFromMind(pan)
 	{
 		let cc = new CloudCoin(1, fnames[i], pan);
 		files.saveCloudCoinToJsonFile(cc, "suspect."+cc.sn);
+		localStorage.removeItem("mind."+cc.sn);
 		//files.writeTo("suspect", cc.sn);
 	}
 	document.getElementById("mindProgress").style.width = "75%";
