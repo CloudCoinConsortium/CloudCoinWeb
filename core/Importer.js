@@ -50,17 +50,10 @@ class Importer
             if(localStorage.key(j).includes(folder) && localStorage.key(j).includes("le") === false)
             fnames.push(localStorage.key(j));
         }
-        if(fnames.length == 0){return false;}
-        else{/*
-            for(let i = 0; i < fnames.length; i++){
-                //console.log(fnames[i]);
-                if(localStorage.getItem(fnames[i]).includes("mindstorage") == false){
-                coins.push(fileUtil.loadOneCloudCoinFromJsonFile(fnames[i]));
-                //this.updateFolder(coins[i], fileUtil);
-                }
-            }*/
+        
+        
             return fnames;
-        }
+        
     }
 /*
     updateFolder(cc, fileUtil)
