@@ -7,26 +7,24 @@ function populateRaidaStatus(rr, id)
 
 function exportDialAdd(dem)
 {
-	let dialCount = document.getElementById("dial"+dem).childElementCount - 3;
-	let htmltext ="<option disabled> </option>\n<option selected>0</option>\n";
-	for(let i =1;i<= dialCount+1; i++)
-	{
-		htmltext+="<option>"+i+"</option>";
-	}
-	htmltext +="<option disabled> </option>";
-	document.getElementById("dial"+dem).innerHTML = htmltext;
+	let dial = document.getElementById("dial"+dem);
+	let bottom = document.getElementById(dem+"bottom");
+	let dialCount = dial.childElementCount - 3;
+	let newOption = document.createElement("option");
+	newOption.textContent = dialCount+1;
+	dial.removeChild(bottom);
+	dial.appendChild(newOption);
+	dial.appendChild(bottom);
 }
 
 function exportDialMinus(dem)
 {
+	let dial = document.getElementById("dial"+dem);
+	let bottom = document.getElementById(dem+"bottom");
 	let dialCount = document.getElementById("dial"+dem).childElementCount - 3;
-	let htmltext ="<option disabled> </option>\n<option selected>0</option>\n";
-	for(let i =1;i<= dialCount-1; i++)
-	{
-		htmltext+="<option>"+i+"</option>";
-	}
-	htmltext +="<option disabled> </option>";
-	document.getElementById("dial"+dem).innerHTML = htmltext;
+	dial.removeChild(bottom);
+	dial.removeChild(dial.lastChild);
+	dial.appendChild(bottom);
 	document.getElementById("dial"+dem).scrollTop = 0;
 }
 
