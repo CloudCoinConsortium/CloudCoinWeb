@@ -15,13 +15,13 @@
     <script src="core/RaidaResponse.js?v=1"></script>
     <script src="core/random.min.js?v=1"></script>
     <script src="core/CloudCoin.js?v=1"></script>
-    <script src="core/FileUtils.js?v=4"></script>
-    <script src="core/main.js?v=20"></script>
+    <script src="core/FileUtils.js?v=5"></script>
+    <script src="core/main.js?v=21"></script>
     <script src="core/RAIDA.js?v=3"></script>
-    <script src="core/Importer.js?v=2"></script>
-    <script src="core/Detector.js?v=4"></script>
-    <script src="core/Banker.js?v=1"></script>
-    <script src="core/Frack_Fixer.js?v=3"></script>
+    <script src="core/Importer.js?v=3"></script>
+    <script src="core/Detector.js?v=5"></script>
+    <script src="core/Banker.js?v=2"></script>
+    <script src="core/Frack_Fixer.js?v=4"></script>
     <script src="core/FixitHelper.js?v=1"></script>
     <script src="core/Exporter.js?v=1"></script>
     <script src="core/FileSaver.js?v=1"></script>
@@ -368,6 +368,7 @@
                         <span id="topInfo" style="margin-left:auto; margin-right:auto;  color:white; background-color:blue">
                         Used to Authenticate, Store and Payout CloudCoins.
                         This software is provided as is with all faults, defects and errors and without warranty of any kind. Free from the CloudCoin Consortium.
+                        We have recently updated this site with some huge changes. Contact chernyshovtesero@protonmail.com if you have any problems.
                        </span>
                         <div id="loading" style="text-align:center;">
                             <p style="font-size:72px;">LOADING</p>
@@ -383,7 +384,7 @@
                     <img src="img/bank/import_icon.svg"><br><span id="butImport">Import</span></button>
                     <button class="large-auto cell button lgfont" data-open="bankModal" onclick="bankMode()">
                     <img src="img/bank/bank_icon.svg"><br><span id="butBank">Safe</span></button>
-                    <button class="large-auto cell button lgfont" data-open="newExportModal">
+                    <button class="large-auto cell button lgfont" data-open="newExportModal" onclick="exportMode();">
                     <img src="img/bank/export_icon.svg" ><br><span id="butExport">Export</span>
                     </button>
 
@@ -393,7 +394,7 @@
                     <span id="botInfo" style="margin-left:auto; margin-right:auto; width:250px;color:white; background-color:blue">Your coins will be stored in your browsing data. Make sure you do not delete browsing data before exporting coins. This also means that you should not be using this site in private/incognito mode.</span>
                     <p id="edition">
                         CloudCoin Web Edition
-                        <br> Version 2017.8.14
+                        <br> Version 2017.8.16
                     </p>
                 </div>
             </div>
@@ -506,8 +507,8 @@
                 </table>
                 <div id="fixStatusContainer"></div>
                 <button class="button" onclick="fix.fixAll(updates)" id="fixButton">Fix Fracked</button>
-                <button id="butB2M" class="button" data-open="mindToModal" onclick="emptyprogress('toMindMessage')">Bank to Mind</button>
-                <button id="butM2B" class="button" data-open="mindFromModal" onclick="emptyprogress('mindProgress');document.getElementById('fromMindStatus').innerHTML='';">
+                <button id="butB2M" class="button" data-open="mindToModal" onclick="toMindMode()">Bank to Mind</button>
+                <button id="butM2B" class="button" data-open="mindFromModal" onclick="fromMindMode()">
    Mind to Bank</button>
                 <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
@@ -565,40 +566,40 @@
                         <select onscroll="scrollSelect('1')" id="dial1" size="3" onchange="dialSet('1')">
     <option disabled> </option>
     <option selected>0</option>
-    <option disabled> </option>
+    <option id="1bottom" disabled> </option>
     </select>
                     </div>
                     <div class="auto cell">5s
                         <select onscroll="scrollSelect('5')" id="dial5" size="3" onchange="dialSet('5')">
         <option disabled> </option>
     <option selected>0</option>
-    <option disabled> </option>
+    <option id="5bottom" disabled> </option>
     </select>
                     </div>
                     <div class="auto cell">25s
                         <select onscroll="scrollSelect('25')" id="dial25" size="3" onchange="dialSet('25')">
         <option disabled> </option>
     <option selected>0</option>
-    <option disabled> </option>
+    <option id="25bottom" disabled> </option>
     </select>
                     </div>
                     <div class="auto cell">100s
                         <select onscroll="scrollSelect('100')" id="dial100" size="3" onchange="dialSet('100')">
         <option disabled> </option>
     <option selected value=0>0</option>
-    <option disabled> </option>
+    <option id="100bottom" disabled> </option>
     </select>
                     </div>
                     <div class="auto cell">250s
                         <select onscroll="scrollSelect('250')" id="dial250" size="3" onchange="dialSet('250')">
         <option disabled> </option>
     <option selected value=0>0</option>
-    <option disabled> </option>
+    <option id="250bottom" disabled> </option>
     </select>
                     </div>
 
                 </div>
-                <button id="butLegacyExport" class="small button" data-open="exportModal">Export Specific Coins</button>
+                <button id="butLegacyExport" class="small button" data-open="exportModal" onclick="exportModeOld()">Export Specific Coins</button>
 
                 <div>
 
@@ -689,7 +690,7 @@
                             </table>
                             <table>
                                 <tbody id="coinlistsuspect"></tbody>
-                                </ul>
+                                </table>
                                 <table>
                                     <tbody id="mcoinlistcounterfeit"></tbody>
                                 </table>
@@ -722,27 +723,27 @@
 
 
     <script>
-        let raida = new RAIDA(3000);
-        let files = new FileUtils();
-        let log = new Log();
-        let importer = new Importer();
-        let detect = new Detector(files, 3000);
-        let coins = importer.importAll(files);
-        let fix = new Frack_Fixer(files, 60000);
-        let canvases = createCanvas();
-        //alert(coins);
-        mindlist();
-        for (let j = 0; j < coins.length; j++) {
-            coinlist(coins[j], files);
-            scoinlist(coins[j], files);
-        }
-        updateTotal(files);
-        sortTable("coinlistbank");
-        sortTable("coinlistfracked");
-        sortTable("mcoinlistbank");
-        sortTable("mcoinlistfracked");
-        document.getElementsByClassName("off-canvas-wrapper")[0].style.opacity = 1.0;
-        document.getElementById("loading").innerHTML = "";
+         let raida = new RAIDA(3000);
+            let files = new FileUtils();
+            let log = new Log();
+            let importer = new Importer();
+            let detect = new Detector(files, 3000);
+            let fix = new Frack_Fixer(files, 60000);
+            let canvases = createCanvas();
+            //alert(coins);
+
+            if(isNaN(localStorage.key(0))===false)
+            convertOld();
+
+
+
+
+            
+            
+            
+            
+            
+            loadEnd();
         if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
             document.getElementById("ygrid").classList.remove("grid-y", "large-grid-frame");
             document.getElementsByClassName("dlJpeg")[0].setAttribute("disabled", ""); -
