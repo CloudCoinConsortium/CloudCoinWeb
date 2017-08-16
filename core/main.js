@@ -182,11 +182,13 @@ function scoinlist(id)
 
 function mindlist()
 {
+	let id;
 	document.getElementById("coinlistmind").innerHTML = "";
 		for(var j = 0; j< localStorage.length; j++){
-            if(localStorage.getItem(localStorage.key(j)) == "mindstorage")
+            if(localStorage.getItem(localStorage.key(j)) == "mindstorage"){
+				id = localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1);
 			document.getElementById("coinlistmind").innerHTML +="<li id = 'm" + 
-		localStorage.key(j) + "'><input type='checkbox' id='mcb"+localStorage.key(j)+"'>" + localStorage.key(j) + "</li>";
+		id + "'><input type='checkbox' id='mcb"+id+"'>" + id + "</li>"};
         }
 	
 }

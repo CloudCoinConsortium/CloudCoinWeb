@@ -264,13 +264,14 @@ function scoinlist(id)
 
 function mindlist()
 {
+	let id;
 	document.getElementById("coinlistmind").innerHTML = "";
 		for(var j = 0; j< localStorage.length; j++){
             if(localStorage.getItem(localStorage.key(j)) == "mindstorage"){
-			let id = localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1);
+				id = localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1);
 			document.getElementById("coinlistmind").innerHTML +="<li id = 'm" + 
-		id + "'><input type='checkbox' id='mcb"+id+"'>" + id + "</li>";
-        }}
+		id + "'><input type='checkbox' id='mcb"+id+"'>" + id + "</li>"};
+        }
 	
 }
 
