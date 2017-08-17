@@ -21,7 +21,7 @@
     <script src="core/Importer.js?v=4"></script>
     <script src="core/Detector.js?v=5"></script>
     <script src="core/Banker.js?v=2"></script>
-    <script src="core/Frack_Fixer.js?v=4"></script>
+    <script src="core/Frack_Fixer.js?v=5"></script>
     <script src="core/FixitHelper.js?v=1"></script>
     <script src="core/Exporter.js?v=1"></script>
     <script src="core/FileSaver.js?v=1"></script>
@@ -57,6 +57,12 @@
             font-size: 20px;
             text-align: center;
             box-shadow: 0px 30px 50px -30px #777 inset, 0px -30px 50px -30px #777 inset;
+        }
+        .check{
+            color:green;
+        }
+        .notcheck{
+            color:red;
         }
     </style>
 </head>
@@ -273,6 +279,21 @@
 
                     </div>
                 </li>
+
+                <li class="accordion-item " data-accordion-item>
+                    <!-- Accordion tab title -->
+                    <a href="#" class="accordion-title">What do I do if my coin didn't fix and is see a red X?</a>
+
+
+                    <div class="accordion-content" data-tab-content>
+                        <p>This is mostly likely caused by a raida server being down.
+                            Wait a while for it to come back up and try again.
+                            If the problem persists after a couple of days, you can try sending a log to us through email.
+                        </p>
+
+                    </div>
+                </li>
+                
                 <li class="accordion-item " data-accordion-item>
                     <!-- Accordion tab title -->
                     <a href="#" class="accordion-title">Why is the Download as Image button grey?</a>
