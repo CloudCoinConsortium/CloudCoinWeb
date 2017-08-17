@@ -255,6 +255,7 @@ function emailRecover()
 	}else {
 		alert("Please Enter a valid serial number");
 	}
+	mindlist();
 }
 
 function restoreFailedDownload()
@@ -435,6 +436,15 @@ function downloadAll(N=false)
 	
 }
 
+function makeBackup()
+{
+	let fnames = importer.importAllGood();
+	let now = new Date();
+	log.updateLog("Making backup " + now.toUTCString() +" total amount of items:" + fnames.length);
+	let tag = "backup." + now.toISOString().substring(0,19);
+	files.downloadAllCloudCoinToJsonFile(fnames, tag);
+}
+
 function checkAll(mind = 0)
 {
 	
@@ -451,9 +461,7 @@ function checkAll(mind = 0)
 		document.getElementById("mcb" + id).checked = false;
 		}
 	}else if(mind == 1){
-		let ffnames = importer.importAllFromFolder("fracked");
-    let bfnames = importer.importAllFromFolder("bank");
-	let fnames = bfnames.concat(ffnames);
+		let fnames = importer.importAllGood();
 		for(let i = 0; i < fnames.length; i++)
 		{
 			id = fnames[i].substring(fnames[i].indexOf('.')+1);
@@ -463,9 +471,7 @@ function checkAll(mind = 0)
 		document.getElementById("scb" + id).checked = false;
 		}
 	}else{
-		let ffnames = importer.importAllFromFolder("fracked");
-    let bfnames = importer.importAllFromFolder("bank");
-	let fnames = bfnames.concat(ffnames);
+		let fnames = importer.importAllGood();
 		for(let i = 0; i < fnames.length; i++)
 		{
 			id = fnames[i].substring(fnames[i].indexOf('.')+1);
@@ -678,6 +684,10 @@ function updates(cc, fileUtil, percent=0, results = null)
 	if(importer.importAllFromFolder("counterfeit").length > 0)
 	{
 		trashFolder("counterfeit");
+	}
+	if(percent == 100 && results[3] == 0)
+	{
+		makeBackup();
 	}
 }
 

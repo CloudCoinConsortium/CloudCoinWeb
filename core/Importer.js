@@ -27,6 +27,28 @@ class Importer
         
     }
 
+    importAllGood()
+    {
+        let fnames = [];
+        //let coins = [];
+        for(var j = 0; j< localStorage.length; j++){
+            if(localStorage.key(j).includes("le") === false && (localStorage.key(j).includes("bank") ||localStorage.key(j).includes("fracked")))
+            fnames.push(localStorage.key(j));
+        }
+        /*let k = 0;
+            for(let i = 0; i < fnames.length; i++){
+                //console.log(fnames[i]);
+				if(localStorage.getItem(fnames[i]).includes("mindstorage") == false){
+                //alert(localStorage.getItem(fnames[i]));
+				coins.push(fileUtil.loadOneCloudCoinFromJsonFile(fnames[i]));
+                this.updateFolder(coins[k], fileUtil);
+				k++;
+				}
+            }*/
+            return fnames;
+        
+    }
+
     importAllFromFolder(folder)
     {
         /*switch(folder)
