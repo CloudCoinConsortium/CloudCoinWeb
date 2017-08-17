@@ -19,7 +19,8 @@ class Frack_Fixer
         if(stat.failsFix[raida_ID] || stat.failsEcho[raida_ID])
         {
             console.log("RAIDA Fails Echo or Fix. Try again when RAIDA online.");
-            msg.innerHTML += "RAIDA Fails Echo or Fix. Try again when RAIDA online.<br>";
+            if(corner==4)
+            msg.innerHTML += "Raida:"+raida_ID+"<span class='notcheck'>&times;</span>  ";
             log.updateLog("RAIDA Fails Echo or Fix. Try again when RAIDA online.");
             return Promise.resolve("RAIDA Fails Echo or Fix. Try again when RAIDA online.");
         }
@@ -45,26 +46,29 @@ class Frack_Fixer
                 if(outcome)
                 {
                     console.log(cc.sn + " RAIDA " + raida_ID + " unfracked successfully");
-                    msg.innerHTML += cc.sn + " RAIDA " + raida_ID + " unfracked successfully<br>";
+                    msg.innerHTML += "Raida:"+raida_ID+"<span class='check'>&check;</span>  ";
                     log.updateLog(cc.sn + " RAIDA " + raida_ID + " unfracked successfully");
                     return cc.sn + " RAIDA " + raida_ID + " unfracked successfully";
                 } else {
                     console.log( cc.sn + " RAIDA " + raida_ID + ": Failed to accept tickets on corner " + corner );
-                    msg.innerHTML += cc.sn + " RAIDA " + raida_ID + ": Failed to accept tickets on corner " + corner +"<br>";
+                    if(corner==4)
+                    msg.innerHTML += "Raida:"+raida_ID+"<span class='notcheck'>&times;</span>  ";
                     log.updateLog( cc.sn + " RAIDA " + raida_ID + ": Failed to accept tickets on corner " + corner );
                     return cc.sn + " RAIDA " + raida_ID + ": Failed to accept tickets on corner " + corner;
                 }//end did the fix work?
                  });
             } else {
                 console.log( cc.sn + " RAIDA " + raida_ID + ": Trusted servers failed to provide tickets for corner " + corner);
-                msg.innerHTML += cc.sn + " RAIDA " + raida_ID + ": Trusted servers failed to provide tickets for corner " + corner+"<br>";
+                if(corner == 4)
+                msg.innerHTML +="Raida:"+raida_ID+"<span class='notcheck'>&times;</span>  ";
                 log.updateLog( cc.sn + " RAIDA " + raida_ID + ": Trusted servers failed to provide tickets for corner " + corner);
                 return cc.sn + " RAIDA " + raida_ID + ": Trusted servers failed to provide tickets for corner " + corner;
             } //end are tickets good
         });
         }// end are trusted raida ready
         else{console.log( cc.sn + " RAIDA " + raida_ID + ": One or more of the trusted triad will not echo and detect. So not trying.");
-        msg.innerHTML += cc.sn + " RAIDA " + raida_ID + ": One or more of the trusted triad will not echo and detect. So not trying.<br>";
+        if(corner==4)
+        msg.innerHTML += "Raida:"+raida_ID+"<span class='notcheck'>&times;</span>  ";
         log.updateLog( cc.sn + " RAIDA " + raida_ID + ": One or more of the trusted triad will not echo and detect. So not trying.");
         return Promise.resolve(cc.sn + " RAIDA " + raida_ID + ": One or more of the trusted triad will not echo and detect. So not trying.");
         }    
