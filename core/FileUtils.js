@@ -155,7 +155,7 @@ class FileUtils
             tag = tag.slice(0,7);
         }
         let filedata = JSON.stringify(obj);
-        let fullFileName = cc.getDenomination() + ".CloudCoins." + tag + ".stack";
+        let fullFileName = cc.getDenomination() + ".cloudcoin." + tag + ".stack";
         let downFile = new File([filedata], fullFileName);
         saveAs(downFile, fullFileName);
         
@@ -187,7 +187,7 @@ class FileUtils
             tag = tag.slice(0,7);
         }
         let filedata = JSON.stringify(obj);
-        let fullFileName = total + ".CloudCoins." + tag + ".stack";
+        let fullFileName = total + ".cloudcoin." + tag + ".stack";
         let downFile = new File([filedata], fullFileName);
         saveAs(downFile, fullFileName);
         
@@ -466,7 +466,7 @@ overWrite(foldernew, filename)
     findCoin(id)
     {
         for(var j = 0; j< localStorage.length; j++){
-            if(localStorage.key(j).includes(id))
+            if(localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1) === id && !localStorage.key(j).includes("le"))
             return localStorage.key(j);
         }
         return false;
