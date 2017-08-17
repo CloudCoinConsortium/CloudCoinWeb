@@ -275,7 +275,7 @@ function restoreFailedDownload()
 			localStorage.removeItem("le"+fname);
 		}
 	}
-	
+	document.getElementById("restoreDone").innerHTML = "Done";
 }
 
 
