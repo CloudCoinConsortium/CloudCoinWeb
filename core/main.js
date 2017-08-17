@@ -256,19 +256,30 @@ function fromMindMode()
 function emailRecover()
 {
 	
-	let sn = prompt("What is the serial number of the coin you want to recover?");
-	if(sn !== "" && !isNaN(parseFloat(sn)) && isFinite(sn) && sn > 0 && sn < 16777216)
+	let sn = prompt("What is the serial number(s) of the coin you want to recover?\nIf you are inputing multiple numbers seperate them with a comma.");
+	if(sn.includes(", "))
+		sn = sn.split(", ");
+	else if(sn.includes(","))
+		sn = sn.split(",");
+	else
+		sn = [sn];
+
+	if(sn[sn.length-1] == "")
+		sn.pop();
+	for(let i = 0; i < sn.length; i++){
+	if(sn[i] !== "" && !isNaN(parseFloat(sn[i])) && isFinite(sn[i]) && sn[i] > 0 && sn[i] < 16777216)
 	{
-		if(!localStorage.getItem(files.findCoin(sn))){
-			localStorage.setItem("mind."+sn, "mindstorage");
-		log.updateLog("Recovered sn:" +sn+" from email.");
+		if(!localStorage.getItem(files.findCoin(sn[i]))){
+			localStorage.setItem("mind."+sn[i], "mindstorage");
+		log.updateLog("Recovered sn:" +sn[i]+" from email.");
 		//mindlist();
 			
 		}else{
-			alert("Coin of SN:"+sn+" is already in this app.");
+			alert("Coin of SN:"+sn[i]+" is already in this app.");
 		}
 	}else {
 		alert("Please Enter a valid serial number");
+	}
 	}
 	mindlist();
 }
