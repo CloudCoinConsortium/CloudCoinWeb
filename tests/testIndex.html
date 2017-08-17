@@ -441,6 +441,7 @@
                     This app has the current version of coin(s): <span id="duplicateNumbers"></span>
                 </div>
                 <div id="deleteMessage"></div>
+                <p>We now have you download a backup of your coins after importing is finished.</p>
                 <button class="close-button" data-close aria-label="Close modal" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
@@ -455,6 +456,8 @@
 
 
             <div class="reveal" id="bankModal" data-reveal>
+                <button class="close-button" data-close aria-label="Close modal" type="button"><span aria-hidden="true">&times;</span></button>
+                <h3></h3>
                 <table>
                     <tbody>
                         <tr>
@@ -504,11 +507,9 @@
                 <div id="fixStatusContainer"></div>
                 <button class="button" onclick="fix.fixAll(updateTotal)" id="fixButton">Fix Fracked</button>
                 <button id="butB2M" class="button" data-open="mindToModal" onclick="toMindMode()">Bank to Mind</button>
-                <button id="butM2B" class="button" data-open="mindFromModal" onclick="fromMindMode()">
-   Mind to Bank</button>
-                <button class="close-button" data-close aria-label="Close modal" type="button">
-    <span aria-hidden="true">&times;</span>
-  </button>
+                <button id="butM2B" class="button" data-open="mindFromModal" onclick="fromMindMode()">Mind to Bank</button>
+                <button class="button" onclick="makeBackup()">Backup Coins</button>
+                
             </div>
 
             <div class="reveal" id="exportModal" data-reveal>
@@ -609,7 +610,7 @@
                     </div>
 
                     <div class="reveal" id="mindFromModal" data-reveal>
-                        <h3 id="m2bHead">Take Out of Mind Inventory </h3>
+                        <h3 id="m2bHead">Take Out of Mind Inventory <button class="small button" data-open="bankModal">Back</button></h3>
                         <input type="checkbox" id="m2bcbAll" onchange="checkAll(2)"> <span>check all</span>
                         <ul id="coinlistmind">
                         </ul>
@@ -631,7 +632,7 @@
                     </div>
 
                     <div class="reveal" id="mindToModal" data-reveal>
-                        <h3 id="b2mHead">Move into Mind Inventory </h3>
+                        <h3 id="b2mHead">Move into Mind Inventory <button class="small button" data-open="bankModal">Back</button></h3>
                         <!--<iframe name="mtmi" style="display:none;"></iframe>-->
                         <input type="checkbox" id="b2mcbAll" onchange="checkAll(1)"> <span id="checkAllM">check all</span>
 
