@@ -94,7 +94,7 @@
                     </li>
 
                     <li></li>
-                    <li><a data-open="offCanvasFaq" style="color:#ffffff">FAQ/Help</a></li>
+                    <li><a data-open="offCanvasFaq" style="color:#ffffff" onclick="window.requestAnimationFrame(function(){document.getElementById('restoreDone').innerHTML ='';});">FAQ/Help</a></li>
                 </ul>
             </div>
 
@@ -250,6 +250,7 @@
                     <div class="accordion-content" data-tab-content>
                         <p>Click this button to restore the coins of you last download.</p>
                         <button class="small button" onclick="restoreFailedDownload()">Restore</button>
+                        <p id="restoreDone"></p>
                     </div>
                 </li>
                 <li class="accordion-item " data-accordion-item>
@@ -501,7 +502,7 @@
                     </tbody>
                 </table>
                 <div id="fixStatusContainer"></div>
-                <button class="button" onclick="fix.fixAll(updates)" id="fixButton">Fix Fracked</button>
+                <button class="button" onclick="fix.fixAll(updateTotal)" id="fixButton">Fix Fracked</button>
                 <button id="butB2M" class="button" data-open="mindToModal" onclick="toMindMode()">Bank to Mind</button>
                 <button id="butM2B" class="button" data-open="mindFromModal" onclick="fromMindMode()">
    Mind to Bank</button>
@@ -609,6 +610,7 @@
 
                     <div class="reveal" id="mindFromModal" data-reveal>
                         <h3 id="m2bHead">Take Out of Mind Inventory </h3>
+                        <input type="checkbox" id="m2bcbAll" onchange="checkAll(2)"> <span>check all</span>
                         <ul id="coinlistmind">
                         </ul>
                         <p id="m2bWarn">Use the exact username, password, and email that you used to put the coins in your mind. Note that they are all case sensitive.
@@ -631,7 +633,7 @@
                     <div class="reveal" id="mindToModal" data-reveal>
                         <h3 id="b2mHead">Move into Mind Inventory </h3>
                         <!--<iframe name="mtmi" style="display:none;"></iframe>-->
-                        <input type="checkbox" id="mcbAll" onchange="checkAll(true)"> <span id="checkAllM">check all</span>
+                        <input type="checkbox" id="b2mcbAll" onchange="checkAll(1)"> <span id="checkAllM">check all</span>
 
 
                         <div class="grid-x">
