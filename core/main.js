@@ -188,7 +188,7 @@ function mindlist()
             if(localStorage.getItem(localStorage.key(j)) == "mindstorage"){
 				id = localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1);
 			document.getElementById("coinlistmind").innerHTML +="<li id = 'm" + 
-		id + "'><input type='checkbox' id='mcb"+id+"'>" + id + "</li>"};
+		id + "'><input type='checkbox' id='mcb"+id+"'>" + id + "  "+getDen(id)+"CC</li>"};
         }
 	
 }
