@@ -822,7 +822,9 @@ function trash(id)
 function trashBad(id)
 {
     
-        document.getElementById(id).remove();
+        if(document.getElementById(id))
+		document.getElementById(id).remove();
+		if(document.getElementById("s"+id))
 		document.getElementById("s"+id).remove();
         //files.overWrite("", "trash", id);
          
