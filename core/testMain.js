@@ -265,14 +265,30 @@ function scoinlist(id)
 function mindlist()
 {
 	let id;
-	document.getElementById("coinlistmind").innerHTML = "";
+	let listitem;
+	let listtext;
+	let checkbox;
+	let mlist = document.getElementById("coinlistmind");
+	mlist.innerHTML = "";
+	let fragment = document.createDocumentFragment();
 		for(var j = 0; j< localStorage.length; j++){
             if(localStorage.getItem(localStorage.key(j)) == "mindstorage"){
 				id = localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1);
-			document.getElementById("coinlistmind").innerHTML +="<li id = 'm" + 
-		id + "'><input type='checkbox' id='mcb"+id+"'>" + id + "</li>"};
+			//document.getElementById("coinlistmind").innerHTML +="<li id = 'm" + 
+		//id + "'><input type='checkbox' id='mcb"+id+"'>" + id + "  "+getDen(id)+"CC</li>"
+				listitem = document.createElement("li");
+				listitem.setAttribute("id", "m"+id);
+				checkbox = document.createElement("input");
+				checkbox.setAttribute("type", "checkbox");
+				checkbox.setAttribute("id", "mcb"+id);
+				listitem.appendChild(checkbox);
+				listtext =document.createTextNode(" "+ id + "  " + getDen(id)+"CC");
+				listitem.appendChild(listtext);
+				fragment.appendChild(listitem);
+			};
         }
-	
+	mlist.appendChild(fragment);
+	sortList();
 }
 
 function toMindMode()
@@ -323,20 +339,32 @@ function fromMindMode()
 function emailRecover()
 {
 	
-	let sn = prompt("What is the serial number of the coin you want to recover?");
-	if(sn !== "" && !isNaN(parseFloat(sn)) && isFinite(sn) && sn > 0 && sn < 16777216)
+	let sn = prompt("What is the serial number(s) of the coin you want to recover?\nIf you are inputing multiple numbers seperate them with a comma.");
+	if(sn.includes(", "))
+		sn = sn.split(", ");
+	else if(sn.includes(","))
+		sn = sn.split(",");
+	else
+		sn = [sn];
+
+	if(sn[sn.length-1] == "")
+		sn.pop();
+	for(let i = 0; i < sn.length; i++){
+	if(sn[i] !== "" && !isNaN(parseFloat(sn[i])) && isFinite(sn[i]) && sn[i] > 0 && sn[i] < 16777216)
 	{
-		if(!localStorage.getItem(files.findCoin(sn))){
-			localStorage.setItem("mind."+sn, "mindstorage");
-		log.updateLog("Recovered sn:" +sn+" from email.");
+		if(!localStorage.getItem(files.findCoin(sn[i]))){
+			localStorage.setItem("mind."+sn[i], "mindstorage");
+		log.updateLog("Recovered sn:" +sn[i]+" from email.");
 		//mindlist();
 			
 		}else{
-			alert("Coin of SN:"+sn+" is already in this app.");
+			alert("Coin of SN:"+sn[i]+" is already in this app.");
 		}
 	}else {
 		alert("Please Enter a valid serial number");
 	}
+	}
+	mindlist();
 }
 
 function restoreFailedDownload()
@@ -513,10 +541,21 @@ function downloadAll(N=false)
 	{tag = document.getElementById("alltag").value;}
     files.downloadAllCloudCoinToJsonFile(fnames, tag);
     for(let i = 0; i < fnames.length; i++){
+		localStorage.setItem("le"+fnames[i], localStorage.getItem(fnames[i]));
 		log.updateLine(fnames[i].substring(fnames[i].indexOf('.')+1) + ",");
         trash(fnames[i].substring(fnames[i].indexOf('.')+1));
+		
 	}
 	
+}
+
+function makeBackup()
+{
+	let fnames = importer.importAllGood();
+	let now = new Date();
+	log.updateLog("Making backup " + now.toUTCString() +" total amount of items:" + fnames.length);
+	let tag = "backup." + now.toISOString().substring(0,19);
+	files.downloadAllCloudCoinToJsonFile(fnames, tag);
 }
 
 function checkAll(mind = 0)
@@ -534,9 +573,8 @@ function checkAll(mind = 0)
 		document.getElementById("mcb" + id).checked = false;
 		}
 	}else if(mind == 1){
-		let ffnames = importer.importAllFromFolder("fracked");
-    let bfnames = importer.importAllFromFolder("bank");
-	let fnames = bfnames.concat(ffnames);
+		
+	let fnames = importer.importAllGood();
 		for(let i = 0; i < fnames.length; i++)
 		{
 			id = fnames[i].substring(fnames[i].indexOf('.')+1);
@@ -546,9 +584,7 @@ function checkAll(mind = 0)
 		document.getElementById("scb" + id).checked = false;
 		}
 	}else{
-		let ffnames = importer.importAllFromFolder("fracked");
-    let bfnames = importer.importAllFromFolder("bank");
-	let fnames = bfnames.concat(ffnames);
+		let fnames = importer.importAllGood();
 		for(let i = 0; i < fnames.length; i++)
 		{
 			id = fnames[i].substring(fnames[i].indexOf('.')+1);
@@ -763,6 +799,10 @@ function updates(cc, fileUtil, percent=0, results = null)
 	{
 		trashFolder("counterfeit");
 	}
+	if(percent == 100 && results[3] == 0)
+	{
+		makeBackup();
+	}
 }
 
 function updatesTemp(cc, percent=0, results = null)
@@ -836,7 +876,7 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 	{
 		fullHtml +="<div class='callout warning'>Coin(s) that got slow responses:"
 		+ results[3];
-		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updates)'";
+		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updatesFromMind)'";
 		if(percent != 100)
 		fullHtml +=" disabled";
 		fullHtml += ">Re-Detect</div>";
@@ -863,6 +903,7 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 		files.saveCloudCoinToJsonFile(cc, cc.getFolder().toLowerCase() +"."+cc.sn);
             mindlist();
 	});
+	updateTotal(files);
 	}
 	
 	
@@ -923,7 +964,7 @@ function trashFolder(folder)
     let fnames = importer.importAllFromFolder(folder);
 
     for(let i = 0; i < fnames.length; i++){
-        trashBad(fnames[i]);}
+        trashBad(fnames[i].substring(fnames[i].indexOf('.')+1));}
 }
 
 function embedCC(cc, N=false)
@@ -1202,24 +1243,21 @@ function statusButton()
 });
     }
 }
-
+/*
 function sortTable(toSort) {
   var table, rows, switching, i, x, y, shouldSwitch;
   table = document.getElementById(toSort);
   switching = true;
-  /*Make a loop that will continue until
-  no switching has been done:*/
+  
   while (switching) {
     //start by saying: no switching is done:
     switching = false;
     rows = table.getElementsByTagName("TR");
-    /*Loop through all table rows (except the
-    first, which contains table headers):*/
+    
     for (i = 1; i < (rows.length - 1); i++) {
       //start by saying there should be no switching:
       shouldSwitch = false;
-      /*Get the two elements you want to compare,
-      one from current row and one from the next:*/
+      
       x = rows[i].getElementsByTagName("TD")[2];
       y = rows[i + 1].getElementsByTagName("TD")[2];
       //check if the two rows should switch place:
@@ -1230,12 +1268,36 @@ function sortTable(toSort) {
       }
     }
     if (shouldSwitch) {
-      /*If a switch has been marked, make the switch
-      and mark that a switch has been done:*/
+      
       rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
       switching = true;
     }
   }
+*/
+
+function sortTable(table) {
+    var tb = document.getElementById(table),
+        tr = Array.prototype.slice.call(tb.rows, 1), 
+        i,
+		col = 2;
+    tr = tr.sort(function (a, b) { 
+        return (a.cells[col].textContent.trim() 
+                .localeCompare(b.cells[col].textContent.trim(), undefined, {numeric: true})
+               );
+    });
+   for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]);
+}
+
+function sortList() {
+    var ul = document.getElementById("coinlistmind"),
+	list = Array.prototype.slice.call(ul.childNodes, 0),
+        i;
+    list = list.sort(function (a, b) { 
+        return (a.textContent.substring(a.textContent.indexOf(" ")+1,a.textContent.indexOf("  ")) 
+                .localeCompare(b.textContent.substring(b.textContent.indexOf(" ")+1,b.textContent.indexOf("  ")) , undefined, {numeric: true})
+               );
+    });
+   for(i = 0; i < list.length; ++i) ul.appendChild(list[i]);
 }
 
 function convertOld()

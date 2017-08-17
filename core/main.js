@@ -206,6 +206,7 @@ function mindlist()
 			};
         }
 	mlist.appendChild(fragment);
+	sortList();
 }
 
 function toMindMode()
@@ -1167,6 +1168,18 @@ function sortTable(table) {
                );
     });
    for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
+}
+
+function sortList() {
+    var ul = document.getElementById("coinlistmind"),
+	list = Array.prototype.slice.call(ul.childNodes, 0),
+        i;
+    list = list.sort(function (a, b) { 
+        return (a.textContent.substring(a.textContent.indexOf(" ")+1,a.textContent.indexOf("  ")) 
+                .localeCompare(b.textContent.substring(b.textContent.indexOf(" ")+1,b.textContent.indexOf("  ")) , undefined, {numeric: true})
+               );
+    });
+   for(i = 0; i < list.length; ++i) ul.appendChild(list[i]);
 }
 
 function convertOld()
