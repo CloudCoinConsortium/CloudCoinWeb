@@ -183,14 +183,29 @@ function scoinlist(id)
 function mindlist()
 {
 	let id;
-	document.getElementById("coinlistmind").innerHTML = "";
+	let listitem;
+	let listtext;
+	let checkbox;
+	let mlist = document.getElementById("coinlistmind");
+	mlist.innerHTML = "";
+	let fragment = document.createDocumentFragment();
 		for(var j = 0; j< localStorage.length; j++){
             if(localStorage.getItem(localStorage.key(j)) == "mindstorage"){
 				id = localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1);
-			document.getElementById("coinlistmind").innerHTML +="<li id = 'm" + 
-		id + "'><input type='checkbox' id='mcb"+id+"'>" + id + "  "+getDen(id)+"CC</li>"};
+			//document.getElementById("coinlistmind").innerHTML +="<li id = 'm" + 
+		//id + "'><input type='checkbox' id='mcb"+id+"'>" + id + "  "+getDen(id)+"CC</li>"
+				listitem = document.createElement("li");
+				listitem.setAttribute("id", "m"+id);
+				checkbox = document.createElement("input");
+				checkbox.setAttribute("type", "checkbox");
+				checkbox.setAttribute("id", "mcb"+id);
+				listitem.appendChild(checkbox);
+				listtext =document.createTextNode( id + "  " + getDen(id)+"CC");
+				listitem.appendChild(listtext);
+				fragment.appendChild(listitem);
+			};
         }
-	
+	mlist.appendChild(fragment);
 }
 
 function toMindMode()
