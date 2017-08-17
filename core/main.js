@@ -1127,39 +1127,18 @@ function statusButton()
     }
 }
 
-function sortTable(toSort) {
-  var table, rows, switching, i, x, y, shouldSwitch;
-  table = document.getElementById(toSort);
-  switching = true;
-  /*Make a loop that will continue until
-  no switching has been done:*/
-  while (switching) {
-    //start by saying: no switching is done:
-    switching = false;
-    rows = table.getElementsByTagName("TR");
-    /*Loop through all table rows (except the
-    first, which contains table headers):*/
-    for (i = 1; i < (rows.length - 1); i++) {
-      //start by saying there should be no switching:
-      shouldSwitch = false;
-      /*Get the two elements you want to compare,
-      one from current row and one from the next:*/
-      x = rows[i].getElementsByTagName("TD")[2];
-      y = rows[i + 1].getElementsByTagName("TD")[2];
-      //check if the two rows should switch place:
-      if (parseInt(x.innerHTML) > parseInt(y.innerHTML)) {
-        //if so, mark as a switch and break the loop:
-        shouldSwitch= true;
-        break;
-      }
-    }
-    if (shouldSwitch) {
-      /*If a switch has been marked, make the switch
-      and mark that a switch has been done:*/
-      rows[i].parentNode.insertBefore(rows[i + 1], rows[i]);
-      switching = true;
-    }
-  }
+function sortTable(table) {
+    var tb = document.getElementById(table),//.tBodies[0], // use `<tbody>` to ignore `<thead>` and `<tfoot>` rows
+        tr = Array.prototype.slice.call(tb.rows, 1), // put rows into array
+        i,
+		col = 2;
+    //reverse = -((+reverse) || -1);
+    tr = tr.sort(function (a, b) { // sort rows
+        return (a.cells[col].textContent.trim() // using `.textContent.trim()` for test
+                .localeCompare(b.cells[col].textContent.trim(), undefined, {numeric: true})
+               );
+    });
+   for(i = 0; i < tr.length; ++i) tb.appendChild(tr[i]); // append each row in order
 }
 
 function convertOld()
