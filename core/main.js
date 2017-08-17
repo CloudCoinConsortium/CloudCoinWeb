@@ -456,6 +456,7 @@ function downloadAll(N=false)
 	{tag = document.getElementById("alltag").value;}
     files.downloadAllCloudCoinToJsonFile(fnames, tag);
     for(let i = 0; i < fnames.length; i++){
+		localStorage.setItem("le"+fnames[i], localStorage.getItem(fnames[i]));
 		log.updateLine(fnames[i].substring(fnames[i].indexOf('.')+1) + ",");
         trash(fnames[i].substring(fnames[i].indexOf('.')+1));
 	}
@@ -815,6 +816,7 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 		files.saveCloudCoinToJsonFile(cc, cc.getFolder().toLowerCase() +"."+cc.sn);
             mindlist();
 	});
+	updateTotal(files);
 	}
 	
 	
@@ -875,7 +877,7 @@ function trashFolder(folder)
     let fnames = importer.importAllFromFolder(folder);
 
     for(let i = 0; i < fnames.length; i++){
-        trashBad(fnames[i]);}
+        trashBad(fnames[i].substring(fnames[i].indexOf('.')+1));}
 }
 
 function embedCC(cc, N=false)

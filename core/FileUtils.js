@@ -173,7 +173,7 @@ class FileUtils
         let total = 0;
         for(let i = 0; i < saveFile.length; i++){
         coin.push(JSON.parse(localStorage.getItem(saveFile[i])));
-        localStorage.setItem("le"+saveFile[i], localStorage.getItem(saveFile[i]));
+        
         //delete coin.pown;
         delete coin[i].time;
         let cc = new CloudCoin(1, coin[i].sn);
