@@ -8,6 +8,8 @@
     <title>Welcome to CloudCoin</title>
     <link rel="stylesheet" href="css6/foundation.css">
     <link rel="stylesheet" href="css6/app.css">
+    <!-- added by A-Lang -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css">
 
 
     <script src="core/DetectionAgent.js?v=2"></script>
@@ -58,11 +60,13 @@
             text-align: center;
             box-shadow: 0px 30px 50px -30px #777 inset, 0px -30px 50px -30px #777 inset;
         }
-        .check{
-            color:green;
+        
+        .check {
+            color: green;
         }
-        .notcheck{
-            color:red;
+        
+        .notcheck {
+            color: red;
         }
     </style>
 </head>
@@ -254,11 +258,11 @@
 
                     <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
                     <div class="accordion-content" data-tab-content>
-                        <p>Check out our video basic tutorial at <a href="https://www.youtube.com/watch?v=8cSu84dgWIY">https://www.youtube.com/watch?v=8cSu84dgWIY</a></p>
-                        
+                        <p>Check out our video basic tutorial at <a data-fancybox href="https://www.youtube.com/watch?v=8cSu84dgWIY">Play Video</a></p>
+
                     </div>
                 </li>
-                
+
                 <li class="accordion-item " data-accordion-item>
                     <!-- Accordion tab title -->
                     <a href="#" class="accordion-title">My Coin(s) failed to export/I canceled the download and my coins are gone. What should I do?</a>
@@ -297,9 +301,7 @@
 
 
                     <div class="accordion-content" data-tab-content>
-                        <p>This is mostly likely caused by a raida server being down.
-                            Wait a while for it to come back up and try again.
-                            If the problem persists after a couple of days, you can try sending a log to us through email.
+                        <p>This is mostly likely caused by a raida server being down. Wait a while for it to come back up and try again. If the problem persists after a couple of days, you can try sending a log to us through email.
                         </p>
 
                     </div>
@@ -396,7 +398,7 @@
 
                     <div class="large auto cell"></div>
                     <div class="large-4 cell">
-                        <img src="../img/bank/logo@3x.png" style="background-color:blue">
+                        <img src="img/bank/logo@3x.png" style="background-color:blue">
                         <br>
                         <span id="topInfo" style="margin-left:auto; margin-right:auto;  color:white; background-color:blue">
                         Used to Authenticate, Store and Payout CloudCoins.
@@ -427,7 +429,7 @@
                     <span id="botInfo" style="margin-left:auto; margin-right:auto; width:250px;color:white; background-color:blue">Your coins will be stored in your browsing data. Make sure you do not delete browsing data before exporting coins. This also means that you should not be using this site in private/incognito mode.</span>
                     <p id="edition">
                         CloudCoin Web Edition</p>
-                        Version 2017.8.17
+                    Version 2017.8.17
                 </div>
             </div>
 
@@ -647,7 +649,7 @@
                 </div>
 
                 <div class="reveal" id="mindFromModal" data-reveal>
-                    <h3 id="m2bHead">Take Out of Mind Inventory  <button class="small button" data-open="bankModal">Back</button></h3>
+                    <h3 id="m2bHead">Take Out of Mind Inventory <button class="small button" data-open="bankModal">Back</button></h3>
                     <input type="checkbox" id="m2bcbAll" onchange="checkAll(2)"> <span>check all</span>
                     <ul id="coinlistmind">
                     </ul>
@@ -669,7 +671,7 @@
                 </div>
 
                 <div class="reveal" id="mindToModal" data-reveal>
-                    <h3 id="b2mHead">Move into Mind Inventory  <button class="small button" data-open="bankModal">Back</button></h3>
+                    <h3 id="b2mHead">Move into Mind Inventory <button class="small button" data-open="bankModal">Back</button></h3>
                     <!--<iframe name="mtmi" style="display:none;"></iframe>-->
                     <input type="checkbox" id="b2mcbAll" onchange="checkAll(1)"> <span id="checkAllM">check all</span>
 
@@ -725,13 +727,13 @@
                             </table>
                             <table>
                                 <tbody id="coinlistsuspect"></tbody>
-                                </table>
-                                <table>
-                                    <tbody id="mcoinlistcounterfeit"></tbody>
-                                </table>
-                                <table>
-                                    <tbody id="mcoinlistsuspect"></tbody>
-                                </table>
+                            </table>
+                            <table>
+                                <tbody id="mcoinlistcounterfeit"></tbody>
+                            </table>
+                            <table>
+                                <tbody id="mcoinlistsuspect"></tbody>
+                            </table>
                         </div>
                     </div>
                     <button class="close-button" data-close aria-label="Close reveal" type="button">
@@ -758,33 +760,37 @@
 
 
     <script>
-         let raida = new RAIDA(3000);
-            let files = new FileUtils();
-            let log = new Log();
-            let importer = new Importer();
-            let detect = new Detector(files, 3000);
-            let fix = new Frack_Fixer(files, 60000);
-            let canvases = createCanvas();
-            //alert(coins);
+        let raida = new RAIDA(3000);
+        let files = new FileUtils();
+        let log = new Log();
+        let importer = new Importer();
+        let detect = new Detector(files, 3000);
+        let fix = new Frack_Fixer(files, 60000);
+        let canvases = createCanvas();
+        //alert(coins);
 
-            if(isNaN(localStorage.key(0))===false)
+        if (isNaN(localStorage.key(0)) === false)
             convertOld();
 
 
 
 
-            
-            
-            
-            
-            
-            loadEnd();
+
+
+
+
+
+        loadEnd();
         if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
             document.getElementById("ygrid").classList.remove("grid-y", "large-grid-frame");
             document.getElementsByClassName("dlJpeg")[0].setAttribute("disabled", ""); -
             document.getElementsByClassName("dlJpeg")[1].setAttribute("disabled", "");
         }
     </script>
+
+    <!-- added by A-Lang -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.js"></script>
 
 </body>
 
