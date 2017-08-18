@@ -156,7 +156,7 @@ class FileUtils
         }
         let filedata = JSON.stringify(obj);
         let fullFileName = cc.getDenomination() + ".cloudcoin." + tag + ".stack";
-        let downFile = new File([filedata], fullFileName);
+        let downFile = new Blob([filedata]);
         saveAs(downFile, fullFileName);
         
     }
@@ -188,7 +188,7 @@ class FileUtils
         }
         let filedata = JSON.stringify(obj);
         let fullFileName = total + ".cloudcoin." + tag + ".stack";
-        let downFile = new File([filedata], fullFileName);
+        let downFile = new Blob([filedata]);
         saveAs(downFile, fullFileName);
         
     }
