@@ -276,7 +276,8 @@ function emailRecover()
 		//mindlist();
 			
 		}else{
-			alert("Coin of SN:"+sn[i]+" is already in this app.");
+			log.updateLog("Coin of SN:"+sn[i]+" is already in this app.");
+			console.log("Coin of SN:"+sn[i]+" is already in this app.");
 		}
 	}else {
 		alert("Please Enter a valid serial number");
@@ -672,15 +673,15 @@ function updates(cc, fileUtil, percent=0, results = null)
 	if(results[0] > 0 || results[2]> 0)
 	{
 		if(results[0] > 0)
-			msg+= "Coin(s) to bank:" + results[0] + "<br>";
+			msg+= "Note(s) to bank:" + results[0] + "<br>";
 		if(results[2] > 0)
-			msg+= "Coin(s) that are fracked:" +results[2] + "<br>";
+			msg+= "Note(s) that are fracked:" +results[2] + "<br>";
 		fullHtml = "<div class='callout success'>"
 		+ msg + "</div>";
 	}
 	if(results[3] > 0)
 	{
-		fullHtml +="<div class='callout warning'>Coin(s) that got slow responses:"
+		fullHtml +="<div class='callout warning'>Note(s) that got slow responses:"
 		+ results[3];
 		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updates)'";
 		if(percent != 100)
@@ -689,7 +690,7 @@ function updates(cc, fileUtil, percent=0, results = null)
 	}
 	if(results[1] > 0)
 	{
-		fullHtml +="<div class='callout alert'>Coin(s) that are counterfeit:"
+		fullHtml +="<div class='callout alert'>Note(s) that are counterfeit:"
 		+ results[1] + "</div>";
 	}
 		document.getElementById("detailsTable").innerHTML += " "+
@@ -699,7 +700,7 @@ function updates(cc, fileUtil, percent=0, results = null)
 	document.getElementById("importStatus").innerHTML = fullHtml;
 	log.updateLog(fullHtml);
 	document.getElementById("uploadProgress").style.width = percent +"%";
-	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>"+percent+"%</p>";
+	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>"+Math.round(percent)+"%</p>";
 	if(percent == 100){
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
 	
@@ -728,15 +729,15 @@ function updatesTemp(cc, percent=0, results = null)
 	if(results[0] > 0 || results[2]> 0)
 	{
 		if(results[0] > 0)
-			msg+= "Coin(s) that are good:" + results[0] + "<br>";
+			msg+= "Note(s) that are good:" + results[0] + "<br>";
 		if(results[2] > 0)
-			msg+= "Coin(s) that are fracked:" +results[2] + "<br>";
+			msg+= "Note(s) that are fracked:" +results[2] + "<br>";
 		fullHtml = "<div class='callout success'>"
 		+ msg + "</div>";
 	}
 	if(results[3] > 0)
 	{
-		fullHtml +="<div class='callout warning'>Coin(s) that got slow responses:"
+		fullHtml +="<div class='callout warning'>Note(s) that got slow responses:"
 		+ results[3];
 		fullHtml += "<button class='small button' onclick='detect.detectAllTemp(updatesTemp)'";
 		if(percent != 100)
@@ -745,7 +746,7 @@ function updatesTemp(cc, percent=0, results = null)
 	}
 	if(results[1] > 0)
 	{
-		fullHtml +="<div class='callout alert'>Coin(s) that are counterfeit:"
+		fullHtml +="<div class='callout alert'>Note(s) that are counterfeit:"
 		+ results[1] + "</div>";
 	}
 		document.getElementById("detailsTable").innerHTML += " "+
@@ -755,7 +756,7 @@ function updatesTemp(cc, percent=0, results = null)
 	document.getElementById("importStatus").innerHTML = fullHtml;
 	log.updateLog(fullHtml);
 	document.getElementById("uploadProgress").style.width = percent +"%";
-	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>"+percent+"%</p>";
+	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>"+Math.round(percent)+"%</p>";
 	if(percent == 100){
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
 	
@@ -780,13 +781,13 @@ function updatesToMind(cc, percent=0, results = null)
 	if(results[0] > 0 || results[2]> 0)
 	{
 		
-			msg+= "Coin(s) moved successfully:" + (results[0]+results[2]) + "<br>";
+			msg+= "Note(s) moved successfully:" + (results[0]+results[2]) + "<br>";
 		fullHtml = "<div class='callout success'>"
 		+ msg + "</div>";
 	}
 	if(results[3] > 0)
 	{
-		fullHtml +="<div class='callout warning'>Coin(s) that got slow responses:"
+		fullHtml +="<div class='callout warning'>Note(s) that got slow responses:"
 		+ results[3];
 		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updatesToMind)'";
 		if(percent != 100)
@@ -795,7 +796,7 @@ function updatesToMind(cc, percent=0, results = null)
 	}
 	if(results[1] > 0)
 	{
-		fullHtml +="<div class='callout alert'>Coin(s) that are counterfeit:"
+		fullHtml +="<div class='callout alert'>Note(s) that are counterfeit:"
 		+ results[1] + "</div>";
 	}
 	}
@@ -805,7 +806,7 @@ function updatesToMind(cc, percent=0, results = null)
 	document.getElementById("toMindDetails").innerHTML = fullHtml;
 	log.updateLog(fullHtml);
 	document.getElementById("toMindMessage").style.width = percent +"%";
-	document.getElementById("toMindMessage").innerHTML="<p class='progress-meter-text'>"+percent+"%</p>";
+	document.getElementById("toMindMessage").innerHTML="<p class='progress-meter-text'>"+Math.round(percent)+"%</p>";
 	if(percent == 100){
 	
 	
@@ -835,6 +836,7 @@ function updatesToMind(cc, percent=0, results = null)
 function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 {
 	document.getElementById("mindProgress").style.width = percent +"%";
+	document.getElementById("mindProgress").innerHTML="<p class='progress-meter-text'>"+Math.round(percent)+"%</p>";
 	if(percent == 100)
 	document.getElementById("mindProgress").innerHTML="<p class='progress-meter-text'>done</p>";
 	let msg = "";
@@ -843,15 +845,15 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 	if(results[0] > 0 || results[2]> 0)
 	{
 		if(results[0] > 0)
-			msg+= "Coin(s) to bank:" + results[0] + "<br>";
+			msg+= "Notes(s) to bank:" + results[0] + "<br>";
 		if(results[2] > 0)
-			msg+= "Coin(s) that are fracked:" +results[2] + "<br>";
+			msg+= "Notes(s) that are fracked:" +results[2] + "<br>";
 		fullHtml = "<div class='callout success'>"
 		+ msg + "</div>";
 	}
 	if(results[3] > 0)
 	{
-		fullHtml +="<div class='callout warning'>Coin(s) that got slow responses:"
+		fullHtml +="<div class='callout warning'>Notes(s) that got slow responses:"
 		+ results[3];
 		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updatesFromMind)'";
 		if(percent != 100)
@@ -860,7 +862,7 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 	}
 	if(results[1] > 0)
 	{
-		fullHtml +="<div class='callout alert'>Coin(s) that are counterfeit:(you may have misspelled something.)"
+		fullHtml +="<div class='callout alert'>Notes(s) that are counterfeit:(you may have misspelled something.)"
 		+ results[1] + "</div>";
 	}
 		
