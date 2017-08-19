@@ -17,11 +17,11 @@
     <script src="core/RaidaResponse.js?v=1"></script>
     <script src="core/random.min.js?v=1"></script>
     <script src="core/CloudCoin.js?v=1"></script>
-    <script src="core/FileUtils.js?v=8"></script>
-    <script src="core/main.js?v=25"></script>
+    <script src="core/FileUtils.js?v=9"></script>
+    <script src="core/main.js?v=27"></script>
     <script src="core/RAIDA.js?v=3"></script>
     <script src="core/Importer.js?v=4"></script>
-    <script src="core/Detector.js?v=5"></script>
+    <script src="core/Detector.js?v=6"></script>
     <script src="core/Banker.js?v=2"></script>
     <script src="core/Frack_Fixer.js?v=5"></script>
     <script src="core/FixitHelper.js?v=1"></script>
@@ -649,7 +649,7 @@
                 </div>
 
                 <div class="reveal" id="mindFromModal" data-reveal>
-                    <h3 id="m2bHead">Take Out of Mind Inventory <button class="small button" data-open="bankModal">Back</button></h3>
+                    <h3 id="m2bHead">Take Out of Mind Inventory <button class="small button" data-open="bankModal" onclick="updateTotal(files)">Back</button></h3>
                     <input type="checkbox" id="m2bcbAll" onchange="checkAll(2)"> <span>check all</span>
                     <ul id="coinlistmind">
                     </ul>
@@ -671,7 +671,7 @@
                 </div>
 
                 <div class="reveal" id="mindToModal" data-reveal>
-                    <h3 id="b2mHead">Move into Mind Inventory <button class="small button" data-open="bankModal">Back</button></h3>
+                    <h3 id="b2mHead">Move into Mind Inventory <button class="small button" data-open="bankModal" onclick="updateTotal(files)">Back</button></h3>
                     <!--<iframe name="mtmi" style="display:none;"></iframe>-->
                     <input type="checkbox" id="b2mcbAll" onchange="checkAll(1)"> <span id="checkAllM">check all</span>
 
@@ -715,6 +715,7 @@
                         <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
                             <div class="progress-meter" id="toMindMessage"></div>
                         </div>
+                        <div id="toMindDetails"></div>
                         <button class="close-button" data-close aria-label="Close reveal" type="button">
     <span aria-hidden="true">&times;</span>
   </button>
