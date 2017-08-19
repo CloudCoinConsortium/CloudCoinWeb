@@ -137,6 +137,7 @@ class FileUtils
 
     downloadCloudCoinToJsonFile(saveFile, tag="")
     {
+        
         let obj = {
             cloudcoin:[
 
@@ -163,6 +164,7 @@ class FileUtils
 
     downloadAllCloudCoinToJsonFile(saveFile, tag="")
     {
+        
         let obj = {
             cloudcoin:[
 
@@ -465,6 +467,7 @@ overWrite(foldernew, filename)
 
     findCoin(id)
     {
+        id = id.toString();
         for(var j = 0; j< localStorage.length; j++){
             if(localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1) === id && !localStorage.key(j).includes("le"))
             return localStorage.key(j);

@@ -66,7 +66,13 @@ class Detector
         
         let coins = [];
         let i = 0;
+        if(callback.name == "updatesFromMind")
+        {
+        this.loopm2(coins, i, fnames, results, callback, this.loopm2);
+    }else
+    {
         this.loop(coins, i, fnames, results, callback, this.loop);
+    }
            
         
         //results[0] = totalValueToBank;
@@ -79,11 +85,9 @@ class Detector
     loop(coins, i, fn, r, callbacku, callbackl)
     {
          if(i<fn.length){
-         if(callbacku.name == "updatesFromMind"){
-                coins.push(raida.detectCoin(files.loadMindCloudCoinFromJsonFile(fn[i])));
-            } else{
+         
             coins.push(raida.detectCoin(files.loadOneCloudCoinFromJsonFile(fn[i])));
-            }
+            
             coins[i].then(function(cc){
             files.saveCloudCoinToJsonFile(cc, "suspect."+cc.sn);
             switch (cc.getFolder().toLowerCase())
@@ -112,6 +116,49 @@ class Detector
             callbacku(cc, files,((i+1)/fn.length*100), r);
             
             callbackl(coins, i+1, fn, r, callbacku, callbackl);
+             });}
+    }
+
+    loopm2(coins, i, fn, r, callbacku, callbackl)
+    {
+         if(i<fn.length){
+         
+            coins.push(raida.detectCoin(files.loadMindCloudCoinFromJsonFile(fn[i])));
+            
+            coins[i].then(function(cc){
+            files.saveCloudCoinToJsonFile(cc, "suspect."+cc.sn);
+            switch (cc.getFolder().toLowerCase())
+            {
+                case "bank":
+                    r[0]++;
+                    files.overWrite("bank", fn[i]);
+                    //bankNames.push(fn[i]);
+                    break;
+                case "fracked":
+                    r[2]++;
+                    files.overWrite("fracked", fn[i]);
+                    //frackedNames.push(fn[i]);
+                    break;
+                case "counterfeit":
+                    r[1]++;
+                    files.overWrite("counterfeit", fn[i]);
+                    //counterfeitNames.push(fn[i]);
+                    break;
+                case "suspect":
+                    r[3]++;
+                    
+                    break;
+            }//end switch
+            for(let i = 0; i < 25; i++) {       
+            cc.pans[i] = cc.generatePan();
+    }
+	raida.detectCoin(cc).then(function(cc){
+		files.saveCloudCoinToJsonFile(cc, cc.getFolder().toLowerCase() +"."+cc.sn);
+            callbacku(cc, files,((i+1)/fn.length*100), r);
+            
+            callbackl(coins, i+1, fn, r, callbacku, callbackl);
+	});
+            
              });}
     }
 
@@ -160,6 +207,63 @@ detectAllTemp(callback)
                 case "counterfeit":
                     r[1]++;
                     //files.overWrite("", fn[i]);
+                    //counterfeitNames.push(fn[i]);
+                    break;
+                case "suspect":
+                    r[3]++;
+                    
+                    break;
+            }//end switch
+            
+            callbacku(cc, ((i+1)/fn.length*100), r);
+            
+            callbackl(coins, i+1, fn, r, callbacku, callbackl);
+             });}
+    }
+
+    detectAllToMind(toBeMoved, callback)
+    {
+        let results = [0, 0, 0, 0];
+        
+       
+        
+        let coins = [];
+        
+        
+        let i = 0;
+        this.loop2m(coins, i, toBeMoved, results, callback, this.loop2m);
+           
+        
+        //results[0] = totalValueToBank;
+            //results[1] = totalValueToCounterfeit;
+            //results[2] = totalValueToFractured;
+            //results[3] = totalValueToKeptInSuspect;
+            return results;
+    }
+
+    loop2m(coins, i, fn, r, callbacku, callbackl)
+    {
+         if(i<fn.length){
+         
+            coins.push(raida.detectCoin(fn[i]));
+            
+            coins[i].then(function(cc){
+            //files.saveCloudCoinToJsonFile(cc, "suspect."+cc.sn);
+            switch (cc.getFolder().toLowerCase())
+            {
+                case "bank":
+                    r[0]++;
+                    //files.overWrite("bank", fn[i]);
+                    //bankNames.push(fn[i]);
+                    break;
+                case "fracked":
+                    r[2]++;
+                    //files.overWrite("fracked", fn[i]);
+                    //frackedNames.push(fn[i]);
+                    break;
+                case "counterfeit":
+                    r[1]++;
+                    //files.overWrite("counterfeit", fn[i]);
                     //counterfeitNames.push(fn[i]);
                     break;
                 case "suspect":

@@ -211,7 +211,7 @@ function mindlist()
 
 function toMindMode()
 {
-	
+	document.getElementById("toMindDetails").innerHTML = "";
 	emptyprogress('toMindMessage');
 	let before = (new Date()).getTime();
 	let loadBank = importer.importAllFromFolder("bank");
@@ -769,6 +769,69 @@ function updatesTemp(cc, percent=0, results = null)
 	
 }
 
+function updatesToMind(cc, percent=0, results = null)
+{
+    
+	trash(cc.sn);
+	localStorage.setItem("mind."+cc.sn, "mindstorage");
+	let msg = "";
+	let fullHtml = "";
+	if(results !== null){
+	if(results[0] > 0 || results[2]> 0)
+	{
+		
+			msg+= "Coin(s) moved successfully:" + (results[0]+results[2]) + "<br>";
+		fullHtml = "<div class='callout success'>"
+		+ msg + "</div>";
+	}
+	if(results[3] > 0)
+	{
+		fullHtml +="<div class='callout warning'>Coin(s) that got slow responses:"
+		+ results[3];
+		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updatesToMind)'";
+		if(percent != 100)
+		fullHtml +=" disabled";
+		fullHtml += ">Re-Detect</div>";
+	}
+	if(results[1] > 0)
+	{
+		fullHtml +="<div class='callout alert'>Coin(s) that are counterfeit:"
+		+ results[1] + "</div>";
+	}
+	}
+
+
+
+	document.getElementById("toMindDetails").innerHTML = fullHtml;
+	log.updateLog(fullHtml);
+	document.getElementById("toMindMessage").style.width = percent +"%";
+	document.getElementById("toMindMessage").innerHTML="<p class='progress-meter-text'>"+percent+"%</p>";
+	if(percent == 100){
+	
+	
+		document.getElementById("toMindMessage").style.width = "100%";
+		document.getElementById("toMindMessage").innerHTML="<p class='progress-meter-text'>done</p>";
+		document.getElementById("user2").value = "";
+		document.getElementById("pass2").value = "";
+		document.getElementById("email2").value = "";
+		//mindlist();
+	
+	
+		
+	}
+	
+	//mindlist();
+	
+	
+	//if(percent == 100 && results[3] == 0)
+	//{
+		
+		
+		
+	//}
+}
+
+
 function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 {
 	document.getElementById("mindProgress").style.width = percent +"%";
@@ -800,8 +863,7 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 		fullHtml +="<div class='callout alert'>Coin(s) that are counterfeit:(you may have misspelled something.)"
 		+ results[1] + "</div>";
 	}
-		document.getElementById("detailsTable").innerHTML += " "+
-		cc.sn+" "+cc.getFolder()+" "+cc.pown+" \n";
+		
 		
 	}
 	document.getElementById("fromMindStatus").innerHTML = fullHtml;
@@ -810,14 +872,9 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 		localStorage.setItem("mind."+cc.sn, "mindstorage");
 		mindlist();
 	}else{
-	for(let i = 0; i < 25; i++) {       
-            cc.pans[i] = cc.generatePan();
-    }
-	raida.detectCoin(cc).then(function(cc){
-		files.saveCloudCoinToJsonFile(cc, cc.getFolder().toLowerCase() +"."+cc.sn);
-            mindlist();
-	});
-	updateTotal(files);
+	
+	mindlist();
+	//updateTotal(files);
 	}
 	
 	
@@ -827,10 +884,9 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 function trash(id)
 {
     
-        if(document.getElementById(id))
+        if(document.getElementById(id)){
 		document.getElementById(id).remove();
-		if(document.getElementById("s"+id))
-		document.getElementById("s"+id).remove();
+		
         //files.overWrite("", "trash", id);
          if ((id < 2097153))
             {
@@ -852,8 +908,9 @@ function trash(id)
             {
                 exportDialMinus(250);
             }
-            
-		
+		}    
+		if(document.getElementById("s"+id))
+		document.getElementById("s"+id).remove();
         localStorage.removeItem(files.findCoin(id));
         //updateTotal(files);
 }
@@ -1002,7 +1059,7 @@ function mindStorage(callback)
 		 usern = document.getElementById("email2").value.toLowerCase();
 	     passw = document.getElementById("user2").value.toLowerCase();
 	     passw += document.getElementById("pass2").value;
-		 log.updateLog("Moving from mind pass1:"+ document.getElementById("email2").value +" pass2:" +document.getElementById("user2").value + document.getElementById("pass2").value);
+		 log.updateLog("Moving to mind pass1:"+ document.getElementById("email2").value +" pass2:" +document.getElementById("user2").value + document.getElementById("pass2").value);
 	}
 	let phrase1 = "";
 	let phrase2 = "";
@@ -1067,7 +1124,7 @@ function mindStorage(callback)
 
 function moveFromMind(pan)
 {
-	document.getElementById("mindProgress").style.width = "50%";
+	document.getElementById("mindProgress").style.width = "1%";
 	
 	let fnames = [];
 	log.updateLog("Moving from mind coins:");
@@ -1086,7 +1143,7 @@ function moveFromMind(pan)
 		localStorage.removeItem("mind."+cc.sn);
 		//files.writeTo("suspect", cc.sn);
 	}
-	document.getElementById("mindProgress").style.width = "75%";
+	document.getElementById("mindProgress").style.width = "2%";
 	document.getElementById("user").value = "";
 		document.getElementById("pass").value = "";
 		document.getElementById("email").value = "";
@@ -1103,7 +1160,7 @@ function moveToMind(newPan)
 	let k = 0;
 	log.updateLog("Moving into mind coins:");
 	for(let j = 0; j < localStorage.length; j++){
-        if(localStorage.getItem(localStorage.key(j)) != "mindstorage" && localStorage.key(j).includes("le")===false){
+        if(localStorage.getItem(localStorage.key(j)) != "mindstorage"&& localStorage.key(j).includes("le")===false){
 			 
 			if(document.getElementById("scb" + localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1)).checked){
 			toBeMoved.push(files.loadOneCloudCoinFromJsonFile(localStorage.key(j)));
@@ -1117,25 +1174,17 @@ xhttp.open("POST", "core/mailMind.php", true);
 xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 xhttp.send(data);
 xhttp.onreadystatechange = function(){
-	document.getElementById("toMindMessage").style.width = "50%";
+	document.getElementById("toMindMessage").style.width = "2%";
 	if(this.readyState == 4 && this.status == 200){
 	console.log(this.responseText);
-	let promises = [];
+	//let promises = [];
 	for(let i = 0; i<toBeMoved.length; i++){
 		toBeMoved[i].pans = newPan;
-		//files.overWrite(toBeMoved[i].getFolder().toLowerCase(), "suspect", toBeMoved[i].sn)
-		promises.push(raida.detectCoin(toBeMoved[i]));
-		trash(toBeMoved[i].sn);
-		localStorage.setItem("mind."+toBeMoved[i].sn, "mindstorage");
+		
+		
+		
 	}
-	Promise.all(promises).then(function(){
-		document.getElementById("toMindMessage").style.width = "100%";
-		document.getElementById("toMindMessage").innerHTML="<p class='progress-meter-text'>done</p>";
-		document.getElementById("user2").value = "";
-		document.getElementById("pass2").value = "";
-		document.getElementById("email2").value = "";
-		//mindlist();
-	});
+	detect.detectAllToMind(toBeMoved, updatesToMind); //change to detector
 }
 if(this.status == 400)
 console.log(this.responseText);
@@ -1188,19 +1237,30 @@ function convertOld()
 	let sn = [];
 	let data = [];
 	let folder = [];
+	let mind = [];
 	for(let j = 0; j< localStorage.length; j++)
 	{
 		if(isNaN(localStorage.key(j))===false){
-		cc = files.loadOneCloudCoinFromJsonFile(localStorage.key(j));
-		cc.reportDetectionResults();
-		sn.push(cc.sn);
-		folder.push(cc.getFolder().toLowerCase());
-		data.push(localStorage.getItem(localStorage.key(j)));
+			if(localStorage.getItem(localStorage.key(j)) == "mindstorage")
+			{
+				mind.push(localStorage.key(j));
+			}else{
+			cc = files.loadOneCloudCoinFromJsonFile(localStorage.key(j));
+			cc.reportDetectionResults();
+			sn.push(cc.sn);
+			folder.push(cc.getFolder().toLowerCase());
+			data.push(localStorage.getItem(localStorage.key(j)));
+			}
 		}
 	}
 	for(let i =0; i< data.length; i++)
 	{
 		localStorage.removeItem(sn[i]);
 		localStorage.setItem(folder[i]+"."+sn[i], data[i]);
+	}
+	for(let k = 0; k<mind.length; k++)
+	{
+		localStorage.removeItem(mind[k]);
+		localStorage.setItem("mind." + mind[k], "mindstorage");
 	}
 }
