@@ -156,8 +156,9 @@ class FileUtils
             tag = tag.slice(0,7);
         }
         let filedata = JSON.stringify(obj);
+        //filedata = filedata.replace("},","},\n");
         let fullFileName = cc.getDenomination() + ".cloudcoin." + tag + ".stack";
-        let downFile = new Blob([filedata]);
+        let downFile = new Blob([filedata], {type: 'application/json'});
         saveAs(downFile, fullFileName);
         
     }
@@ -189,6 +190,7 @@ class FileUtils
             tag = tag.slice(0,7);
         }
         let filedata = JSON.stringify(obj);
+        filedata = filedata.replace(/},/g,"},\r\n");
         let fullFileName = total + ".cloudcoin." + tag + ".stack";
         let downFile = new Blob([filedata]);
         saveAs(downFile, fullFileName);
