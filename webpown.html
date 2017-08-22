@@ -1,0 +1,536 @@
+<!doctype html>
+<html class="no-js" lang="en" dir="ltr">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to CloudCoin</title>
+    <link rel="stylesheet" href="css6/foundation.css">
+    <link rel="stylesheet" href="css6/app.css">
+    <!-- added by A-Lang -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.css">
+
+
+    <script src="core/DetectionAgent.js?v=1"></script>
+    <script src="core/RAIDA_Status.js?v=1"></script>
+    <script src="core/RaidaResponse.js?v=1"></script>
+    <script src="core/random.min.js?v=1"></script>
+    <script src="core/CloudCoin.js?v=1"></script>
+    <script src="corelite/FileUtilsLite.js?v=1"></script>
+    <script src="corelite/mainLite.js?v=1"></script>
+    <script src="core/RAIDA.js?v=1"></script>
+    <script src="corelite/ImporterLite.js?v=1"></script>
+    <script src="core/Detector.js?v=1"></script>
+    
+    <script src="corelite/Frack_FixerLite.js?v=1"></script>
+    <script src="core/FixitHelper.js?v=1"></script>
+    
+    <script src="core/FileSaver.js?v=1"></script>
+    
+    <script src="core/log.js?v=1"></script>
+    <style>
+        body {
+            background-color: blue;
+            background-image: url(img/bank/back_icons.svg);
+        }
+        
+        button.lgfont {
+            margin: 20px;
+            background-color: white;
+            font-size: 3rem;
+            border-radius: 3rem;
+            color: blue;
+            padding: 20px;
+            margin-left: 20px;
+        }
+        
+        td {
+            text-align: right;
+            margin: 0px;
+            padding: 1px;
+            line-height: 0;
+            color: white;
+            background-color: #333333;
+        }
+        
+        select {
+            height: 90px;
+            font-size: 20px;
+            text-align: center;
+            box-shadow: 0px 30px 50px -30px #777 inset, 0px -30px 50px -30px #777 inset;
+        }
+        
+        .check {
+            color: green;
+        }
+        
+        .notcheck {
+            color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="off-canvas-wrapper" style="opacity:0.5">
+        <div class="top-bar">
+
+
+            <div class="top-bar-left">
+                <a data-open="offCanvasRaida" onclick="statusButton()"><span ></span><img src="img/bank/RAIDA-logo-white.svg" width="100"></a>
+            </div>
+           <!-- <div class="top-bar-right">
+                <ul class="dropdown menu" data-dropdown-menu style="color:#ffffff">
+                    <li><a>LANG</a>
+                        <ul class="menu vertical">
+                            <li><a onclick="changeLanguage('values')">English</a></li>
+                            <li><a onclick="changeLanguage('values-de')">German</a></li>
+                            <li><a onclick="changeLanguage('values-es-r419')">Spanish</a></li>
+                            <li><a onclick="changeLanguage('values-sv')">Swedish</a></li>
+                            <li><a onclick="changeLanguage('values-cs')">Czech</a></li>
+                            <li><a onclick="changeLanguage('values-fr')">French</a></li>
+                            <li><a onclick="changeLanguage('values-hu')">Hungarian</a></li>
+                            <li><a onclick="changeLanguage('values-it')">Italian</a></li>
+                            <li><a onclick="changeLanguage('values-da')">Danish</a></li>
+                            <li><a onclick="changeLanguage('values-pt-rPT')">Portuguese</a></li>
+                            <li><a onclick="changeLanguage('values-sv')">Slovak</a></li>
+                            <li><a onclick="changeLanguage('values-ja')">Japanese</a></li>
+                            <li><a onclick="changeLanguage('values-ru')">Russian</a></li>
+                            <li><a onclick="changeLanguage('values-ro')">Romanian</a></li>
+                            <li><a onclick="changeLanguage('values-pl')">Polish</a></li>
+                            <li><a onclick="changeLanguage('values-zh-TW')">Traditional Chinese</a></li>
+                            <li><a onclick="changeLanguage('values-zh-CN')">Simplified Chinese</a></li>
+                        </ul>
+                    </li>
+
+                    <li></li>
+                    <li><a data-open="offCanvasFaq" style="color:#ffffff" onclick="window.requestAnimationFrame(function(){document.getElementById('restoreDone').innerHTML ='';});">FAQ/Help</a></li>
+                </ul>
+            </div>-->
+
+
+
+        </div>
+        <div class="off-canvas position-left" id="offCanvasRaida" data-off-canvas style="background-color:black">
+            <img src="img/bank/RAIDA-logo-white.svg" width="300" style="padding:5px;">
+
+
+            <table>
+                <tr>
+                    <th id="echoRaida">Raida</th>
+                    <th id="echoStatus">Status</th>
+                    <th id="echoMillisec">Millisec</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td id="r_0"></td>
+                    <td id="p_0"></td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td id="r_1"></td>
+                    <td id="p_1"></td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td id="r_2"></td>
+                    <td id="p_2"></td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td id="r_3"></td>
+                    <td id="p_3"></td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td id="r_4"></td>
+                    <td id="p_4"></td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td id="r_5"></td>
+                    <td id="p_5"></td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td id="r_6"></td>
+                    <td id="p_6"></td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td id="r_7"></td>
+                    <td id="p_7"></td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td id="r_8"></td>
+                    <td id="p_8"></td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td id="r_9"></td>
+                    <td id="p_9"></td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td id="r_10"></td>
+                    <td id="p_10"></td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td id="r_11"></td>
+                    <td id="p_11"></td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td id="r_12"></td>
+                    <td id="p_12"></td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td id="r_13"></td>
+                    <td id="p_13"></td>
+                </tr>
+                <tr>
+                    <td>14</td>
+                    <td id="r_14"></td>
+                    <td id="p_14"></td>
+                </tr>
+                <tr>
+                    <td>15</td>
+                    <td id="r_15"></td>
+                    <td id="p_15"></td>
+                </tr>
+                <tr>
+                    <td>16</td>
+                    <td id="r_16"></td>
+                    <td id="p_16"></td>
+                </tr>
+                <tr>
+                    <td>17</td>
+                    <td id="r_17"></td>
+                    <td id="p_17"></td>
+                </tr>
+                <tr>
+                    <td>18</td>
+                    <td id="r_18"></td>
+                    <td id="p_18"></td>
+                </tr>
+                <tr>
+                    <td>19</td>
+                    <td id="r_19"></td>
+                    <td id="p_19"></td>
+                </tr>
+                <tr>
+                    <td>20</td>
+                    <td id="r_20"></td>
+                    <td id="p_20"></td>
+                </tr>
+                <tr>
+                    <td>21</td>
+                    <td id="r_21"></td>
+                    <td id="p_21"></td>
+                </tr>
+                <tr>
+                    <td>22</td>
+                    <td id="r_22"></td>
+                    <td id="p_22"></td>
+                </tr>
+                <tr>
+                    <td>23</td>
+                    <td id="r_23"></td>
+                    <td id="p_23"></td>
+                </tr>
+                <tr>
+                    <td>24</td>
+                    <td id="r_24"></td>
+                    <td id="p_24"></td>
+                </tr>
+            </table>
+        </div>
+
+<!--
+        <div class="off-canvas position-right" id="offCanvasFaq" data-off-canvas style="background-color:black">
+            <ul class="accordion" data-accordion data-allow-all-closed="true">
+                <li class="accordion-item " data-accordion-item>
+                    
+                    <a href="#" class="accordion-title">How do I use this application?</a>
+
+                    
+                    <div class="accordion-content" data-tab-content>
+                        <p>Check out our video basic tutorial at <a data-fancybox href="https://www.youtube.com/watch?v=8cSu84dgWIY">Play Video</a></p>
+
+                    </div>
+                </li>
+
+                <li class="accordion-item " data-accordion-item>
+                   
+                    <a href="#" class="accordion-title">My Coin(s) failed to export/I canceled the download and my coins are gone. What should I do?</a>
+
+                    
+                    <div class="accordion-content" data-tab-content>
+                        <p>Click this button to restore the coins of you last download.</p>
+                        <button class="small button" onclick="restoreFailedDownload()">Restore</button>
+                        <p id="restoreDone"></p>
+                    </div>
+                </li>
+                <li class="accordion-item " data-accordion-item>
+                    
+                    <a href="#" class="accordion-title">How to File a Lost Coin Report</a>
+
+                   
+                    <div class="accordion-content" data-tab-content>
+                        <p>To file a lost coin report, please email the serial numbers and the date you lost the coins to CloudCoin@Protonmail.com subject: Lost coins.</p>
+
+                    </div>
+                </li>
+                <li class="accordion-item " data-accordion-item>
+                   
+                    <a href="#" class="accordion-title">Why is my coin Fracked?</a>
+
+
+                    <div class="accordion-content" data-tab-content>
+                        <p>Don't worry having Fracked coins is perfectly fine. One of the RAIDA nodes may have been down during detection. The Raida was designed to handle this. Just be sure to fix your fracked coin in the safe menu.</p>
+
+                    </div>
+                </li>
+
+                <li class="accordion-item " data-accordion-item>
+                    
+                    <a href="#" class="accordion-title">What do I do if my coin didn't fix and is see a red X?</a>
+
+
+                    <div class="accordion-content" data-tab-content>
+                        <p>This is mostly likely caused by a raida server being down. Wait a while for it to come back up and try again. If the problem persists after a couple of days, you can try sending a log to us through email.
+                        </p>
+
+                    </div>
+                </li>
+
+                <li class="accordion-item " data-accordion-item>
+                   
+                    <a href="#" class="accordion-title">Why is the Download as Image button grey?</a>
+
+
+                    <div class="accordion-content" data-tab-content>
+                        <p>Exporting as an image file currently doesn't work on ios devices. We are working to remedy this.</p>
+
+                    </div>
+                </li>
+                <li class="accordion-item " data-accordion-item>
+                   
+                    <a href="#" class="accordion-title">What is the purpose of Bank to Mind/Mind to Bank?</a>
+
+
+                    <div class="accordion-content" data-tab-content>
+                        <p>CloudCoins are the first currency that can be stored in your mind. Use mind storage to safeguard your coins, so if someone steals the device you are storing your coins in you can use the email we send to recover your coins on another
+                            device. You can also use mind storage to transfer coins with a whisper.
+                        </p>
+
+                    </div>
+                </li>
+                <li class="accordion-item " data-accordion-item>
+                   
+                    <a href="#" class="accordion-title">How to save coins with password.</a>
+
+
+                    <div class="accordion-content" data-tab-content>
+                        <p>Click Safe, then Bank to Mind. Choose which coins you are saving by clicking on the checkboxes. Either remember the Serial Numbers(SN) or write them down. You will also get an email with the serial numbers. Then enter a username,
+                            password, and email, click Move Checked Coins to Mind, and the green bar will tell you when the process is finished.
+                        </p>
+
+                    </div>
+                </li>
+                <li class="accordion-item " data-accordion-item>
+                    
+                    <a href="#" class="accordion-title">Why do we have to delete the stack/jpeg file after uploading and importing it.</a>
+
+
+                    <div class="accordion-content" data-tab-content>
+                        <p>Importing coins also authenticates them, and when coins are authenticated their numbers are changed so that the coin will belong to you and not whoever you got it from. The web bank application can't change the original file you
+                            uploaded so it's numbers stay outdated. If you try to upload that file it will come up as counterfeit.
+                        </p>
+
+                    </div>
+                </li>
+                <li class="accordion-item " data-accordion-item>
+                    
+                    <a href="#" class="accordion-title">How do I export coins on an iPhone?</a>
+
+
+                    <div class="accordion-content" data-tab-content>
+                        <p>Due to iPhones not having a proper file system, exporting coins is a little complicated. When you click Download as Stack a new tab should appear with an "unknown" file you can save. Save that file to either iCloud, Dropbox, or
+                            your prefered cloud storage application. It won't have a proper filename so make sure to give it one yourself. If you are using iCloud it won't let you change the filename unless there is a file with that name already, so save
+                            it once as "unknown" and then save it again so you can give it a filename.
+                            <b>Make sure the filename ends with .stack so it has the proper file extention.</b>
+                        </p>
+
+                    </div>
+                </li>
+
+
+
+
+
+
+
+                <li class="accordion-item " data-accordion-item>
+                    
+                    <a href="#" class="accordion-title">Download Log</a>
+
+
+                    <div class="accordion-content" data-tab-content>
+                        <button class="small button" onclick="log.downloadLog()">Download</button>
+
+                    </div>
+                </li>
+            </ul>
+
+
+        </div>
+-->
+
+
+
+        <div class="off-canvas-content" data-off-canvas-content>
+            <div id="ygrid" class="grid-y large-grid-frame">
+                <div class="grid-x large-4 small-1 cell" style="margin-left:auto; margin-right:auto;">
+
+                    <div class="large auto cell"></div>
+                    <div class="large-4 cell">
+                        <img src="img/bank/logo@3x.png" style="background-color:blue">
+                        <br>
+                        <span id="topInfo" style="margin-left:auto; margin-right:auto;  color:white; background-color:blue">
+                        Used to Authenticate CloudCoins.
+                        This software is provided as is with all faults, defects and errors and without warranty of any kind. Free from the CloudCoin Consortium.
+                        
+                       </span>
+                        <div id="loading" style="text-align:center;">
+                            <p style="font-size:72px;">LOADING</p>
+                            
+                        </div>
+                    </div>
+                    <div class="large auto cell"></div>
+                </div>
+
+                <div class="large-4 small-10 cell grid-x">
+                <div class="large auto cell"></div>
+                <div class="large-10 small-10 cell callout">
+                <h3 id="importHead" style="display:none">Upload Coin</h3>
+                <h3 id="importHeadShown">Upload Coin</h3>
+
+
+                <div id="importButtons">
+
+                    <input type="file" id="myFile" multiple onchange="uploadButtonAppear()">
+                    <!--<label for="myFile" class="button">Upload File</label>
+    <input type="file" id="myFile" multiple onchange="uploadButtonAppear()" class="show-for-sr">-->
+                     
+                    <div id="upButtonDiv"></div>
+
+                </div>
+                <input type="text" id="alltag" placeholder="Name your stack of cloudcoins file">
+                <span id="upButton" style="display:none">Own Coins</span>
+                <div class="grid-x">
+                    <div class="switch large-3 small-3 cell">
+                        <input class="switch-input" id="scanSwitch" type="checkbox" name="scanSwitch" onchange="scanSwitchMessage()" checked>
+                        <label class="switch-paddle" for="scanSwitch">
+                        <span class="show-for-sr">Scan or Save</span>
+                        </label>
+                    </div>
+                    <div class="large-9 small-9 cell" id="scanSwitchMessage">Take ownership of the coin(s), and download a new version.
+                    </div>
+                </div>
+                <div class="callout" data-closable style="display:none; overflow:scroll; height:150px" id="importDetails">
+
+
+                    <span id="detailsTable">
+                    </span>
+
+                    <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+
+                </div>
+
+                <p>Upload/Detect Progress:</p>
+                <div class="success progress" role="progressbar" tabindex="0" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+                    <div class="progress-meter" id="uploadProgress"></div>
+                </div>
+                <div id="importStatus"></div>
+                <div id="duplicateHolder" class="callout warning" style="display:none">
+                <span id="duplicateNumbers"></span>
+                </div>
+                <div id="deleteMessage"></div>
+                <span>Fix Progress:</span>
+                <div id="fixLiteProgress"></div>
+                
+                <div id="fixDone"></div>
+                <div id="fixStatusContainer" style="display:none"></div>
+                </div>
+                <div class="large auto cell"></div>
+                
+               
+
+                    
+
+                </div>
+
+                <div class="large-4 small-1 cell" style="margin-left:auto; margin-right:auto; width:250px;color:white">
+                    <span id="botInfo" style="margin-left:auto; margin-right:auto; width:250px;color:white; background-color:blue">
+                        </span>
+                    <p id="edition">
+                        CloudCoin WebPown</p>
+                    Version 2017.8.22
+                </div>
+            </div>
+
+ 
+            </div>
+        </div>
+    </div>
+    <a class="exit-off-canvas"></a>
+
+
+
+
+    <script src="js6/vendor/jquery.js"></script>
+    <script src="js6/vendor/what-input.js"></script>
+    <script src="js6/vendor/foundation.js"></script>
+    <script src="js6/app.js"></script>
+
+
+
+
+
+    <script>
+        let raida = new RAIDA(3000);
+        let files = new FileUtils();
+        let log = new Log();
+        let importer = new Importer();
+        let detect = new Detector(files, 3000);
+        let fix = new Frack_Fixer(files, 60000);
+        let canvases = createCanvas();
+        //alert(coins);
+
+
+
+
+
+
+
+        loadEnd();
+        if ((navigator.userAgent.match(/iPhone/i)) || (navigator.userAgent.match(/iPod/i))) {
+            document.getElementById("ygrid").classList.remove("grid-y", "large-grid-frame");
+            document.getElementsByClassName("dlJpeg")[0].setAttribute("disabled", ""); -
+            document.getElementsByClassName("dlJpeg")[1].setAttribute("disabled", "");
+        }
+    </script>
+
+    <!-- added by A-Lang -->
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.1.20/jquery.fancybox.min.js"></script>
+
+</body>
+
+</html>

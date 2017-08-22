@@ -18,12 +18,12 @@
     <script src="core/random.min.js?v=1"></script>
     <script src="core/CloudCoin.js?v=1"></script>
     <script src="core/FileUtils.js?v=10"></script>
-    <script src="core/main.js?v=28"></script>
+    <script src="core/main.js?v=29"></script>
     <script src="core/RAIDA.js?v=3"></script>
     <script src="core/Importer.js?v=4"></script>
     <script src="core/Detector.js?v=6"></script>
     <script src="core/Banker.js?v=2"></script>
-    <script src="core/Frack_Fixer.js?v=6"></script>
+    <script src="core/Frack_Fixer.js?v=7"></script>
     <script src="core/FixitHelper.js?v=1"></script>
     <script src="core/Exporter.js?v=1"></script>
     <script src="core/FileSaver.js?v=1"></script>
@@ -329,18 +329,7 @@
 
                     </div>
                 </li>
-                <li class="accordion-item " data-accordion-item>
-                    <!-- Accordion tab title -->
-                    <a href="#" class="accordion-title">How to save coins with password.</a>
-
-
-                    <div class="accordion-content" data-tab-content>
-                        <p>Click Safe, then Bank to Mind. Choose which coins you are saving by clicking on the checkboxes. Either remember the Serial Numbers(SN) or write them down. You will also get an email with the serial numbers. Then enter a username,
-                            password, and email, click Move Checked Coins to Mind, and the green bar will tell you when the process is finished.
-                        </p>
-
-                    </div>
-                </li>
+                
                 <li class="accordion-item " data-accordion-item>
                     <!-- Accordion tab title -->
                     <a href="#" class="accordion-title">Why do we have to delete the stack/jpeg file after uploading and importing it.</a>
@@ -429,7 +418,7 @@
                     <span id="botInfo" style="margin-left:auto; margin-right:auto; width:250px;color:white; background-color:blue">Your coins will be stored in your browsing data. Make sure you do not delete browsing data before exporting coins. This also means that you should not be using this site in private/incognito mode.</span>
                     <p id="edition">
                         CloudCoin Web Edition</p>
-                    Version 2017.8.17
+                    Version 2017.8.22
                 </div>
             </div>
 
@@ -541,6 +530,7 @@
                         </tr>
                     </tbody>
                 </table>
+                <div id="fixDone"></div>
                 <div id="fixStatusContainer"></div>
                 <button class="button" onclick="fix.fixAll(updateTotal)" id="fixButton">Fix Fracked</button>
                 <button id="butB2M" class="button" data-open="mindToModal" onclick="toMindMode()">Bank to Mind</button>
