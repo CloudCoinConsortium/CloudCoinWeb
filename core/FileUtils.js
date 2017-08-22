@@ -27,8 +27,8 @@ class FileUtils
           
         //} //end on success
     }
-    
-    
+
+
 
     loadMindCloudCoinFromJsonFile(loadFilePath)
     {
@@ -45,6 +45,7 @@ class FileUtils
         returnCC.setAnsToPans();
         return returnCC;
     }
+
 
     saveCloudCoinToJsonFile(cc, saveFilePath)
     {
@@ -70,6 +71,7 @@ class FileUtils
         //} else {console.log("coin already in local storage");}
 
     }
+
 	
 	uploadCloudCoinFromJsonFile(loadFile, callback)
 	{
@@ -178,6 +180,7 @@ class FileUtils
         coin.push(JSON.parse(localStorage.getItem(saveFile[i])));
         
         //delete coin.pown;
+        if(coin[i.time])
         delete coin[i].time;
         let cc = new CloudCoin(1, coin[i].sn);
         total += cc.getDenomination();

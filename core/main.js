@@ -586,7 +586,7 @@ if(document.getElementById("scanSwitch").checked){
 
 function bankMode()
 {
-	
+	document.getElementById("fixDone").innerHTML ="";
 	document.getElementById('fixStatusContainer').style.display = 'none';
 	updateTotal(files);
 }
@@ -686,7 +686,7 @@ function updates(cc, fileUtil, percent=0, results = null)
 		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updates)'";
 		if(percent != 100)
 		fullHtml +=" disabled";
-		fullHtml += ">Re-Detect</div>";
+		fullHtml += ">Re-Detect</button></div>";
 	}
 	if(results[1] > 0)
 	{
@@ -739,10 +739,8 @@ function updatesTemp(cc, percent=0, results = null)
 	{
 		fullHtml +="<div class='callout warning'>Note(s) that got slow responses:"
 		+ results[3];
-		fullHtml += "<button class='small button' onclick='detect.detectAllTemp(updatesTemp)'";
-		if(percent != 100)
-		fullHtml +=" disabled";
-		fullHtml += ">Re-Detect</div>";
+		
+		fullHtml += "</div>";
 	}
 	if(results[1] > 0)
 	{
@@ -787,12 +785,12 @@ function updatesToMind(cc, percent=0, results = null)
 	}
 	if(results[3] > 0)
 	{
-		fullHtml +="<div class='callout warning'>Note(s) that got slow responses:"
-		+ results[3];
-		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updatesToMind)'";
-		if(percent != 100)
-		fullHtml +=" disabled";
-		fullHtml += ">Re-Detect</div>";
+		//fullHtml +="<div class='callout warning'>Note(s) that got slow responses:"
+		//+ results[3];
+		//fullHtml += "<button class='small button' onclick='detect.detectAllToMind(null, updatesToMind)'";
+		//if(percent != 100)
+		//fullHtml +=" disabled";
+		//fullHtml += ">Re-Detect</button></div>";
 	}
 	if(results[1] > 0)
 	{
@@ -858,7 +856,7 @@ function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updatesFromMind)'";
 		if(percent != 100)
 		fullHtml +=" disabled";
-		fullHtml += ">Re-Detect</div>";
+		fullHtml += ">Re-Detect</button></div>";
 	}
 	if(results[1] > 0)
 	{
