@@ -87,7 +87,7 @@ class Frack_Fixer
     fixAll(callback)
     {
         document.getElementById("fixStatusContainer").innerHTML ="";
-        document.getElementById("fixDone")="Fixing Fracked in Progress";
+        document.getElementById("fixDone").innerHTML="Fixing Fracked in Progress";
         document.getElementById("fixStatusContainer").style.display = "initial";
         let results = [0, 0, 0];
         
