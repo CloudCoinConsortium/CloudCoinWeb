@@ -17,13 +17,13 @@
     <script src="core/RaidaResponse.js?v=2"></script>
     <script src="core/random.min.js?v=2"></script>
     <script src="core/CloudCoin.js?v=2"></script>
-    <script src="core/FileUtils.js?v=11"></script>
-    <script src="core/main.js?v=30"></script>
+    <script src="core/FileUtils.js?v=12"></script>
+    <script src="core/main.js?v=33"></script>
     <script src="core/RAIDA.js?v=4"></script>
     <script src="core/Importer.js?v=5"></script>
     <script src="core/Detector.js?v=7"></script>
     <script src="core/Banker.js?v=3"></script>
-    <script src="core/Frack_Fixer.js?v=9"></script>
+    <script src="core/Frack_Fixer.js?v=10"></script>
     <script src="core/FixitHelper.js?v=2"></script>
     <script src="core/Exporter.js?v=2"></script>
     <script src="core/FileSaver.js?v=2"></script>
@@ -67,6 +67,15 @@
         
         .notcheck {
             color: red;
+        }
+        .inputfile{
+            position:absolute; 
+            opacity: 0; 
+            height:5rem;
+        }
+        .inputlabel{
+            height:5rem; 
+            text-align:center;
         }
     </style>
 </head>
@@ -427,15 +436,18 @@
                 <h3 id="importHeadShown">Upload Coin</h3>
 
 
-                <div id="importButtons">
-
-                    <input type="file" id="myFile" multiple onchange="uploadButtonAppear()">
+                 <input class="inputfile uphide" type="file" id="myFile" multiple onchange="uploadButtonAppear()">
+                    <div class="card inputlabel uphide">Drop Files in Here,<br> or Click This Box to Choose Your Files.
+                    
+                    </div>
                     <!--<label for="myFile" class="button">Upload File</label>
     <input type="file" id="myFile" multiple onchange="uploadButtonAppear()" class="show-for-sr">-->
+                     <span>Files:</span>
+                <div class="card" id="uploadList"></div>
+                    <div id="upButtonDiv" class="uphide"><button class='button' id='upButtonShown' onclick='uploadFile()'>Own Coins</button></div>
 
-                    <div id="upButtonDiv"></div>
 
-                </div>
+                
                 <span id="upButton" style="display:none">Upload</span>
                 <div class="grid-x">
                     <div class="switch large-3 cell">
@@ -758,6 +770,7 @@
         let detect = new Detector(files, 3000);
         let fix = new Frack_Fixer(files, 60000);
         let canvases = createCanvas();
+        
         //alert(coins);
 
         if (isNaN(localStorage.key(0)) === false)
