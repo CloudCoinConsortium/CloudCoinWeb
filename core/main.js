@@ -699,43 +699,65 @@ function exportModeOld()
 
 function updates(cc, fileUtil, percent=0, results = null)
 {
-    //coinlist(cc, fileUtil);
-	//scoinlist(cc, fileUtil);
-    //updateTotal(fileUtil);
+    
 	let msg = "";
-	let fullHtml = "";
+	let good = null;
+	let suspect = null;
+	let counterf = null;
+	let fullHtml = document.createDocumentFragment();
+	
 	if(results !== null){
 	if(results[0] > 0 || results[2]> 0)
 	{
 		if(results[0] > 0)
-			msg+= "Note(s) to bank:" + results[0] + "<br>";
+			msg+= "Note(s) to bank:" + results[0] +"\n";
 		if(results[2] > 0)
-			msg+= "Note(s) that are fracked:" +results[2] + "<br>";
-		fullHtml = "<div class='callout success'>"
-		+ msg + "</div>";
+			msg+= "Note(s) that are fracked:" +results[2];
+		good = document.createElement("div");
+		good.setAttribute("class", "callout success");
+		good.textContent = msg;
+		
 	}
 	if(results[3] > 0)
 	{
-		fullHtml +="<div class='callout warning'>Note(s) that got slow responses:"
+		msg ="Note(s) that got slow responses:"
 		+ results[3];
-		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updates)'";
+		let redetect = document.createElement("button");
+		redetect.setAttribute("class", "small button");
+		redetect.setAttribute("onclick", "detect.detectAllSuspect(updates)");
+		
 		if(percent != 100)
-		fullHtml +=" disabled";
-		fullHtml += ">Re-Detect</button></div>";
+		redetect.setAttribute("disabled", "");
+		
+		suspect = document.createElement("div");
+		suspect.setAttribute("class", "callout warning");
+		suspect.textContent = msg;
+		suspect.appendChild(redetect);
 	}
 	if(results[1] > 0)
 	{
-		fullHtml +="<div class='callout alert'>Note(s) that are counterfeit:"
-		+ results[1] + "</div>";
+		msg ="Note(s) that are counterfeit:"
+		+ results[1];
+		counterf = document.createElement("div");
+		counterf.setAttribute("class", "callout alert");
+		counterf.textContent = msg;
 	}
-		document.getElementById("detailsTable").innerHTML += " "+
+		document.getElementById("detailsTable").textContent += " "+
 		cc.sn+" "+cc.getFolder()+" "+cc.pown+" \n";
 		
 	}
-	document.getElementById("importStatus").innerHTML = fullHtml;
-	log.updateLog(fullHtml);
+	if(good !== null)
+	fullHtml.appendChild(good);
+	if(suspect !== null)
+	fullHtml.appendChild(suspect);
+	if(counterf !== null)
+	fullHtml.appendChild(counterf);
+	if(document.getElementById("importStatus").hasChildNodes)
+	document.getElementById("importStatus").innerHTML ="";
+	document.getElementById("importStatus").appendChild(fullHtml);
+	log.updateLog(fullHtml.textContent);
 	document.getElementById("uploadProgress").style.width = percent +"%";
-	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>"+Math.round(percent)+"%</p>";
+	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>"+percent+"%</p>";
 	if(percent == 100){
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
 	document.getElementsByClassName("uphide")[0].style.visibility = "initial";
@@ -743,11 +765,12 @@ function updates(cc, fileUtil, percent=0, results = null)
 	document.getElementsByClassName("uphide")[2].style.visibility = "initial";
 	files.fileArray = [];
 	document.getElementById("uploadList").innerHTML = "";
-	document.getElementById("importHeadShown").innerHTML = "Import Complete";
+	document.getElementById("importHeadShown").textContent = "Import Complete";
 	document.getElementById("deleteMessage").innerHTML = "Be sure to delete the original file. It is outdated."
 	+ "<button class='small button' onclick="+"document.getElementById('importDetails').style.display='block'"+">Details</button>";	
 }
 	
+	//mindlist();
 	
 	if(importer.importAllFromFolder("counterfeit").length > 0)
 	{
@@ -756,6 +779,8 @@ function updates(cc, fileUtil, percent=0, results = null)
 	if(percent == 100 && results[3] == 0)
 	{
 		makeBackup();
+		
+		//document.getElementById("importClose").setAttribute("data-close", "");
 	}
 }
 
@@ -763,37 +788,57 @@ function updatesTemp(cc, percent=0, results = null)
 {
     
 	let msg = "";
-	let fullHtml = "";
+	let good = null;
+	let suspect = null;
+	let counterf = null;
+	let fullHtml = document.createDocumentFragment();
+	
 	if(results !== null){
 	if(results[0] > 0 || results[2]> 0)
 	{
 		if(results[0] > 0)
-			msg+= "Note(s) that are good:" + results[0] + "<br>";
+			msg+= "Note(s) to bank:" + results[0] +"\n";
 		if(results[2] > 0)
-			msg+= "Note(s) that are fracked:" +results[2] + "<br>";
-		fullHtml = "<div class='callout success'>"
-		+ msg + "</div>";
+			msg+= "Note(s) that are fracked:" +results[2];
+		good = document.createElement("div");
+		good.setAttribute("class", "callout success");
+		good.textContent = msg;
+		
 	}
 	if(results[3] > 0)
 	{
-		fullHtml +="<div class='callout warning'>Note(s) that got slow responses:"
+		msg ="Note(s) that got slow responses:"
 		+ results[3];
 		
-		fullHtml += "</div>";
+		suspect = document.createElement("div");
+		suspect.setAttribute("class", "callout warning");
+		suspect.textContent = msg;
+		
 	}
 	if(results[1] > 0)
 	{
-		fullHtml +="<div class='callout alert'>Note(s) that are counterfeit:"
-		+ results[1] + "</div>";
+		msg ="Note(s) that are counterfeit:"
+		+ results[1];
+		counterf = document.createElement("div");
+		counterf.setAttribute("class", "callout alert");
+		counterf.textContent = msg;
 	}
-		document.getElementById("detailsTable").innerHTML += " "+
+		document.getElementById("detailsTable").textContent += " "+
 		cc.sn+" "+cc.getFolder()+" "+cc.pown+" \n";
 		
 	}
-	document.getElementById("importStatus").innerHTML = fullHtml;
-	log.updateLog(fullHtml);
+	if(good !== null)
+	fullHtml.appendChild(good);
+	if(suspect !== null)
+	fullHtml.appendChild(suspect);
+	if(counterf !== null)
+	fullHtml.appendChild(counterf);
+	if(document.getElementById("importStatus").hasChildNodes)
+	document.getElementById("importStatus").innerHTML ="";
+	document.getElementById("importStatus").appendChild(fullHtml);
+	log.updateLog(fullHtml.textContent);
 	document.getElementById("uploadProgress").style.width = percent +"%";
-	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>"+Math.round(percent)+"%</p>";
+	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>"+percent+"%</p>";
 	if(percent == 100){
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
 	document.getElementsByClassName("uphide")[0].style.visibility = "initial";
@@ -817,37 +862,44 @@ function updatesToMind(cc, percent=0, results = null)
 	trash(cc.sn);
 	localStorage.setItem("mind."+cc.sn, "mindstorage");
 	let msg = "";
-	let fullHtml = "";
+	let good = null;
+	let counterf = null;
+	let fullHtml = document.createDocumentFragment();
 	if(results !== null){
 	if(results[0] > 0 || results[2]> 0)
 	{
 		
-			msg+= "Note(s) moved successfully:" + (results[0]+results[2]) + "<br>";
-		fullHtml = "<div class='callout success'>"
-		+ msg + "</div>";
+			msg+= "Note(s) moved successfully:" + (results[0]+results[2]);
+			good = document.createElement("div");
+		good.setAttribute("class", "callout success");
+		good.textContent = msg;
 	}
 	if(results[3] > 0)
 	{
-		//fullHtml +="<div class='callout warning'>Note(s) that got slow responses:"
-		//+ results[3];
-		//fullHtml += "<button class='small button' onclick='detect.detectAllToMind(null, updatesToMind)'";
-		//if(percent != 100)
-		//fullHtml +=" disabled";
-		//fullHtml += ">Re-Detect</button></div>";
+		
 	}
 	if(results[1] > 0)
 	{
-		fullHtml +="<div class='callout alert'>Note(s) that are counterfeit:"
-		+ results[1] + "</div>";
+		msg ="Note(s) that are counterfeit:"
+		+ results[1];
+		counterf = document.createElement("div");
+		counterf.setAttribute("class", "callout alert");
+		counterf.textContent = msg;
 	}
 	}
 
 
-
-	document.getElementById("toMindDetails").innerHTML = fullHtml;
-	log.updateLog(fullHtml);
+if(good !== null)
+	fullHtml.appendChild(good);
+	
+	if(counterf !== null)
+	fullHtml.appendChild(counterf);
+	if(document.getElementById("toMindDetails").hasChildNodes)
+	document.getElementById("toMindDetails").innerHTML ="";
+	document.getElementById("toMindDetails").appendChild(fullHtml);
+	log.updateLog(fullHtml.textContent);
 	document.getElementById("toMindMessage").style.width = percent +"%";
-	document.getElementById("toMindMessage").innerHTML="<p class='progress-meter-text'>"+Math.round(percent)+"%</p>";
+	document.getElementById("toMindMessage").innerHTML="<p class='progress-meter-text'>"+percent+"%</p>";
 	if(percent == 100){
 	
 	
@@ -873,44 +925,60 @@ function updatesToMind(cc, percent=0, results = null)
 	//}
 }
 
-
 function updatesFromMind(cc, fileUtil, percent = 0, results=null)
 {
 	document.getElementById("mindProgress").style.width = percent +"%";
-	document.getElementById("mindProgress").innerHTML="<p class='progress-meter-text'>"+Math.round(percent)+"%</p>";
 	if(percent == 100)
 	document.getElementById("mindProgress").innerHTML="<p class='progress-meter-text'>done</p>";
 	let msg = "";
-	let fullHtml = "";
+	let good = null;
+	let suspect = null;
+	let counterf = null;
+	let fullHtml = document.createDocumentFragment();
+	
 	if(results !== null){
 	if(results[0] > 0 || results[2]> 0)
 	{
 		if(results[0] > 0)
-			msg+= "Notes(s) to bank:" + results[0] + "<br>";
+			msg+= "Note(s) to bank:" + results[0] +"\n";
 		if(results[2] > 0)
-			msg+= "Notes(s) that are fracked:" +results[2] + "<br>";
-		fullHtml = "<div class='callout success'>"
-		+ msg + "</div>";
+			msg+= "Note(s) that are fracked:" +results[2];
+		good = document.createElement("div");
+		good.setAttribute("class", "callout success");
+		good.textContent = msg;
+		
 	}
 	if(results[3] > 0)
 	{
-		fullHtml +="<div class='callout warning'>Notes(s) that got slow responses:"
+		msg ="Note(s) that got slow responses:"
 		+ results[3];
-		fullHtml += "<button class='small button' onclick='detect.detectAllSuspect(updatesFromMind)'";
-		if(percent != 100)
-		fullHtml +=" disabled";
-		fullHtml += ">Re-Detect</button></div>";
+		
+		suspect = document.createElement("div");
+		suspect.setAttribute("class", "callout warning");
+		suspect.textContent = msg;
+		
 	}
 	if(results[1] > 0)
 	{
-		fullHtml +="<div class='callout alert'>Notes(s) that are counterfeit:(you may have misspelled something.)"
-		+ results[1] + "</div>";
+		msg ="Note(s) that are counterfeit:"
+		+ results[1];
+		counterf = document.createElement("div");
+		counterf.setAttribute("class", "callout alert");
+		counterf.textContent = msg;
 	}
 		
 		
 	}
-	document.getElementById("fromMindStatus").innerHTML = fullHtml;
-	log.updateLog(fullHtml);
+	if(good !== null)
+	fullHtml.appendChild(good);
+	if(suspect !== null)
+	fullHtml.appendChild(suspect);
+	if(counterf !== null)
+	fullHtml.appendChild(counterf);
+	if(document.getElementById("fromMindStatus").hasChildNodes)
+	document.getElementById("fromMindStatus").innerHTML ="";
+	document.getElementById("fromMindStatus").appendChild(fullHtml);
+	log.updateLog(fullHtml.textContent);
 	if(cc.getFolder().toLowerCase() == "counterfeit"){
 		localStorage.setItem("mind."+cc.sn, "mindstorage");
 		mindlist();
