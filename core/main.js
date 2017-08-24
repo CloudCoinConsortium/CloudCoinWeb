@@ -318,7 +318,7 @@ function downloadImage(N=false)
     if(localStorage.key(j).includes("le")){
 		lenames.push(localStorage.key(j));
 	}
-	else if(localStorage.getItem(localStorage.key(j)) != "mindstorage"){     
+	else if(localStorage.key(j).includes("bank") ||localStorage.key(j).includes("fracked")){     
 	if(document.getElementById("cb" + localStorage.key(j).substring(localStorage.key(j).indexOf(".")+1)).checked)
  			fnames.push(localStorage.key(j));
 	}
@@ -441,7 +441,7 @@ function downloadAll(N=false)
     if(localStorage.key(j).includes("le")){
 		lenames.push(localStorage.key(j));
 	}
-	else if(localStorage.getItem(localStorage.key(j)) !== "mindstorage"){ 
+	else if(localStorage.key(j).includes("bank") ||localStorage.key(j).includes("fracked")){ 
 	if(document.getElementById("cb" + localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1)).checked)
 			 fnames.push(localStorage.key(j));
 		}
@@ -464,6 +464,20 @@ function downloadAll(N=false)
 	}
 	
 }
+
+function removeFile(name)
+{
+	let index;
+	for(let i=0;i< files.fileArray.length; i++)
+	{
+		if(files.fileArray[i].name == name)
+		index = i;
+	}
+	let remove = files.fileArray.splice(index, 1);
+	let elem = document.getElementById(remove[0].name);
+	document.getElementById("uploadList").removeChild(elem);
+}
+
 
 function makeBackup()
 {
@@ -528,7 +542,7 @@ function uncheckEvery()
 function importMode()
 {
 	document.getElementById("importHeadShown").innerHTML = document.getElementById("importHead").innerHTML;
-	document.getElementById("importButtons").innerHTML = "<input type='file' id='myFile' multiple onchange='uploadButtonAppear()'><div id='upButtonDiv'></div>";
+	document.getElementById("upButtonShown").innerHTML = document.getElementById("upButton").innerHTML;
 	document.getElementById("importStatus").innerHTML ="";
 	document.getElementById("deleteMessage").innerHTML = "";
 	document.getElementById("duplicateHolder").style.display = "none";
@@ -538,25 +552,45 @@ function importMode()
 }
 	
 function uploadButtonAppear(){
-	//alert(document.getElementById("myFile").value);
-    document.getElementById("upButtonDiv").innerHTML="<button class='button' id='upButtonShown' onclick='uploadFile()'></button>";
-	document.getElementById("upButtonShown").innerHTML = document.getElementById("upButton").innerHTML;
+	let elFile = document.getElementById("myFile");
+	let fragment = document.createDocumentFragment();
+	let listitem;
+	let close;
+	let closefile;
+	for(let i = 0; i < elFile.files.length; i++){
+		files.fileArray.push(elFile.files[i]);
+		listitem = document.createElement("span");
+		listitem.setAttribute("id", files.fileArray[files.fileArray.length-1].name);
+		close = document.createElement("span");
+		closefile = "removeFile('"+(files.fileArray[files.fileArray.length-1].name)+"')";
+		close.setAttribute("onclick", closefile);
+		close.innerHTML = "&#x274C;";
+		listitem.textContent = files.fileArray[files.fileArray.length-1].name +" ";
+		listitem.appendChild(close);
+		fragment.appendChild(listitem);
+	}
+    document.getElementById("uploadList").appendChild(fragment);
+	elFile.value = null;
 	document.getElementById("uploadProgress").style.width = "0%";
 	document.getElementById("uploadProgress").innerHTML="";
 }
 
 function uploadFile(){
+	if(files.fileArray.length > 0){
+	document.getElementsByClassName("uphide")[0].style.visibility = "hidden";
+	document.getElementsByClassName("uphide")[1].style.visibility = "hidden";
+	document.getElementsByClassName("uphide")[2].style.visibility = "hidden";
 	document.getElementsByClassName("switch-paddle")[0].style.visibility = "hidden";
 	document.getElementById("uploadProgress").style.width = "2%";
-	let elFile = document.getElementById("myFile");
+	
 	let totalSize = 0;
-    for(let i = 0; i < elFile.files.length; i++){
-    let upJson = elFile.files[i];
+    for(let i = 0; i < files.fileArray.length; i++){
+    let upJson = files.fileArray[i];
 	totalSize += upJson.size;
-    if(elFile.value.slice(-5) == "stack"){
+    if(upJson.name.slice(-5) == "stack"){
 	files.uploadCloudCoinFromJsonFile(upJson, files.saveCloudCoinToJsonFile);
 	//document.getElementById("uploadProgress").style.width = "50%";
-    } else if(elFile.value.slice(-4) == "jpeg" || elFile.value.slice(-4) == "jfif" || elFile.value.slice(-3) == "jpg"){
+    } else if(upJson.name.slice(-4) == "jpeg" || upJson.name.slice(-4) == "jfif" || upJson.name.slice(-3) == "jpg"){
         files.uploadCloudCoinFromJpegFile(upJson, files.saveCloudCoinToJsonFile);
 		//document.getElementById("uploadProgress").style.width = "50%";
     } else{alert("Valid File Type Please");}
@@ -582,6 +616,7 @@ if(document.getElementById("scanSwitch").checked){
 		//updateTotal(fileUtil);
 	}, 500 + (totalSize/80));
 }
+	}
 }
 
 function bankMode()
@@ -703,12 +738,16 @@ function updates(cc, fileUtil, percent=0, results = null)
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>"+Math.round(percent)+"%</p>";
 	if(percent == 100){
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
-	
+	document.getElementsByClassName("uphide")[0].style.visibility = "initial";
+	document.getElementsByClassName("uphide")[1].style.visibility = "initial";
+	document.getElementsByClassName("uphide")[2].style.visibility = "initial";
+	files.fileArray = [];
+	document.getElementById("uploadList").innerHTML = "";
 	document.getElementById("importHeadShown").innerHTML = "Import Complete";
 	document.getElementById("deleteMessage").innerHTML = "Be sure to delete the original file. It is outdated."
 	+ "<button class='small button' onclick="+"document.getElementById('importDetails').style.display='block'"+">Details</button>";	
 }
-	document.getElementById("importButtons").innerHTML= "";
+	
 	
 	if(importer.importAllFromFolder("counterfeit").length > 0)
 	{
@@ -757,12 +796,16 @@ function updatesTemp(cc, percent=0, results = null)
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>"+Math.round(percent)+"%</p>";
 	if(percent == 100){
 	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
-	
+	document.getElementsByClassName("uphide")[0].style.visibility = "initial";
+	document.getElementsByClassName("uphide")[1].style.visibility = "initial";
+	document.getElementsByClassName("uphide")[2].style.visibility = "initial";
+	files.fileArray = [];
+	document.getElementById("uploadList").innerHTML = "";
 	document.getElementById("importHeadShown").innerHTML = "Import Complete";
 	document.getElementById("deleteMessage").innerHTML = ""
 	+ "<button class='small button' onclick="+"document.getElementById('importDetails').style.display='block'"+">Details</button>";	
 }
-	document.getElementById("importButtons").innerHTML= "";
+	
 	localStorage.removeItem("temp."+cc.sn);
 	
 	
@@ -1160,7 +1203,7 @@ function moveToMind(newPan)
 	let k = 0;
 	log.updateLog("Moving into mind coins:");
 	for(let j = 0; j < localStorage.length; j++){
-        if(localStorage.getItem(localStorage.key(j)) != "mindstorage"&& localStorage.key(j).includes("le")===false){
+        if((localStorage.key(j).includes("bank") ||localStorage.key(j).includes("fracked"))&& localStorage.key(j).includes("le")===false){
 			 
 			if(document.getElementById("scb" + localStorage.key(j).substring(localStorage.key(j).indexOf('.')+1)).checked){
 			toBeMoved.push(files.loadOneCloudCoinFromJsonFile(localStorage.key(j)));

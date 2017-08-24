@@ -1,9 +1,9 @@
 class FileUtils 
 {
 
-    constructor()
+    constructor(fileArray=[])
     {
-        
+        this.fileArray = fileArray;
         
     }
 
