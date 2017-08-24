@@ -19,16 +19,6 @@ function populateRaidaStatus(rr, id)
 
 
 
-function scanSwitchMessage()
-{
-	if(document.getElementById("scanSwitch").checked)
-	{
-		document.getElementById("scanSwitchMessage").innerHTML = "Take ownership of the coin(s), and download a new version.";
-	}else{
-		document.getElementById("scanSwitchMessage").innerHTML = "Just check if the coin(s) is real, don't download a new version.";
-	}
-}
-
 function getDen(sn)
 {
 	let nom = 0;
@@ -83,6 +73,7 @@ function restoreFailedDownload()
 			sessionStorage.removeItem("le"+fname);
 		}
 	}
+	downloadAll();
 	document.getElementById("restoreDone").innerHTML = "Done";
 }
 
@@ -238,47 +229,83 @@ function downloadAll()
 		log.updateLine(fnames[i].substring(fnames[i].indexOf('.')+1) + ",");
         trash(fnames[i].substring(fnames[i].indexOf('.')+1));
 	}
-	
+	document.getElementsByClassName("uphide")[0].style.visibility = "initial";
+	document.getElementsByClassName("uphide")[1].style.visibility = "initial";
+	document.getElementsByClassName("uphide")[2].style.visibility = "initial";
+	files.fileArray = [];
+	document.getElementById("uploadList").innerHTML = "";
+}
+
+function removeFile(name)
+{
+	let index;
+	for(let i=0;i< files.fileArray.length; i++)
+	{
+		if(files.fileArray[i].name == name)
+		index = i;
+	}
+	let remove = files.fileArray.splice(index, 1);
+	let elem = document.getElementById(remove[0].name);
+	document.getElementById("uploadList").removeChild(elem);
 }
 
 
 function importMode()
 {
 	document.getElementById("importHeadShown").innerHTML = document.getElementById("importHead").innerHTML;
-	document.getElementById("importButtons").innerHTML = "<input type='file' id='myFile' multiple onchange='uploadButtonAppear()'><div id='upButtonDiv'></div>";
+	
 	document.getElementById("importStatus").innerHTML ="";
 	document.getElementById("deleteMessage").innerHTML = "";
 	document.getElementById("duplicateHolder").style.display = "none";
 	document.getElementById("duplicateNumbers").innerHTML = "";
-	document.getElementsByClassName("switch-paddle")[0].style.visibility = "initial";
+	
 	emptyprogress('uploadProgress');
 }
 	
 function uploadButtonAppear(){
-	//alert(document.getElementById("myFile").value);
-    document.getElementById("upButtonDiv").innerHTML="<button class='button' id='upButtonShown' onclick='uploadFile()'></button>";
-	document.getElementById("upButtonShown").innerHTML = document.getElementById("upButton").innerHTML;
+	let elFile = document.getElementById("myFile");
+	let fragment = document.createDocumentFragment();
+	let listitem;
+	let close;
+	let closefile;
+	for(let i = 0; i < elFile.files.length; i++){
+		files.fileArray.push(elFile.files[i]);
+		listitem = document.createElement("span");
+		listitem.setAttribute("id", files.fileArray[files.fileArray.length-1].name);
+		close = document.createElement("span");
+		closefile = "removeFile('"+(files.fileArray[files.fileArray.length-1].name)+"')";
+		close.setAttribute("onclick", closefile);
+		close.innerHTML = "&#x274C;";
+		listitem.textContent = files.fileArray[files.fileArray.length-1].name +" ";
+		listitem.appendChild(close);
+		fragment.appendChild(listitem);
+	}
+    document.getElementById("uploadList").appendChild(fragment);
+	elFile.value = null;
 	document.getElementById("uploadProgress").style.width = "0%";
 	document.getElementById("uploadProgress").innerHTML="";
 }
 
 function uploadFile(){
-	document.getElementsByClassName("switch-paddle")[0].style.visibility = "hidden";
+	if(files.fileArray.length > 0){
+	document.getElementsByClassName("uphide")[0].style.visibility = "hidden";
+	document.getElementsByClassName("uphide")[1].style.visibility = "hidden";
+	document.getElementsByClassName("uphide")[2].style.visibility = "hidden";
 	document.getElementById("uploadProgress").style.width = "2%";
-	let elFile = document.getElementById("myFile");
+	
 	let totalSize = 0;
-    for(let i = 0; i < elFile.files.length; i++){
-    let upJson = elFile.files[i];
+    for(let i = 0; i < files.fileArray.length; i++){
+    let upJson = files.fileArray[i];
 	totalSize += upJson.size;
-    if(elFile.value.slice(-5) == "stack"){
+    if(upJson.name.slice(-5) == "stack"){
 	files.uploadCloudCoinFromJsonFile(upJson, files.saveCloudCoinToJsonFile);
 	//document.getElementById("uploadProgress").style.width = "50%";
-    } else if(elFile.value.slice(-4) == "jpeg" || elFile.value.slice(-4) == "jfif" || elFile.value.slice(-3) == "jpg"){
+    } else if(upJson.name.slice(-4) == "jpeg" || upJson.name.slice(-4) == "jfif" || upJson.name.slice(-3) == "jpg"){
         files.uploadCloudCoinFromJpegFile(upJson, files.saveCloudCoinToJsonFile);
 		//document.getElementById("uploadProgress").style.width = "50%";
     } else{alert("Valid File Type Please");}
 }
-if(document.getElementById("scanSwitch").checked){
+
 	setTimeout(function(){
 		//document.getElementById("uploadProgress").style.width = "75%";
 		detect.detectAllSuspect(updates);
@@ -288,17 +315,7 @@ if(document.getElementById("scanSwitch").checked){
 		//coins.forEach(coinlist);
 		//updateTotal(fileUtil);
 	}, 500 + (totalSize/80));
-}else{
-	setTimeout(function(){
-		//document.getElementById("uploadProgress").style.width = "75%";
-		detect.detectAllTemp(updatesTemp);
-        
-        //let importer = new Importer();
-    //let coins = importer.importAll(fileUtil);
-		//coins.forEach(coinlist);
-		//updateTotal(fileUtil);
-	}, 500 + (totalSize/80));
-}
+	}
 }
 
 
@@ -346,7 +363,7 @@ function updates(cc, fileUtil, percent=0, results = null)
 	document.getElementById("deleteMessage").innerHTML = "Detection Finished, if there were any slow responses detection will run again, otherwise fracked notes will be fixed next"
 	+ "<button class='small button' onclick="+"document.getElementById('importDetails').style.display='block'"+">Details</button>";	
 }
-	document.getElementById("importButtons").innerHTML= "";
+	//document.getElementById("importButtons").innerHTML= "";
 	
 	if(importer.importAllFromFolder("counterfeit").length > 0)
 	{
@@ -362,53 +379,7 @@ function updates(cc, fileUtil, percent=0, results = null)
 	}
 }
 
-function updatesTemp(cc, percent=0, results = null)
-{
-    
-	let msg = "";
-	let fullHtml = "";
-	if(results !== null){
-	if(results[0] > 0 || results[2]> 0)
-	{
-		if(results[0] > 0)
-			msg+= "Note(s) that are good:" + results[0] + "<br>";
-		if(results[2] > 0)
-			msg+= "Note(s) that are fracked:" +results[2] + "<br>";
-		fullHtml = "<div class='callout success'>"
-		+ msg + "</div>";
-	}
-	if(results[3] > 0)
-	{
-		fullHtml +="<div class='callout warning'>Note(s) that got slow responses:"
-		+ results[3];
 
-		fullHtml += "</div>";
-	}
-	if(results[1] > 0)
-	{
-		fullHtml +="<div class='callout alert'>Note(s) that are counterfeit:"
-		+ results[1] + "</div>";
-	}
-		document.getElementById("detailsTable").innerHTML += " "+
-		cc.sn+" "+cc.getFolder()+" "+cc.pown+" \n";
-		
-	}
-	document.getElementById("importStatus").innerHTML = fullHtml;
-	log.updateLog(fullHtml);
-	document.getElementById("uploadProgress").style.width = percent +"%";
-	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>"+Math.round(percent)+"%</p>";
-	if(percent == 100){
-	document.getElementById("uploadProgress").innerHTML="<p class='progress-meter-text'>done</p>";
-	
-	document.getElementById("importHeadShown").innerHTML = "Import Complete";
-	document.getElementById("deleteMessage").innerHTML = ""
-	+ "<button class='small button' onclick="+"document.getElementById('importDetails').style.display='block'"+">Details</button>";	
-}
-	document.getElementById("importButtons").innerHTML= "";
-	sessionStorage.removeItem("temp."+cc.sn);
-	
-	
-}
 
 function updatesFromFix(leftToFix)
 {

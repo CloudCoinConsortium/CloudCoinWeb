@@ -96,6 +96,7 @@ class Frack_Fixer
         //let files = this.fileUtil;
         if(frackedFileNames.length <= 0){
             callback(0);
+            document.getElementById("fixDone").innerHTML = "Finished running fix. Your download of the coin(s) should begin shortly.";
             console.log("You have no fracked coins");}
         else
         {
@@ -139,14 +140,14 @@ class Frack_Fixer
             {
                 case "bank":
                     //this.totalValueToBank++;
-                    files.overWrite("bank",files.findCoin(fixedCC.sn));
+                    files.overWrite("bank","fracked."+fixedCC.sn);
                     //this.deleteCoin(this.fileUtil.frackedFolder + chunk[i]);
                     console.log( fixedCC.sn + ": CloudCoin was moved to Bank");
                     log.updateLog( fixedCC.sn+ ": CloudCoin was moved to Bank");
                     break;
                 case "counterfeit":
                     //this.totalValueToCounterfeit++;
-                    files.overWrite("counterfeit", findCoin(fixedCC.sn));
+                    files.overWrite("counterfeit", "fracked."+fixedCC.sn);
                     //this.deleteCoin(this.fileUtil.frackedFolder + chunk[i]);
                     console.log( fixedCC.sn + ": CloudCoin was moved to Counterfeit");
                     log.updateLog( fixedCC.sn + ": CloudCoin was moved to Counterfeit");

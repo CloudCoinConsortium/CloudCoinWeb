@@ -1,9 +1,9 @@
 class FileUtils 
 {
 
-    constructor()
+    constructor(fileArray =[])
     {
-        
+        this.fileArray = fileArray;
         
     }
 
@@ -83,9 +83,9 @@ class FileUtils
 		let upCoin = new CloudCoin(cc.nn, cc.sn, cc.an, cc.ed, cc.aoid, cc.pown);
        
         
-            if(document.getElementById("scanSwitch").checked)
-                {callback(upCoin, "suspect."+upCoin.sn);}
-                else{callback(upCoin, "temp."+upCoin.sn);}
+            
+                callback(upCoin, "suspect."+upCoin.sn);
+                
             
         }}
 		reader.readAsText(loadFile);
@@ -106,9 +106,9 @@ class FileUtils
         
         
             
-            if(document.getElementById("scanSwitch").checked)
-                {callback(upCoin, "suspect."+upCoin.sn);}
-                else{callback(upCoin, "temp."+upCoin.sn);}
+           
+                callback(upCoin, "suspect."+upCoin.sn);
+                
             
         }
 		reader.readAsDataURL(loadFile);
