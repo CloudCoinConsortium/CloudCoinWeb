@@ -29,55 +29,7 @@
     <script src="core/FileSaver.js?v=2"></script>
     <script src="core/changeLanguage.js?v=2"></script>
     <script src="core/log.js?v=2"></script>
-    <style>
-        body {
-            background-color: blue;
-            background-image: url(img/bank/back_icons.svg);
-        }
-        
-        button.lgfont {
-            margin: 20px;
-            background-color: white;
-            font-size: 3rem;
-            border-radius: 3rem;
-            color: blue;
-            padding: 20px;
-            margin-left: 20px;
-        }
-        
-        td {
-            text-align: right;
-            margin: 0px;
-            padding: 1px;
-            line-height: 0;
-            color: white;
-            background-color: #333333;
-        }
-        
-        select {
-            height: 90px;
-            font-size: 20px;
-            text-align: center;
-            box-shadow: 0px 30px 50px -30px #777 inset, 0px -30px 50px -30px #777 inset;
-        }
-        
-        .check {
-            color: green;
-        }
-        
-        .notcheck {
-            color: red;
-        }
-        .inputfile{
-            position:absolute; 
-            opacity: 0; 
-            height:5rem;
-        }
-        .inputlabel{
-            height:5rem; 
-            text-align:center;
-        }
-    </style>
+    <link rel="stylesheet" href="core/bank.css">
 </head>
 
 <body>
@@ -271,7 +223,32 @@
 
                     </div>
                 </li>
+                <li class="accordion-item " data-accordion-item>
+                    <!-- Accordion tab title -->
+                    <a href="#" class="accordion-title">Who should I contact with any questions/concerns?</a>
 
+                    <!-- Accordion tab content: it would start in the open state due to using the `is-active` state class. -->
+                    <div class="accordion-content" data-tab-content>
+                        <p>For questions about this web application contact: <b>chernyshovtesero @protonmail.com</b><br><br>
+                            For questions about CloudCoin contact: <b>cloudcoin@protonmail.com</b>
+                        </p>
+
+                    </div>
+                </li>
+                <li class="accordion-item " data-accordion-item>
+                    <!-- Accordion tab title -->
+                    <a href="#" class="accordion-title">I just loaded the page up, and my coins aren't here.</a>
+
+
+                    <div class="accordion-content" data-tab-content>
+                        <p>
+                            Your coins might be on a different site's localstorage. If you are on https://cloudcoin.co/bank.html try going to
+                            https://www.cloudcoin.co/bank.html and vice versa. If they are gone because your browser cleared your cache,
+                            recover them by uploading the most recent backup file that is saved at every Import.
+                        </p>
+
+                    </div>
+                </li>
                 <li class="accordion-item " data-accordion-item>
                     <!-- Accordion tab title -->
                     <a href="#" class="accordion-title">My Coin(s) failed to export/I canceled the download and my coins are gone. What should I do?</a>
@@ -400,8 +377,7 @@
                         <br>
                         <span id="topInfo" style="margin-left:auto; margin-right:auto;  color:white; background-color:blue">
                         Used to Authenticate, Store and Payout CloudCoins.
-                        This software is provided as is with all faults, defects and errors and without warranty of any kind. Free from the CloudCoin Consortium.<br><br>
-                        We have recently updated this site with some huge changes. Contact chernyshovtesero@protonmail.com if you have any problems.
+                        This software is provided as is with all faults, defects and errors and without warranty of any kind. Free from the CloudCoin Consortium.
                        </span>
                         <div id="loading" style="text-align:center;">
                             <p style="font-size:72px;">LOADING</p>
@@ -427,7 +403,7 @@
                     <span id="botInfo" style="margin-left:auto; margin-right:auto; width:250px;color:white; background-color:blue">Your coins will be stored in your browsing data. Make sure you do not delete browsing data before exporting coins. This also means that you should not be using this site in private/incognito mode.</span>
                     <p id="edition">
                         CloudCoin Web Edition</p>
-                    Version 2017.8.23
+                    Version 2017.8.25
                 </div>
             </div>
 
