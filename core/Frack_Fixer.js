@@ -98,7 +98,7 @@ class Frack_Fixer
         else
         {
             
-            let chunk = frackedFileNames.splice(0,3);
+            let chunk = frackedFileNames.splice(0,1);
             this.fixChunk(chunk, frackedFileNames, callback);
             
         }
@@ -161,7 +161,7 @@ class Frack_Fixer
             
             if(k == last && frackedFileNames.length > 0)
             {
-                let newchunk = frackedFileNames.splice(0,3);
+                let newchunk = frackedFileNames.splice(0,1);
                 //console.log(newchunk, frackedFileNames);
                 fix.fixChunk(newchunk, frackedFileNames, callback);
                 
